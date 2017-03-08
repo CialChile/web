@@ -1,0 +1,116 @@
+<!-- top navigation -->
+<div class="top_nav">
+    <div class="nav_menu">
+        <nav>
+            <div class="nav toggle">
+                <a id="menu_toggle" (click)="toggleClicked($event)">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="" dropdown>
+                    <a class="user-profile" href id="single-button" dropdownToggle>
+                        <img src="assets/img/missing.png" alt="">
+                        <span *ngIf="user">{{user.first_name}} {{user.last_name}}</span>
+                        <span class=" fa fa-angle-down"></span>
+                    </a>
+                    <ul dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="single-button">
+                        <li>
+                            <a href="javascript:;"> Profile</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <span class="badge bg-red pull-right">50%</span>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">Help</a>
+                        </li>
+                        <li>
+                            <a (click)="logout()">
+                                <i class="fa fa-sign-out pull-right"></i>
+                                Log Out
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li role="presentation" dropdown>
+                    <a href id="notificaciones" dropdownToggle>
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="badge bg-green">6</span>
+                    </a>
+                    <ul dropdownMenu class="dropdown-menu list-unstyled msg_list" role="menu"
+                        aria-labelledby="notificaciones">
+                        <li>
+                            <a>
+                                <span class="image">
+                                    <img src="assets/img/missing.png" alt="">
+                                </span>
+                                <span>
+                                    <span>John Smith</span>
+                                    <span class="time">3 mins ago</span>
+                                </span>
+                                <span class="message">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where...
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="image">
+                                    <img src="assets/img/missing.png" alt="">
+                                </span>
+                                <span>
+                                    <span>John Smith</span>
+                                    <span class="time">3 mins ago</span>
+                                </span>
+                                <span class="message">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where...
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="image">
+                                    <img src="assets/img/missing.png" alt="">
+                                </span>
+                                <span>
+                                    <span>John Smith</span>
+                                    <span class="time">3 mins ago</span>
+                                </span>
+                                <span class="message">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where...
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="image">
+                                    <img src="assets/img/missing.png" alt="">
+                                </span>
+                                <span>
+                                    <span>John Smith</span>
+                                    <span class="time">3 mins ago</span>
+                                </span>
+                                <span class="message">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where...
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="text-center">
+                                <a>
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- /top navigation -->

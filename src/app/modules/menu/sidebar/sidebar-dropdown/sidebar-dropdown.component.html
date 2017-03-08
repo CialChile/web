@@ -1,0 +1,12 @@
+<li routerLinkActive="active-route" [routerLinkActiveOptions]="{exact:true}">
+    <a (click)="anchorClicked($event)">
+        <i [class]="['fa '+item.icon]"></i>
+        {{item.name}}
+        <span class="fa fa-chevron-down"></span>
+    </a>
+    <ul class="nav child_menu">
+        <li *ngFor="let dropdownItem of item.items">
+            <a [routerLink]="dropdownItem.link">{{dropdownItem.name}}</a>
+        </li>
+    </ul>
+</li>

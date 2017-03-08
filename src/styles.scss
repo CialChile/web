@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'assets/sass/variables';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap';
+@import 'assets/sass/libs/ng2-toastr/ng2-toastr';
+@import 'assets/sass/dashboard/gentelella';
+@import 'assets/sass/toolbar/toolbar';
+
+html, body {
+  height: 100%;
+}
+
+.loading {
+  height: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-container {
+  max-width: 50%;
+}
+
+.link-disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.row-selected{
+  background: rgba(38,185,154,.16);
+}

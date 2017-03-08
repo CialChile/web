@@ -1,0 +1,29 @@
+<div class="container body">
+    <div class="main_container">
+        <side-bar [menu]="menu"></side-bar>
+        <topnav-bar></topnav-bar>
+        <div class="right_col" role="main" style="min-height: 1000px">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Dashboard</h3>
+                </div>
+
+                <div class="title_right">
+                    <div class="col-md-5 col-sm-5 col-xs-12 pull-right">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="#">Dashboard</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <a href="" *userCan="'companies.see2'">Permiso</a>
+                <button *userCan="'companies.see2';deniedStrategy:'disable';">Permiso2</button>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>

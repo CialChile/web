@@ -1,0 +1,5 @@
+.nav-sm,.nav-md {
+  transition-property: all;
+  transition-duration: .5s;
+  transition-timing-function: cubic-bezier(0.5, 1, 0, 1);
+}

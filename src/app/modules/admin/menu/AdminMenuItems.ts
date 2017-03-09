@@ -2,7 +2,7 @@ import {Menu} from "../../menu/types/Menu";
 export const ADMINMENUITEMS: Menu[] = [
   {
     dropdown: false,
-    link: '/admin',
+    link: '/admin/dashboard',
     name: 'Dashboard',
     icon: 'fa-home'
   },

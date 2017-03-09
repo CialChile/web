@@ -30,7 +30,7 @@
                         </div>
                         <control-messages [control]="loginForm.controls.password"></control-messages>
                     </div>
-                    <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Iniciar Sesión</button>
+                    <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid || loginIn">Iniciar Sesión</button>
                 </form>
             </div>
         </div>

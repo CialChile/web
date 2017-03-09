@@ -14,8 +14,10 @@ import {ClientModule} from "./modules/client/client.module";
 import {ToastrService} from "./services/toastr/toastr.service";
 import {DatatableService} from "./services/datatable/datatable.service";
 import {EventsService} from "./services/events/events.service";
+import {ModalModule} from 'ng2-bootstrap/modal';
+import {DataTablesModule} from "./directives/datatable/angular-datatables.module";
 
-function authHttpServiceFactory(http: Http, options: RequestOptions) {
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
     tokenName: 'token',
     globalHeaders: [{'Content-Type': 'application/json'}],
@@ -24,7 +26,7 @@ function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,9 @@ function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ClientModule,
     AdminModule,
     ToastModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot(),
+    DataTablesModule.forRoot(),
   ],
   providers: [{
     provide: AuthHttp,

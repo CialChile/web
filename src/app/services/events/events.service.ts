@@ -33,6 +33,12 @@ export class EventsService {
     this.listeners[name].push(listener);
   }
 
+  off(name) {
+    if (this.listeners[name]) {
+      delete this.listeners[name];
+    }
+  }
+
   broadcast(name, ...args) {
     this.eventsSubject.next({
       name,

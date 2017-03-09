@@ -9,50 +9,55 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {ValidationService} from "../../../components/forms/validation/validation.service";
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
 
-    credentials: Credentials = {
-        email: null,
-        password: null
-    };
-    private user: User;
-    private loginForm: any;
+  credentials: Credentials = {
+    email: null,
+    password: null
+  };
+  private user: User;
+  private loginForm: any;
+  private loginIn: boolean = false;
 
-    constructor(private authService: AuthService, private router: Router, public toastr: ToastsManager,
-                private userService: UserService, private formBuilder: FormBuilder) {
+  constructor(private authService: AuthService, private router: Router, public toastr: ToastsManager,
+              private userService: UserService, private formBuilder: FormBuilder) {
 
-        this.loginForm = this.formBuilder.group({
-            'email': ['', Validators.compose([Validators.required, ValidationService.emailValidator])],
-            'password': ['', [Validators.required]],
-        });
+    this.loginForm = this.formBuilder.group({
+      'email': ['', Validators.compose([Validators.required, ValidationService.emailValidator])],
+      'password': ['', [Validators.required]],
+    });
+  }
+
+
+  onSubmit() {
+    if (this.loginForm.dirty && this.loginForm.valid) {
+      this.credentials = this.loginForm.value;
+      this.loginIn = true;
+      this.authService.login(this.credentials).subscribe(
+        () => {
+          this.toastr.success('Inicio de sesión exitoso');
+          this.userService.getUser(true).subscribe(
+            (user) => {
+              this.loginIn = false;
+              this.user = user;
+              if (this.user['isSuperUser']) {
+                this.router.navigate(['/admin/dashboard']);
+              } else {
+                this.router.navigate(['/dashboard']);
+              }
+            },
+            error => this.loginIn = false
+          )
+        },
+        (error) => {
+          this.toastr.error(error);
+          this.loginIn = false
+        })
     }
-
-
-    onSubmit() {
-        if (this.loginForm.dirty && this.loginForm.valid) {
-            this.credentials = this.loginForm.value;
-            this.authService.login(this.credentials).subscribe(
-                () => {
-                    this.toastr.success('Inicio de sesión exitoso');
-                    this.userService.getUser(true).subscribe(
-                        (user) => {
-                            this.user = user;
-                            if (this.user['isSuperUser']) {
-                                this.router.navigate(['/admin']);
-                            } else {
-                                this.router.navigate(['/dashboard']);
-                            }
-                        },
-                        error => console.log(error));
-                },
-                (error) => {
-                    this.toastr.error(error)
-                })
-        }
-    }
+  }
 
 }

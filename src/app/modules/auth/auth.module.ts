@@ -11,18 +11,19 @@ import {LoginGuard} from "./guards/login-guard.service";
 import {UserService} from "./services/user.service";
 import {AdminGuard} from "./guards/admin.guard";
 import {ClientGuard} from "./guards/client.guard";
-import {ControlMessageComponent} from "../../components/forms/control-message/control-message.component";
 import {PermissionGuard} from "./guards/permission.guard";
+import {FormsHelperModule} from "../../components/forms/forms-helpers.module";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        AuthRoutingModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
-    providers: [AuthService, AuthGuard, LoginGuard, UserService, AdminGuard, ClientGuard, PermissionGuard],
-    declarations: [LoginComponent, LogoutComponent, ControlMessageComponent],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FormsHelperModule
+  ],
+  providers: [AuthService, AuthGuard, LoginGuard, UserService, AdminGuard, ClientGuard, PermissionGuard],
+  declarations: [LoginComponent, LogoutComponent],
 })
 export class AuthModule {
 }

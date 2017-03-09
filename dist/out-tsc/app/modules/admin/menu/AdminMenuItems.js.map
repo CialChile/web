@@ -1,1 +1,0 @@
-{"version":3,"file":"AdminMenuItems.js","sourceRoot":"","sources":["AdminMenuItems.ts"],"names":[],"mappings":"AACA,OAAO,IAAM,cAAc,GAAW;IACpC;QACE,QAAQ,EAAE,KAAK;QACf,IAAI,EAAE,kBAAkB;QACxB,IAAI,EAAE,WAAW;QACjB,IAAI,EAAE,SAAS;KAChB;IACD;QACE,QAAQ,EAAE,KAAK;QACf,IAAI,EAAE,kBAAkB;QACxB,IAAI,EAAE,UAAU;QAChB,IAAI,EAAE,aAAa;KACpB;CACF,CAAC"}

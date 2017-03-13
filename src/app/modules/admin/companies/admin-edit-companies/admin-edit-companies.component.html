@@ -236,53 +236,53 @@
             </h2>
             <div class="clearfix"></div>
           </div>
-          <div class="x_content" formGroupName="user">
-            <div class="row">
+          <div class="x_content" formGroupName="responsible">
+            <div class="row" >
               <div class="col-xs-12 col-md-6">
                 <div class="form-group"
-                     [ngClass]="{'has-error':!companyForm.controls['user'].controls['first_name'].valid  && companyForm.controls['user'].controls['first_name'].touched}">
+                     [ngClass]="{'has-error':!companyForm.controls['responsible'].controls['first_name'].valid  && companyForm.controls['responsible'].controls['first_name'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="first_name" class="form-control" placeholder="Nombre"
                            id="first_name"/>
                     <control-messages
-                      [control]="companyForm.controls['user'].controls['first_name']"></control-messages>
+                      [control]="companyForm.controls['responsible'].controls['first_name']"></control-messages>
                   </div>
                 </div>
               </div>
               <div class="col-xs-12 col-md-6">
                 <div class="form-group"
-                     [ngClass]="{'has-error':!companyForm.controls['user'].controls['last_name'].valid  && companyForm.controls['user'].controls['last_name'].touched}">
+                     [ngClass]="{'has-error':!companyForm.controls['responsible'].controls['last_name'].valid  && companyForm.controls['responsible'].controls['last_name'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Apellido</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="last_name" class="form-control" placeholder="Apellido"
                            id="last_name"/>
-                    <control-messages [control]="companyForm.controls['user'].controls['last_name']"></control-messages>
+                    <control-messages [control]="companyForm.controls['responsible'].controls['last_name']"></control-messages>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-12 col-md-6">
+              <div class="col-xs-12 col-md-6" >
                 <div class="form-group"
-                     [ngClass]="{'has-error':!companyForm.controls['user'].controls['email'].valid  && companyForm.controls['user'].controls['email'].touched}">
+                     [ngClass]="{'has-error':!companyForm.controls['responsible'].controls['email'].valid  && companyForm.controls['responsible'].controls['email'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="email" class="form-control" placeholder="Email"
-                           id="user_email"/>
-                    <control-messages [control]="companyForm.controls['user'].controls['email']"></control-messages>
+                           id="responsible_email"/>
+                    <control-messages [control]="companyForm.controls['responsible'].controls['email']"></control-messages>
                   </div>
                 </div>
               </div>
               <div class="col-xs-12 col-md-6">
                 <div class="form-group"
-                     [ngClass]="{'has-error':!companyForm.controls['user'].controls['rut_passport'].valid  && companyForm.controls['user'].controls['rut_passport'].touched}">
+                     [ngClass]="{'has-error':!companyForm.controls['responsible'].controls['rut_passport'].valid  && companyForm.controls['responsible'].controls['rut_passport'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">RUT o Pasaporte</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="rut_passport" class="form-control" placeholder="RUT o Pasaporte"
                            id="rut_passport"/>
                     <control-messages
-                      [control]="companyForm.controls['user'].controls['rut_passport']"></control-messages>
+                      [control]="companyForm.controls['responsible'].controls['rut_passport']"></control-messages>
                   </div>
                 </div>
               </div>
@@ -290,12 +290,12 @@
             <div class="row">
               <div class="col-xs-12 col-md-6">
                 <div class="form-group"
-                     [ngClass]="{'has-error':!companyForm.controls['user'].controls['position'].valid  && companyForm.controls['user'].controls['position'].touched}">
+                     [ngClass]="{'has-error':!companyForm.controls['responsible'].controls['position'].valid  && companyForm.controls['responsible'].controls['position'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Cargo</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="position" class="form-control" placeholder="Cargo"
                            id="position"/>
-                    <control-messages [control]="companyForm.controls['user'].controls['position']"></control-messages>
+                    <control-messages [control]="companyForm.controls['responsible'].controls['position']"></control-messages>
                   </div>
                 </div>
               </div>
@@ -326,14 +326,15 @@
 </div>
 
 <div #prompt="bs-modal" bsModal class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-          aria-hidden="true">
+     aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">¿Estas Seguro?</h4>
       </div>
       <div class="modal-body">
-        <p>Si Cambias el correo del usuario administrador, se invalidara el usuario anterior y se generara una nueva contraseña,
+        <p>Si Cambias el correo del usuario administrador, se invalidara el usuario anterior y se generara una nueva
+          contraseña,
           ¿Esta seguro de continuar?</p>
       </div>
       <div class="modal-footer">

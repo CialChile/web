@@ -33,7 +33,7 @@ export class AdminCreateCompaniesComponent implements OnInit {
       telephone: ['', [Validators.required]],
       fax: ['', [Validators.required]],
       users_number: ['', [Validators.required]],
-      user: this.formBuilder.group({
+      responsible: this.formBuilder.group({
         first_name: ['', [Validators.required]],
         last_name: ['', [Validators.required]],
         email: ['', Validators.compose([Validators.required, ValidationService.emailValidator])],
@@ -56,7 +56,7 @@ export class AdminCreateCompaniesComponent implements OnInit {
   onSubmit() {
     let data = this.companyForm.value;
     this.saving = true;
-    this.apiService.create('company', data).subscribe((response) => {
+    this.apiService.create('admin/company', data).subscribe((response) => {
         this.saving = false;
         this.toastr.success('Empresa creada con exito');
         this.toastr.success('Un correo electrónico ha sido enviado a la dirección de usuario especificado con mas instrucciones para acceder a la cuenta');

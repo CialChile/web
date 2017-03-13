@@ -30,8 +30,18 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
     }, {
       title: 'Nombre Comercial',
       data: 'commercial_name'
+    }, {
+      title: 'Identificación Fiscal',
+      data: 'fiscal_identification'
+    }, {
+      title: 'Activo',
+      data: 'active',
+      render: (data, type, row) => {
+        console.log(data, row);
+        return row.active ? 'Si' : 'No';
+      }
     }];
-    this.dtOptions = this.datatableService.init('company/datatable', columns);
+    this.dtOptions = this.datatableService.init('admin/company/datatable', columns);
     this.dtOptions.rowCallback = (nRow: any, aData: any) => {
       let self = this;
       if (aData.id == self.selectedRowId) {

@@ -37,7 +37,7 @@ export class AdminEditCompaniesComponent implements OnInit {
       telephone: ['', [Validators.required]],
       fax: ['', [Validators.required]],
       users_number: ['', [Validators.required]],
-      user: this.formBuilder.group({
+      responsible: this.formBuilder.group({
         first_name: ['', [Validators.required]],
         last_name: ['', [Validators.required]],
         email: ['', Validators.compose([Validators.required, ValidationService.emailValidator])],
@@ -56,7 +56,7 @@ export class AdminEditCompaniesComponent implements OnInit {
     this.apiService.all('country').subscribe(countries => this.countries = countries.data);
     this.apiService.all('company-field/list').subscribe(fields => this.fields = fields.data);
     this.route.params.subscribe((params) => {
-      this.apiService.one('company', params['id'], 'user').subscribe((company) => {
+      this.apiService.one('admin/company', params['id'], 'responsible').subscribe((company) => {
         this.loading = false;
         this.initForm(company.data)
       })
@@ -72,7 +72,7 @@ export class AdminEditCompaniesComponent implements OnInit {
     $event.preventDefault();
     this.saving = true;
     let data = this.companyForm.value;
-    if (data.user.email != this.company.user.email) {
+    if (data.responsible.email != this.company.responsible.email) {
       this.promptModal.show();
     } else {
       this.save();
@@ -82,7 +82,7 @@ export class AdminEditCompaniesComponent implements OnInit {
   save() {
     let data = this.companyForm.value;
     this.promptModal.hide();
-    this.apiService.update('company', this.company.id, data).subscribe((response) => {
+    this.apiService.update('admin/company', this.company.id, data).subscribe((response) => {
         this.saving = false;
         this.toastr.success('Empresa actualizada con exito');
         this.router.navigate(['/admin/companies']);

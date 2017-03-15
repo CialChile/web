@@ -10,17 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { NgModule } from '@angular/core';
 import { ControlMessageComponent } from "./control-message/control-message.component";
 import { CommonModule } from "@angular/common";
-export var FormsHelperModule = (function () {
-    function FormsHelperModule() {
-    }
-    FormsHelperModule = __decorate([
-        NgModule({
-            imports: [CommonModule],
-            declarations: [ControlMessageComponent],
-            exports: [ControlMessageComponent]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], FormsHelperModule);
-    return FormsHelperModule;
-}());
+export let FormsHelperModule = class FormsHelperModule {
+};
+FormsHelperModule = __decorate([
+    NgModule({
+        imports: [CommonModule],
+        declarations: [ControlMessageComponent],
+        exports: [ControlMessageComponent]
+    }), 
+    __metadata('design:paramtypes', [])
+], FormsHelperModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/components/forms/forms-helpers.module.js.map

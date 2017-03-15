@@ -6,7 +6,7 @@ import { AdminCompaniesComponent } from "./companies/admin-companies.component";
 import { AdminCreateCompaniesComponent } from "./companies/admin-create-companies/admin-create-companies.component";
 import { AdminListCompaniesComponent } from "./companies/admin-list-companies/admin-list-companies.component";
 import { AdminEditCompaniesComponent } from "./companies/admin-edit-companies/admin-edit-companies.component";
-export var routes = [
+export const routes = [
     {
         path: 'admin',
         component: AdminIndexComponent,

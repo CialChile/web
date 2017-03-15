@@ -16,46 +16,50 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/publishReplay';
 import { AuthHttp } from "angular2-jwt";
 import { environment } from "../../../../environments/environment";
-export var UserService = (function () {
-    function UserService(authHttp) {
+import { ReplaySubject } from "rxjs";
+let UserService_1 = class UserService {
+    constructor(authHttp) {
         this.authHttp = authHttp;
         this.url = environment.baseUrl + 'auth/user?include=roles,permissions';
+        this.userSubject = new ReplaySubject(1);
     }
-    UserService.prototype.getUser = function (refresh) {
-        if (refresh) {
-            this._user = null;
-        }
-        if (!this._user) {
+    getUser(refresh) {
+        if (refresh || !this._user) {
             this._user = this.authHttp.get(this.url)
-                .map(UserService.extractData)
-                .publishReplay(1)
-                .refCount()
-                .catch(UserService.handleError);
+                .map(UserService_1.extractData)
+                .catch(UserService_1.handleError);
+            this._user.subscribe(result => this.userSubject.next(result), err => this.userSubject.error(err));
         }
-        return this._user;
-    };
-    UserService.extractData = function (res) {
-        var user = res.json();
+        return this.userSubject.asObservable();
+    }
+    getUserLogin() {
+        this._user = null;
+        return this.authHttp.get(this.url)
+            .map(UserService_1.extractData)
+            .catch(UserService_1.handleError);
+    }
+    static extractData(res) {
+        let user = res.json();
         localStorage.setItem('permissions', JSON.stringify(user.data.permissions));
         return user.data || {};
-    };
-    UserService.handleError = function (error) {
-        var errMsg;
+    }
+    static handleError(error) {
+        let errMsg;
         if (error instanceof Response) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+            const body = error.json() || '';
+            const err = body.error || JSON.stringify(body);
+            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
         }
         else {
             errMsg = error.message ? error.message : error.toString();
         }
         console.error(errMsg);
         return Observable.throw(errMsg);
-    };
-    UserService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [AuthHttp])
-    ], UserService);
-    return UserService;
-}());
+    }
+};
+export let UserService = UserService_1;
+UserService = UserService_1 = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [AuthHttp])
+], UserService);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/services/user.service.js.map

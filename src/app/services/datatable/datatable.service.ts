@@ -39,14 +39,21 @@ export class DatatableService {
   constructor() {
   }
 
-  init(url: string, columns: any[]) {
+  init(url: string, columns: any[], include?: string) {
 
+    let tableUrl = this.baseUrl + url + '?token=' + localStorage.getItem('token');
+    tableUrl = include ? `${tableUrl}&include=${include}` : tableUrl;
     return {
-      ajax: this.baseUrl + url + '?token=' + localStorage.getItem('token'),
+      ajax: tableUrl,
       columns: columns,
       language: this.language,
       serverSide: true,
-      procesing: true
+      procesing: true,
+      responsive:true,
+      dom:
+      "<'row'<'col-sm-6 col-xs-12'l><'col-sm-6 col-xs-12'f>>" +
+      "<'row'<'col-xs-12 col-sm-12'tr>>" +
+      "<'row'<'col-xs-12 col-sm-5'i><'col-xs-12 col-sm-7'p>>",
 
     }
   }

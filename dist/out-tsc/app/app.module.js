@@ -31,36 +31,33 @@ export function authHttpServiceFactory(http, options) {
         globalHeaders: [{ 'Content-Type': 'application/json' }],
     }), http, options);
 }
-export var AppModule = (function () {
-    function AppModule() {
-    }
-    AppModule = __decorate([
-        NgModule({
-            declarations: [
-                AppComponent,
-            ],
-            imports: [
-                BrowserModule,
-                FormsModule,
-                HttpModule,
-                AuthModule,
-                AppRoutingModule,
-                ClientModule,
-                AdminModule,
-                ToastModule,
-                ReactiveFormsModule,
-                ModalModule.forRoot(),
-                DataTablesModule.forRoot(),
-            ],
-            providers: [{
-                    provide: AuthHttp,
-                    useFactory: authHttpServiceFactory,
-                    deps: [Http, RequestOptions]
-                }, ToastsManager, ApiService, ToastrService, DatatableService, EventsService],
-            bootstrap: [AppComponent]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppModule);
-    return AppModule;
-}());
+export let AppModule = class AppModule {
+};
+AppModule = __decorate([
+    NgModule({
+        declarations: [
+            AppComponent
+        ],
+        imports: [
+            BrowserModule,
+            FormsModule,
+            HttpModule,
+            AuthModule,
+            AppRoutingModule,
+            ClientModule,
+            AdminModule,
+            ToastModule,
+            ReactiveFormsModule,
+            ModalModule.forRoot(),
+            DataTablesModule.forRoot(),
+        ],
+        providers: [{
+                provide: AuthHttp,
+                useFactory: authHttpServiceFactory,
+                deps: [Http, RequestOptions]
+            }, ToastsManager, ApiService, ToastrService, DatatableService, EventsService],
+        bootstrap: [AppComponent]
+    }), 
+    __metadata('design:paramtypes', [])
+], AppModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/app.module.js.map

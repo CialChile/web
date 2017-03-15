@@ -1,20 +1,20 @@
 import { async, TestBed } from '@angular/core/testing';
 import { AdminCreateCompaniesComponent } from './admin-create-companies.component';
-describe('AdminCreateCompaniesComponent', function () {
-    var component;
-    var fixture;
-    beforeEach(async(function () {
+describe('AdminCreateCompaniesComponent', () => {
+    let component;
+    let fixture;
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [AdminCreateCompaniesComponent]
         })
             .compileComponents();
     }));
-    beforeEach(function () {
+    beforeEach(() => {
         fixture = TestBed.createComponent(AdminCreateCompaniesComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
-    it('should create', function () {
+    it('should create', () => {
         expect(component).toBeTruthy();
     });
 });

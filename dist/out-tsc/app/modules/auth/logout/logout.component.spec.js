@@ -1,20 +1,20 @@
 import { async, TestBed } from '@angular/core/testing';
 import { LogoutComponent } from './logout.component';
-describe('LogoutComponent', function () {
-    var component;
-    var fixture;
-    beforeEach(async(function () {
+describe('LogoutComponent', () => {
+    let component;
+    let fixture;
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [LogoutComponent]
         })
             .compileComponents();
     }));
-    beforeEach(function () {
+    beforeEach(() => {
         fixture = TestBed.createComponent(LogoutComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
-    it('should create', function () {
+    it('should create', () => {
         expect(component).toBeTruthy();
     });
 });

@@ -10,19 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EtrackUserCanDirective } from "./etrack-user-can.directive";
-export var UserCanModule = (function () {
-    function UserCanModule() {
-    }
-    UserCanModule = __decorate([
-        NgModule({
-            imports: [
-                CommonModule
-            ],
-            declarations: [EtrackUserCanDirective],
-            exports: [EtrackUserCanDirective]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], UserCanModule);
-    return UserCanModule;
-}());
+export let UserCanModule = class UserCanModule {
+};
+UserCanModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule
+        ],
+        declarations: [EtrackUserCanDirective],
+        exports: [EtrackUserCanDirective]
+    }), 
+    __metadata('design:paramtypes', [])
+], UserCanModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/directives/user-can/user-can.module.js.map

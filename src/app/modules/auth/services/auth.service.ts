@@ -20,7 +20,7 @@ export class AuthService {
         return tokenNotExpired('token');
     }
 
-    login(credentials: Credentials): Observable<Object> {
+    login(credentials: Credentials): Observable<string> {
         return this.http.post(this.loginUrl, credentials)
             .map(this.extractLoginData)
             .catch(this.handleError);
@@ -34,7 +34,6 @@ export class AuthService {
 
     private extractLoginData(res: Response) {
         let body = res.json();
-        localStorage.setItem('token', body.token);
         return body.token || {};
     }
 

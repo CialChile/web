@@ -9,23 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AuthGuard } from "../auth/guards/auth-guard.service";
-import { ClientGuard } from "../auth/guards/client.guard";
-var routes = [
-    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard, ClientGuard] },
-];
-export var ClientRoutingModule = (function () {
-    function ClientRoutingModule() {
-    }
-    ClientRoutingModule = __decorate([
-        NgModule({
-            imports: [RouterModule.forChild(routes)],
-            exports: [RouterModule],
-            providers: []
-        }), 
-        __metadata('design:paramtypes', [])
-    ], ClientRoutingModule);
-    return ClientRoutingModule;
-}());
+import { routes } from "./client-routes";
+export let ClientRoutingModule = class ClientRoutingModule {
+};
+ClientRoutingModule = __decorate([
+    NgModule({
+        imports: [RouterModule.forChild(routes)],
+        exports: [RouterModule],
+        providers: []
+    }), 
+    __metadata('design:paramtypes', [])
+], ClientRoutingModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/client/client-routing.module.js.map

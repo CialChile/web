@@ -10,17 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { routes } from './admin-routes';
-export var AdminRoutingModule = (function () {
-    function AdminRoutingModule() {
-    }
-    AdminRoutingModule = __decorate([
-        NgModule({
-            imports: [RouterModule.forChild(routes)],
-            exports: [RouterModule],
-            providers: []
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AdminRoutingModule);
-    return AdminRoutingModule;
-}());
+export let AdminRoutingModule = class AdminRoutingModule {
+};
+AdminRoutingModule = __decorate([
+    NgModule({
+        imports: [RouterModule.forChild(routes)],
+        exports: [RouterModule],
+        providers: []
+    }), 
+    __metadata('design:paramtypes', [])
+], AdminRoutingModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/admin/admin-routing.module.js.map

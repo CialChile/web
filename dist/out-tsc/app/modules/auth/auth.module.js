@@ -21,23 +21,20 @@ import { AdminGuard } from "./guards/admin.guard";
 import { ClientGuard } from "./guards/client.guard";
 import { PermissionGuard } from "./guards/permission.guard";
 import { FormsHelperModule } from "../../components/forms/forms-helpers.module";
-export var AuthModule = (function () {
-    function AuthModule() {
-    }
-    AuthModule = __decorate([
-        NgModule({
-            imports: [
-                CommonModule,
-                AuthRoutingModule,
-                FormsModule,
-                ReactiveFormsModule,
-                FormsHelperModule
-            ],
-            providers: [AuthService, AuthGuard, LoginGuard, UserService, AdminGuard, ClientGuard, PermissionGuard],
-            declarations: [LoginComponent, LogoutComponent],
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AuthModule);
-    return AuthModule;
-}());
+export let AuthModule = class AuthModule {
+};
+AuthModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule,
+            AuthRoutingModule,
+            FormsModule,
+            ReactiveFormsModule,
+            FormsHelperModule
+        ],
+        providers: [AuthService, AuthGuard, LoginGuard, UserService, AdminGuard, ClientGuard, PermissionGuard],
+        declarations: [LoginComponent, LogoutComponent],
+    }), 
+    __metadata('design:paramtypes', [])
+], AuthModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/auth.module.js.map

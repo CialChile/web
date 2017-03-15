@@ -22,33 +22,30 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminListCompaniesComponent } from "./companies/admin-list-companies/admin-list-companies.component";
 import { ModalModule } from "ng2-bootstrap/modal";
 import { DataTablesModule } from "../../directives/datatable/angular-datatables.module";
-export var AdminModule = (function () {
-    function AdminModule() {
-    }
-    AdminModule = __decorate([
-        NgModule({
-            imports: [
-                CommonModule,
-                AdminRoutingModule,
-                MenuModule,
-                UserCanModule,
-                DataTablesModule,
-                FormsHelperModule,
-                FormsModule,
-                ReactiveFormsModule,
-                ModalModule
-            ],
-            declarations: [
-                AdminIndexComponent,
-                AdminDashboardComponent,
-                AdminCompaniesComponent,
-                AdminListCompaniesComponent,
-                AdminCreateCompaniesComponent,
-                AdminEditCompaniesComponent
-            ],
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AdminModule);
-    return AdminModule;
-}());
+export let AdminModule = class AdminModule {
+};
+AdminModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule,
+            AdminRoutingModule,
+            MenuModule,
+            UserCanModule,
+            DataTablesModule,
+            FormsHelperModule,
+            FormsModule,
+            ReactiveFormsModule,
+            ModalModule
+        ],
+        declarations: [
+            AdminIndexComponent,
+            AdminDashboardComponent,
+            AdminCompaniesComponent,
+            AdminListCompaniesComponent,
+            AdminCreateCompaniesComponent,
+            AdminEditCompaniesComponent
+        ],
+    }), 
+    __metadata('design:paramtypes', [])
+], AdminModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/admin/admin.module.js.map

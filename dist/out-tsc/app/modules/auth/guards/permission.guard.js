@@ -10,39 +10,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from "../../../services/toastr/toastr.service";
-export var PermissionGuard = (function () {
-    function PermissionGuard(router, toastr) {
+export let PermissionGuard = class PermissionGuard {
+    constructor(router, toastr) {
         this.router = router;
         this.toastr = toastr;
     }
-    PermissionGuard.prototype.canActivate = function (next, state) {
-        var routePermission = next.data['permission'];
-        var permissions = JSON.parse(localStorage.getItem('permissions'));
+    canActivate(next, state) {
+        const routePermission = next.data['permission'];
+        let permissions = JSON.parse(localStorage.getItem('permissions'));
         if (!permissions) {
             permissions = [];
         }
-        var permissionExist = permissions.filter(function (permission) {
+        let permissionExist = permissions.filter((permission) => {
             return permission == routePermission;
         });
         if (permissionExist.length > 0) {
             return true;
         }
         //this.toastr.showError('No tienes permiso para acceder a este recurso');
-        var redirectTo = next.data['redirectTo'];
+        const redirectTo = next.data['redirectTo'];
+        this.toastr.showError('No tiene permisos para acceder a esta sección');
         if (redirectTo) {
             this.router.navigate([redirectTo]);
             return false;
         }
         this.router.navigate(['/']);
         return false;
-    };
-    PermissionGuard.prototype.canActivateChild = function (route, state) {
+    }
+    canActivateChild(route, state) {
         return this.canActivate(route, state);
-    };
-    PermissionGuard = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [Router, ToastrService])
-    ], PermissionGuard);
-    return PermissionGuard;
-}());
+    }
+};
+PermissionGuard = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [Router, ToastrService])
+], PermissionGuard);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/guards/permission.guard.js.map

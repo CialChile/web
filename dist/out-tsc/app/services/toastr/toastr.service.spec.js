@@ -1,12 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ToastrService } from './toastr.service';
-describe('ToastrService', function () {
-    beforeEach(function () {
+describe('ToastrService', () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [ToastrService]
         });
     });
-    it('should ...', inject([ToastrService], function (service) {
+    it('should ...', inject([ToastrService], (service) => {
         expect(service).toBeTruthy();
     }));
 });

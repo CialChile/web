@@ -8,19 +8,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-export var FooterComponent = (function () {
-    function FooterComponent() {
+export let FooterComponent = class FooterComponent {
+    constructor() {
     }
-    FooterComponent.prototype.ngOnInit = function () {
-    };
-    FooterComponent = __decorate([
-        Component({
-            selector: 'app-footer',
-            templateUrl: './footer.component.html',
-            styleUrls: ['./footer.component.scss']
-        }), 
-        __metadata('design:paramtypes', [])
-    ], FooterComponent);
-    return FooterComponent;
-}());
+    ngOnInit() {
+    }
+};
+FooterComponent = __decorate([
+    Component({
+        selector: 'app-footer',
+        templateUrl: './footer.component.html',
+        styleUrls: ['./footer.component.scss']
+    }), 
+    __metadata('design:paramtypes', [])
+], FooterComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/components/footer/footer.component.js.map

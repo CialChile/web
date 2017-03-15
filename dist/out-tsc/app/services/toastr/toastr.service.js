@@ -9,26 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { ToastsManager } from "ng2-toastr/ng2-toastr";
-export var ToastrService = (function () {
-    function ToastrService(toastr) {
+export let ToastrService = class ToastrService {
+    constructor(toastr) {
         this.toastr = toastr;
     }
-    ToastrService.prototype.showSuccess = function (header, description) {
+    showSuccess(header, description) {
         this.toastr.success(description, header);
-    };
-    ToastrService.prototype.showError = function (header, description) {
+    }
+    showError(header, description) {
         this.toastr.error(description, header);
-    };
-    ToastrService.prototype.showWarning = function (header, description) {
+    }
+    showWarning(header, description) {
         this.toastr.warning(description, header);
-    };
-    ToastrService.prototype.showInfo = function (header, description) {
+    }
+    showInfo(header, description) {
         this.toastr.info(description, header);
-    };
-    ToastrService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [ToastsManager])
-    ], ToastrService);
-    return ToastrService;
-}());
+    }
+};
+ToastrService = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [ToastsManager])
+], ToastrService);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/services/toastr/toastr.service.js.map

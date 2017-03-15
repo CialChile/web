@@ -6,12 +6,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/share'
 import {environment} from '../../environments/environment'
-import {Response, Http} from "@angular/http";
+import {Response} from "@angular/http";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class ApiService {
 
-  constructor(private authHttp: AuthHttp, private http: Http) {
+  constructor(private authHttp: AuthHttp, private router: Router) {
   }
 
   private actionUrl = environment.baseUrl;
@@ -46,7 +47,7 @@ export class ApiService {
       .catch(this.handleError);
   };
 
-  public r = (path: string, id, data): Observable<any> => {
+  public destroy = (path: string, id): Observable<any> => {
     let fullPath = this.actionUrl + path + '/' + id;
     return this.authHttp.delete(fullPath)
       .map(res => this.extractData(res))
@@ -59,25 +60,25 @@ export class ApiService {
   }
 
   private handleError(error: any) {
-    let errMsg: string;
+    let errMsg: string = '';
     if (error instanceof Response) {
       const body = error.json() || '';
       if (body.hasOwnProperty('errors')) {
-        let errorString = '';
-        for (let apiError in body.errors) {
-          errorString += body.errors[apiError] + ', ';
-        }
-        errMsg = errorString;
-        errMsg = errMsg.substr(0, errMsg.length - 2)
+        Object.keys(body.errors).forEach(function (key) {
+          errMsg += body.errors[key] + ' - '
+        });
+        errMsg = errMsg.substr(0, errMsg.length - 3);
       } else {
-        const err = body.error || JSON.stringify(body);
+        const err = body.message || JSON.stringify(body);
         errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
       }
-
     } else {
       errMsg = error.message ? error.message : error.toString();
+      if (errMsg == 'No JWT present or has expired') {
+        errMsg = 'Sessión Expiro';
+        this.router.navigate(['/login'])
+      }
     }
-    errMsg = `${errMsg}`;
     console.error(errMsg);
     return Observable.throw(errMsg);
   }

@@ -16,23 +16,23 @@ import { SidebarItemComponent } from "./sidebar/sidebar-item/sidebar-item.compon
 import { RouterModule } from "@angular/router";
 import { DropdownModule } from "ng2-bootstrap";
 import { FooterComponent } from "../../components/footer/footer.component";
-export var MenuModule = (function () {
-    function MenuModule() {
-    }
-    MenuModule = __decorate([
-        NgModule({
-            imports: [
-                CommonModule,
-                RouterModule,
-                DropdownModule.forRoot()
-            ],
-            declarations: [SidebarComponent, TopNavBarComponent, FooterComponent,
-                SidebarDropdownComponent, SidebarItemComponent],
-            exports: [SidebarComponent, TopNavBarComponent, FooterComponent,
-                SidebarDropdownComponent, SidebarItemComponent]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], MenuModule);
-    return MenuModule;
-}());
+import { TopbarDropdownItemComponent } from "./topnavbar/topbar-dropdown-item/topbar-dropdown-item.component";
+import { UserCanModule } from "../../directives/user-can/user-can.module";
+export let MenuModule = class MenuModule {
+};
+MenuModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule,
+            RouterModule,
+            DropdownModule.forRoot(),
+            UserCanModule
+        ],
+        declarations: [SidebarComponent, TopNavBarComponent, FooterComponent,
+            SidebarDropdownComponent, SidebarItemComponent, TopbarDropdownItemComponent],
+        exports: [SidebarComponent, TopNavBarComponent, FooterComponent,
+            SidebarDropdownComponent, SidebarItemComponent, TopbarDropdownItemComponent]
+    }), 
+    __metadata('design:paramtypes', [])
+], MenuModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/menu/menu.module.js.map

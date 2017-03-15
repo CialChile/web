@@ -1,12 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ClientGuard } from './client.guard';
-describe('ClientGuard', function () {
-    beforeEach(function () {
+describe('ClientGuard', () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [ClientGuard]
         });
     });
-    it('should ...', inject([ClientGuard], function (guard) {
+    it('should ...', inject([ClientGuard], (guard) => {
         expect(guard).toBeTruthy();
     }));
 });

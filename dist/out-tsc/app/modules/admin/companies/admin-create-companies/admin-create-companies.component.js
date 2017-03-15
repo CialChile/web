@@ -13,9 +13,8 @@ import { ValidationService } from "../../../../components/forms/validation/valid
 import { ToastsManager } from "ng2-toastr";
 import { Router } from "@angular/router";
 import { ApiService } from "../../../../services/api.service";
-export var AdminCreateCompaniesComponent = (function () {
-    function AdminCreateCompaniesComponent(formBuilder, apiService, toastr, router) {
-        var _this = this;
+export let AdminCreateCompaniesComponent = class AdminCreateCompaniesComponent {
+    constructor(formBuilder, apiService, toastr, router) {
         this.formBuilder = formBuilder;
         this.apiService = apiService;
         this.toastr = toastr;
@@ -43,42 +42,39 @@ export var AdminCreateCompaniesComponent = (function () {
                 position: ['', [Validators.required]]
             })
         });
-        this.companyForm.controls['country'].valueChanges.subscribe(function (value) {
+        this.companyForm.controls['country'].valueChanges.subscribe((value) => {
             if (value) {
-                _this.apiService.all('state/' + value).subscribe(function (states) { return _this.states = states.data; });
+                this.apiService.all('state/' + value).subscribe(states => this.states = states.data);
             }
         });
     }
-    AdminCreateCompaniesComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.apiService.all('country').subscribe(function (countries) { return _this.countries = countries.data; });
-        this.apiService.all('company-field/list').subscribe(function (fields) { return _this.fields = fields.data; });
-    };
-    AdminCreateCompaniesComponent.prototype.onSubmit = function () {
-        var _this = this;
-        var data = this.companyForm.value;
+    ngOnInit() {
+        this.apiService.all('country').subscribe(countries => this.countries = countries.data);
+        this.apiService.all('company-field/list').subscribe(fields => this.fields = fields.data);
+    }
+    onSubmit() {
+        let data = this.companyForm.value;
         this.saving = true;
-        this.apiService.create('admin/company', data).subscribe(function (response) {
-            _this.saving = false;
-            _this.toastr.success('Empresa creada con exito');
-            _this.toastr.success('Un correo electrónico ha sido enviado a la dirección de usuario especificado con mas instrucciones para acceder a la cuenta');
-            _this.router.navigate(['/admin/companies']);
-        }, function (error) {
-            _this.toastr.error(error);
-            _this.saving = false;
+        this.apiService.create('admin/company', data).subscribe((response) => {
+            this.saving = false;
+            this.toastr.success('Empresa creada con exito');
+            this.toastr.success('Un correo electrónico ha sido enviado a la dirección de usuario especificado con mas instrucciones para acceder a la cuenta');
+            this.router.navigate(['/admin/companies']);
+        }, (error) => {
+            this.toastr.error(error);
+            this.saving = false;
         });
-    };
-    AdminCreateCompaniesComponent.prototype.cancel = function () {
+    }
+    cancel() {
         this.router.navigate(['/admin/companies']);
-    };
-    AdminCreateCompaniesComponent = __decorate([
-        Component({
-            selector: 'admin-create-companies',
-            templateUrl: './admin-create-companies.component.html',
-            styleUrls: ['./admin-create-companies.component.scss']
-        }), 
-        __metadata('design:paramtypes', [FormBuilder, ApiService, ToastsManager, Router])
-    ], AdminCreateCompaniesComponent);
-    return AdminCreateCompaniesComponent;
-}());
+    }
+};
+AdminCreateCompaniesComponent = __decorate([
+    Component({
+        selector: 'admin-create-companies',
+        templateUrl: './admin-create-companies.component.html',
+        styleUrls: ['./admin-create-companies.component.scss']
+    }), 
+    __metadata('design:paramtypes', [FormBuilder, ApiService, ToastsManager, Router])
+], AdminCreateCompaniesComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/admin/companies/admin-create-companies/admin-create-companies.component.js.map

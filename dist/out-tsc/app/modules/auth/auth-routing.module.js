@@ -13,21 +13,18 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AuthGuard } from './guards/auth-guard.service';
 import { LoginGuard } from './guards/login-guard.service';
-var routes = [
+const routes = [
     { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
     { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
 ];
-export var AuthRoutingModule = (function () {
-    function AuthRoutingModule() {
-    }
-    AuthRoutingModule = __decorate([
-        NgModule({
-            imports: [RouterModule.forChild(routes)],
-            exports: [RouterModule],
-            providers: []
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AuthRoutingModule);
-    return AuthRoutingModule;
-}());
+export let AuthRoutingModule = class AuthRoutingModule {
+};
+AuthRoutingModule = __decorate([
+    NgModule({
+        imports: [RouterModule.forChild(routes)],
+        exports: [RouterModule],
+        providers: []
+    }), 
+    __metadata('design:paramtypes', [])
+], AuthRoutingModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/auth-routing.module.js.map

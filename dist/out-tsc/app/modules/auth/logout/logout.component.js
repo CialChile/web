@@ -8,19 +8,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-export var LogoutComponent = (function () {
-    function LogoutComponent() {
+export let LogoutComponent = class LogoutComponent {
+    constructor() {
     }
-    LogoutComponent.prototype.ngOnInit = function () {
-    };
-    LogoutComponent = __decorate([
-        Component({
-            selector: 'app-logout',
-            templateUrl: './logout.component.html',
-            styleUrls: ['./logout.component.scss']
-        }), 
-        __metadata('design:paramtypes', [])
-    ], LogoutComponent);
-    return LogoutComponent;
-}());
+    ngOnInit() {
+    }
+};
+LogoutComponent = __decorate([
+    Component({
+        selector: 'app-logout',
+        templateUrl: './logout.component.html',
+        styleUrls: ['./logout.component.scss']
+    }), 
+    __metadata('design:paramtypes', [])
+], LogoutComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/logout/logout.component.js.map

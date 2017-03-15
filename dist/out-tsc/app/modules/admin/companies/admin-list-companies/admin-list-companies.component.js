@@ -12,21 +12,20 @@ import { DatatableService } from "../../../../services/datatable/datatable.servi
 import { EventsService } from "../../../../services/events/events.service";
 import { Router } from "@angular/router";
 import { DataTableDirective } from "../../../../directives/datatable/angular-datatables.directive";
-export var AdminListCompaniesComponent = (function () {
-    function AdminListCompaniesComponent(datatableService, eventsService, router) {
+export let AdminListCompaniesComponent = class AdminListCompaniesComponent {
+    constructor(datatableService, eventsService, router) {
         this.datatableService = datatableService;
         this.eventsService = eventsService;
         this.router = router;
         this.dtOptions = {};
         this.selectedCompany = null;
         this.selectedRowId = null;
-        this.eventsService.on('menu-toggle', function () {
+        this.eventsService.on('menu-toggle', () => {
             console.log('hole');
         });
     }
-    AdminListCompaniesComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        var columns = [{
+    ngOnInit() {
+        const columns = [{
                 title: 'Nombre',
                 data: 'name'
             }, {
@@ -38,20 +37,20 @@ export var AdminListCompaniesComponent = (function () {
             }, {
                 title: 'Activo',
                 data: 'active',
-                render: function (data, type, row) {
+                render: (data, type, row) => {
                     console.log(data, row);
                     return row.active ? 'Si' : 'No';
                 }
             }];
         this.dtOptions = this.datatableService.init('admin/company/datatable', columns);
-        this.dtOptions.rowCallback = function (nRow, aData) {
-            var self = _this;
+        this.dtOptions.rowCallback = (nRow, aData) => {
+            let self = this;
             if (aData.id == self.selectedRowId) {
                 $(nRow).children().addClass('row-selected');
             }
             $('td', nRow).unbind('click');
-            $('td', nRow).bind('click', function () {
-                var id = aData.id;
+            $('td', nRow).bind('click', () => {
+                let id = aData.id;
                 if (id === self.selectedRowId) {
                     self.selectedRowId = null;
                 }
@@ -69,33 +68,32 @@ export var AdminListCompaniesComponent = (function () {
                 }
             });
         };
-    };
-    AdminListCompaniesComponent.prototype.rowClicked = function (data) {
+    }
+    rowClicked(data) {
         this.selectedCompany = data;
-    };
-    AdminListCompaniesComponent.prototype.create = function () {
+    }
+    create() {
         this.router.navigate(['/admin/companies/create']);
-    };
-    AdminListCompaniesComponent.prototype.edit = function () {
+    }
+    edit() {
         this.router.navigate(['/admin/companies/' + this.selectedCompany.id]);
-    };
-    AdminListCompaniesComponent.prototype.remove = function () {
-    };
-    AdminListCompaniesComponent.prototype.ngOnDestroy = function () {
+    }
+    remove() {
+    }
+    ngOnDestroy() {
         this.eventsService.off('menu-toggle');
-    };
-    __decorate([
-        ViewChild(DataTableDirective), 
-        __metadata('design:type', DataTableDirective)
-    ], AdminListCompaniesComponent.prototype, "datatableEl", void 0);
-    AdminListCompaniesComponent = __decorate([
-        Component({
-            selector: 'admin-list-companies',
-            templateUrl: 'admin-list-companies.component.html',
-            styleUrls: ['admin-list-companies.component.scss']
-        }), 
-        __metadata('design:paramtypes', [DatatableService, EventsService, Router])
-    ], AdminListCompaniesComponent);
-    return AdminListCompaniesComponent;
-}());
+    }
+};
+__decorate([
+    ViewChild(DataTableDirective), 
+    __metadata('design:type', DataTableDirective)
+], AdminListCompaniesComponent.prototype, "datatableEl", void 0);
+AdminListCompaniesComponent = __decorate([
+    Component({
+        selector: 'admin-list-companies',
+        templateUrl: 'admin-list-companies.component.html',
+        styleUrls: ['admin-list-companies.component.scss']
+    }), 
+    __metadata('design:paramtypes', [DatatableService, EventsService, Router])
+], AdminListCompaniesComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/admin/companies/admin-list-companies/admin-list-companies.component.js.map

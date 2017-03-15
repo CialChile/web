@@ -8,19 +8,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-export var AdminDashboardComponent = (function () {
-    function AdminDashboardComponent() {
+export let AdminDashboardComponent = class AdminDashboardComponent {
+    constructor() {
     }
-    AdminDashboardComponent.prototype.ngOnInit = function () {
-    };
-    AdminDashboardComponent = __decorate([
-        Component({
-            selector: 'admin-dashboard',
-            templateUrl: './admin-dashboard.component.html',
-            styleUrls: ['./admin-dashboard.component.scss']
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AdminDashboardComponent);
-    return AdminDashboardComponent;
-}());
+    ngOnInit() {
+    }
+};
+AdminDashboardComponent = __decorate([
+    Component({
+        selector: 'admin-dashboard',
+        templateUrl: './admin-dashboard.component.html',
+        styleUrls: ['./admin-dashboard.component.scss']
+    }), 
+    __metadata('design:paramtypes', [])
+], AdminDashboardComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/admin/dashboard/admin-dashboard.component.js.map

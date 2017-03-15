@@ -9,47 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import * as Rx from 'rxjs/Rx';
-export var EventsService = (function () {
-    function EventsService() {
-        var _this = this;
+export let EventsService = class EventsService {
+    constructor() {
         this.listeners = {};
         this.eventsSubject = new Rx.Subject();
         this.events = Rx.Observable.from(this.eventsSubject);
-        this.events.subscribe(function (_a) {
-            var name = _a.name, args = _a.args;
-            if (_this.listeners[name]) {
-                for (var _i = 0, _b = _this.listeners[name]; _i < _b.length; _i++) {
-                    var listener = _b[_i];
-                    listener.apply(void 0, args);
+        this.events.subscribe(({ name, args }) => {
+            if (this.listeners[name]) {
+                for (let listener of this.listeners[name]) {
+                    listener(...args);
                 }
             }
         });
     }
-    EventsService.prototype.on = function (name, listener) {
+    on(name, listener) {
         if (!this.listeners[name]) {
             this.listeners[name] = [];
         }
         this.listeners[name].push(listener);
-    };
-    EventsService.prototype.off = function (name) {
+    }
+    off(name) {
         if (this.listeners[name]) {
             delete this.listeners[name];
         }
-    };
-    EventsService.prototype.broadcast = function (name) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
+    }
+    broadcast(name, ...args) {
         this.eventsSubject.next({
-            name: name,
-            args: args
+            name,
+            args
         });
-    };
-    EventsService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], EventsService);
-    return EventsService;
-}());
+    }
+};
+EventsService = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [])
+], EventsService);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/services/events/events.service.js.map

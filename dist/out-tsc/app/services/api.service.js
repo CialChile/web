@@ -15,78 +15,78 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/share';
 import { environment } from '../../environments/environment';
-import { Response, Http } from "@angular/http";
-export var ApiService = (function () {
-    function ApiService(authHttp, http) {
-        var _this = this;
+import { Response } from "@angular/http";
+import { Router } from "@angular/router";
+export let ApiService = class ApiService {
+    constructor(authHttp, router) {
         this.authHttp = authHttp;
-        this.http = http;
+        this.router = router;
         this.actionUrl = environment.baseUrl;
-        this.all = function (path, include) {
-            var fullPath = _this.actionUrl + path;
+        this.all = (path, include) => {
+            let fullPath = this.actionUrl + path;
             fullPath = include ? fullPath + '?include=' + include : fullPath;
-            return _this.authHttp.get(fullPath)
-                .map(function (res) { return _this.extractData(res); })
-                .catch(_this.handleError);
+            return this.authHttp.get(fullPath)
+                .map(res => this.extractData(res))
+                .catch(this.handleError);
         };
-        this.one = function (path, id, include) {
-            var fullPath = _this.actionUrl + path + '/' + id;
+        this.one = (path, id, include) => {
+            let fullPath = this.actionUrl + path + '/' + id;
             fullPath = include ? fullPath + '?include=' + include : fullPath;
-            return _this.authHttp.get(fullPath)
-                .map(function (res) { return _this.extractData(res); })
-                .catch(_this.handleError);
+            return this.authHttp.get(fullPath)
+                .map(res => this.extractData(res))
+                .catch(this.handleError);
         };
-        this.create = function (path, data) {
-            var fullPath = _this.actionUrl + path;
-            return _this.authHttp.post(fullPath, data)
-                .map(function (res) { return _this.extractData(res); })
-                .catch(_this.handleError);
+        this.create = (path, data) => {
+            let fullPath = this.actionUrl + path;
+            return this.authHttp.post(fullPath, data)
+                .map(res => this.extractData(res))
+                .catch(this.handleError);
         };
-        this.update = function (path, id, data) {
-            var fullPath = _this.actionUrl + path + '/' + id;
-            return _this.authHttp.put(fullPath, data)
-                .map(function (res) { return _this.extractData(res); })
-                .catch(_this.handleError);
+        this.update = (path, id, data) => {
+            let fullPath = this.actionUrl + path + '/' + id;
+            return this.authHttp.put(fullPath, data)
+                .map(res => this.extractData(res))
+                .catch(this.handleError);
         };
-        this.r = function (path, id, data) {
-            var fullPath = _this.actionUrl + path + '/' + id;
-            return _this.authHttp.delete(fullPath)
-                .map(function (res) { return _this.extractData(res); })
-                .catch(_this.handleError);
+        this.destroy = (path, id) => {
+            let fullPath = this.actionUrl + path + '/' + id;
+            return this.authHttp.delete(fullPath)
+                .map(res => this.extractData(res))
+                .catch(this.handleError);
         };
     }
-    ApiService.prototype.extractData = function (res) {
-        var body = res.json();
+    extractData(res) {
+        let body = res.json();
         return body || {};
-    };
-    ApiService.prototype.handleError = function (error) {
-        var errMsg;
+    }
+    handleError(error) {
+        let errMsg = '';
         if (error instanceof Response) {
-            var body = error.json() || '';
+            const body = error.json() || '';
             if (body.hasOwnProperty('errors')) {
-                var errorString = '';
-                for (var apiError in body.errors) {
-                    errorString += body.errors[apiError] + ', ';
-                }
-                errMsg = errorString;
-                errMsg = errMsg.substr(0, errMsg.length - 2);
+                Object.keys(body.errors).forEach(function (key) {
+                    errMsg += body.errors[key] + ' - ';
+                });
+                errMsg = errMsg.substr(0, errMsg.length - 3);
             }
             else {
-                var err = body.error || JSON.stringify(body);
-                errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+                const err = body.message || JSON.stringify(body);
+                errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
             }
         }
         else {
             errMsg = error.message ? error.message : error.toString();
+            if (errMsg == 'No JWT present or has expired') {
+                errMsg = 'Sessión Expiro';
+                this.router.navigate(['/login']);
+            }
         }
-        errMsg = "" + errMsg;
         console.error(errMsg);
         return Observable.throw(errMsg);
-    };
-    ApiService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [AuthHttp, Http])
-    ], ApiService);
-    return ApiService;
-}());
+    }
+};
+ApiService = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [AuthHttp, Router])
+], ApiService);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/services/api.service.js.map

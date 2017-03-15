@@ -10,12 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-export var AuthGuard = (function () {
-    function AuthGuard(auth, router) {
+export let AuthGuard = class AuthGuard {
+    constructor(auth, router) {
         this.auth = auth;
         this.router = router;
     }
-    AuthGuard.prototype.canActivate = function () {
+    canActivate() {
         if (this.auth.loggedIn()) {
             return true;
         }
@@ -23,14 +23,13 @@ export var AuthGuard = (function () {
             this.router.navigate(['/login']);
             return false;
         }
-    };
-    AuthGuard.prototype.canActivateChild = function () {
+    }
+    canActivateChild() {
         return this.canActivate();
-    };
-    AuthGuard = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [AuthService, Router])
-    ], AuthGuard);
-    return AuthGuard;
-}());
+    }
+};
+AuthGuard = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [AuthService, Router])
+], AuthGuard);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/guards/auth-guard.service.js.map

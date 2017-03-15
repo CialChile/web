@@ -1286,6 +1286,21 @@ datatables.net-bs:
     datatables.net ">=1.10.9"
     jquery ">=1.7"
 
+datatables.net-responsive, datatables.net-responsive@>=1.0.7:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/datatables.net-responsive/-/datatables.net-responsive-2.1.1.tgz#cbbd617882267ab2663e9745ad1b4e748158ed11"
+  dependencies:
+    datatables.net ">=1.10.9"
+    jquery ">=1.7"
+
+datatables.net-responsive-dt:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/datatables.net-responsive-dt/-/datatables.net-responsive-dt-2.1.1.tgz#bbb3b869efcaaa824fce9929a07e310fe589116d"
+  dependencies:
+    datatables.net ">=1.10.9"
+    datatables.net-responsive ">=1.0.7"
+    jquery ">=1.7"
+
 datatables.net@>=1.10.9:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-2.1.1.tgz#6f1103ef08054642aecf85e7e25efd592822ee78"

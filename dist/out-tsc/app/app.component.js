@@ -11,8 +11,8 @@ import { Component, ViewContainerRef } from '@angular/core';
 import { environment } from '../environments/environment';
 import { ToastsManager } from "ng2-toastr";
 import { Router, NavigationEnd, NavigationStart } from "@angular/router";
-export var AppComponent = (function () {
-    function AppComponent(toastr, vcr, router) {
+export let AppComponent = class AppComponent {
+    constructor(toastr, vcr, router) {
         this.toastr = toastr;
         this.router = router;
         this.title = environment.baseUrl;
@@ -20,31 +20,28 @@ export var AppComponent = (function () {
         this._subscriptions = [];
         this.toastr.setRootViewContainerRef(vcr);
     }
-    AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
+    ngOnInit() {
         this._subscriptions.push(
         // save or restore scroll position on route change
-        this.router.events.pairwise().subscribe(function (_a) {
-            var prevRouteEvent = _a[0], currRouteEvent = _a[1];
+        this.router.events.pairwise().subscribe(([prevRouteEvent, currRouteEvent]) => {
             if (prevRouteEvent instanceof NavigationEnd && currRouteEvent instanceof NavigationStart) {
-                _this._routeScrollPositions[prevRouteEvent.url] = window.pageYOffset;
+                this._routeScrollPositions[prevRouteEvent.url] = window.pageYOffset;
             }
             if (currRouteEvent instanceof NavigationEnd) {
-                window.scrollTo(0, _this._routeScrollPositions[currRouteEvent.url] || 0);
+                window.scrollTo(0, this._routeScrollPositions[currRouteEvent.url] || 0);
             }
         }));
-    };
-    AppComponent.prototype.ngOnDestroy = function () {
-        this._subscriptions.forEach(function (subscription) { return subscription.unsubscribe(); });
-    };
-    AppComponent = __decorate([
-        Component({
-            selector: 'app-root',
-            templateUrl: './app.component.html',
-            styleUrls: ['./app.component.css']
-        }), 
-        __metadata('design:paramtypes', [ToastsManager, ViewContainerRef, Router])
-    ], AppComponent);
-    return AppComponent;
-}());
+    }
+    ngOnDestroy() {
+        this._subscriptions.forEach(subscription => subscription.unsubscribe());
+    }
+};
+AppComponent = __decorate([
+    Component({
+        selector: 'app-root',
+        templateUrl: './app.component.html',
+        styleUrls: ['./app.component.css']
+    }), 
+    __metadata('design:paramtypes', [ToastsManager, ViewContainerRef, Router])
+], AppComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/app.component.js.map

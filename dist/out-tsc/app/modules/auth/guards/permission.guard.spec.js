@@ -1,12 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { PermissionGuard } from './permission.guard';
-describe('PermissionGuard', function () {
-    beforeEach(function () {
+describe('PermissionGuard', () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [PermissionGuard]
         });
     });
-    it('should ...', inject([PermissionGuard], function (guard) {
+    it('should ...', inject([PermissionGuard], (guard) => {
         expect(guard).toBeTruthy();
     }));
 });

@@ -6,6 +6,7 @@ export class ValidationService {
       'invalidRut': 'El formato del Rut es invalido',
       'invalidEmailAddress': 'El formato del Correo Electrónico Invalido',
       'invalidPassword': 'Contraseña invalida. Debe ser de por lo menos 6 caracteres y contener un numero',
+      'validateEqual': 'Las contraseñas deben coincidir',
       'minlength': `Minimum length ${validatorValue.requiredLength}`
     };
 
@@ -46,5 +47,17 @@ export class ValidationService {
     } else {
       return {'invalidPassword': true};
     }
+  }
+
+  static invalidConfirmationPassword(control) {
+    if (control._parent) {
+      let newPass = control._parent._value.new_password
+      if (control.value == newPass) {
+        return null;
+      } else {
+        return {'invalidConfirmationPassword': true};
+      }
+    }
+    return null;
   }
 }

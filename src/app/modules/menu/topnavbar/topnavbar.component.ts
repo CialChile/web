@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 import {ToastsManager} from "ng2-toastr";
 import {User} from "../../auth/types/User";
@@ -14,6 +14,7 @@ import {EventsService} from "../../../services/events/events.service";
 })
 export class TopNavBarComponent {
   private user: User;
+  @Input() userMenu;
 
   constructor(private authService: AuthService, private router: Router,
               private toastr: ToastsManager, private userService: UserService,
@@ -23,28 +24,8 @@ export class TopNavBarComponent {
 
   toggleClicked(event: MouseEvent) {
     this.eventsService.broadcast('menu-toggle');
-    const target = event.srcElement.id;
     const body = document.getElementsByTagName('body')[0];
-    const menu = document.getElementById('sidebar-menu');
 
-    // toggle small or large menu
-    if (body.classList.contains('nav-md')) {
-      for (let el of <HTMLLIElement[]><any> menu.querySelectorAll('li.active ul')) {
-        el.style.display = 'none';
-      }
-      for (let el of <HTMLLIElement[]><any> menu.querySelectorAll('li.active')) {
-        el.classList.add('active-sm');
-        el.classList.remove('active')
-      }
-    } else {
-      for (let el of <HTMLLIElement[]><any> menu.querySelectorAll('li.active-sm ul')) {
-        el.style.display = 'block';
-      }
-      for (let el of <HTMLLIElement[]><any> menu.querySelectorAll('li.active-sm')) {
-        el.classList.add('active');
-        el.classList.remove('active-sm')
-      }
-    }
     if (body.classList) {
       body.classList.toggle('nav-md');
       body.classList.toggle('nav-sm');

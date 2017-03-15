@@ -8,19 +8,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-export var AdminCompaniesComponent = (function () {
-    function AdminCompaniesComponent() {
+export let AdminCompaniesComponent = class AdminCompaniesComponent {
+    constructor() {
     }
-    AdminCompaniesComponent.prototype.ngOnInit = function () {
-    };
-    AdminCompaniesComponent = __decorate([
-        Component({
-            selector: 'admin-companies',
-            templateUrl: 'admin-companies.component.html',
-            styleUrls: ['admin-companies.component.scss']
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AdminCompaniesComponent);
-    return AdminCompaniesComponent;
-}());
+    ngOnInit() {
+    }
+};
+AdminCompaniesComponent = __decorate([
+    Component({
+        selector: 'admin-companies',
+        templateUrl: 'admin-companies.component.html',
+        styleUrls: ['admin-companies.component.scss']
+    }), 
+    __metadata('design:paramtypes', [])
+], AdminCompaniesComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/admin/companies/admin-companies.component.js.map

@@ -1,5 +1,6 @@
-export class MenuItem {
-    link: string;
-    name: string;
-    icon: string;
+export interface MenuItem {
+  link: string;
+  name: string;
+  icon: string;
+  permission: string;
 }

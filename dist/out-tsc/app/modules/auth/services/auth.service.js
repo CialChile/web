@@ -15,56 +15,54 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
 import { UserService } from "./user.service";
 import { environment } from "../../../../environments/environment";
-export var AuthService = (function () {
-    function AuthService(http, authHttp, userService) {
+export let AuthService = class AuthService {
+    constructor(http, authHttp, userService) {
         this.http = http;
         this.authHttp = authHttp;
         this.userService = userService;
         this.loginUrl = environment.baseUrl + 'auth/login';
         this.logoutUrl = environment.baseUrl + 'auth/logout';
     }
-    AuthService.prototype.loggedIn = function () {
+    loggedIn() {
         return tokenNotExpired('token');
-    };
-    AuthService.prototype.login = function (credentials) {
+    }
+    login(credentials) {
         return this.http.post(this.loginUrl, credentials)
             .map(this.extractLoginData)
             .catch(this.handleError);
-    };
-    AuthService.prototype.logout = function () {
+    }
+    logout() {
         return this.authHttp.post(this.logoutUrl, {})
             .map(this.extractLogoutData)
             .catch(this.handleError);
-    };
-    AuthService.prototype.extractLoginData = function (res) {
-        var body = res.json();
-        localStorage.setItem('token', body.token);
+    }
+    extractLoginData(res) {
+        let body = res.json();
         return body.token || {};
-    };
-    AuthService.prototype.extractLogoutData = function (res) {
-        var body = res.json();
+    }
+    extractLogoutData(res) {
+        let body = res.json();
         localStorage.removeItem('token');
         localStorage.removeItem('permissions');
         return body || {};
-    };
-    AuthService.prototype.handleError = function (error) {
+    }
+    handleError(error) {
         // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
+        let errMsg;
         if (error instanceof Response) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+            const body = error.json() || '';
+            const err = body.error || JSON.stringify(body);
+            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
         }
         else {
             errMsg = error.message ? error.message : error.toString();
         }
         console.error(errMsg);
         return Observable.throw(errMsg);
-    };
-    AuthService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [Http, AuthHttp, UserService])
-    ], AuthService);
-    return AuthService;
-}());
+    }
+};
+AuthService = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [Http, AuthHttp, UserService])
+], AuthService);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/services/auth.service.js.map

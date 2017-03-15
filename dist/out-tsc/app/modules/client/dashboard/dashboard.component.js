@@ -8,28 +8,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { CLIENTMENUITEMS } from "../menu/ClientMenuItems";
-import { UserService } from "../../auth/services/user.service";
-export var DashboardComponent = (function () {
-    function DashboardComponent(userService) {
-        this.userService = userService;
+export let DashboardComponent = class DashboardComponent {
+    constructor() {
         this.permission = 'permiso';
-        this.menu = CLIENTMENUITEMS;
     }
-    DashboardComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.userService.getUser().subscribe(function (user) {
-            _this.user = user;
-        }, function (error) { return console.log(error); });
-    };
-    DashboardComponent = __decorate([
-        Component({
-            selector: 'app-dashboard',
-            templateUrl: './dashboard.component.html',
-            styleUrls: ['./dashboard.component.scss']
-        }), 
-        __metadata('design:paramtypes', [UserService])
-    ], DashboardComponent);
-    return DashboardComponent;
-}());
+    ngOnInit() {
+    }
+};
+DashboardComponent = __decorate([
+    Component({
+        selector: 'app-dashboard',
+        templateUrl: './dashboard.component.html',
+        styleUrls: ['./dashboard.component.scss']
+    }), 
+    __metadata('design:paramtypes', [])
+], DashboardComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/client/dashboard/dashboard.component.js.map

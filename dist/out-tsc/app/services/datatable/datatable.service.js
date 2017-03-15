@@ -9,8 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-export var DatatableService = (function () {
-    function DatatableService() {
+export let DatatableService = class DatatableService {
+    constructor() {
         this.baseUrl = environment.baseUrl;
         this.language = {
             "sProcessing": "Procesando...",
@@ -44,19 +44,24 @@ export var DatatableService = (function () {
             }
         };
     }
-    DatatableService.prototype.init = function (url, columns) {
+    init(url, columns, include) {
+        let tableUrl = this.baseUrl + url + '?token=' + localStorage.getItem('token');
+        tableUrl = include ? `${tableUrl}&include=${include}` : tableUrl;
         return {
-            ajax: this.baseUrl + url + '?token=' + localStorage.getItem('token'),
+            ajax: tableUrl,
             columns: columns,
             language: this.language,
             serverSide: true,
-            procesing: true
+            procesing: true,
+            responsive: true,
+            dom: "<'row'<'col-sm-6 col-xs-12'l><'col-sm-6 col-xs-12'f>>" +
+                "<'row'<'col-xs-12 col-sm-12'tr>>" +
+                "<'row'<'col-xs-12 col-sm-5'i><'col-xs-12 col-sm-7'p>>",
         };
-    };
-    DatatableService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], DatatableService);
-    return DatatableService;
-}());
+    }
+};
+DatatableService = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [])
+], DatatableService);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/services/datatable/datatable.service.js.map

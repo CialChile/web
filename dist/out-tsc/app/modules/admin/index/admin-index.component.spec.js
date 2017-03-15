@@ -1,20 +1,20 @@
 import { async, TestBed } from '@angular/core/testing';
 import { AdminIndexComponent } from './admin-index.component';
-describe('AdminIndexComponent', function () {
-    var component;
-    var fixture;
-    beforeEach(async(function () {
+describe('AdminIndexComponent', () => {
+    let component;
+    let fixture;
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [AdminIndexComponent]
         })
             .compileComponents();
     }));
-    beforeEach(function () {
+    beforeEach(() => {
         fixture = TestBed.createComponent(AdminIndexComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
-    it('should create', function () {
+    it('should create', () => {
         expect(component).toBeTruthy();
     });
 });

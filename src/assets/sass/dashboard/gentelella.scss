@@ -199,11 +199,6 @@
   color: #C4CFDA;
 }
 
-.active a span.fa {
-  text-align: right !important;
-  margin-right: 4px;
-}
-
 .nav-sm .menu_section {
   margin: 0;
 }
@@ -621,6 +616,7 @@ a:hover, a:focus {
   position: relative;
   display: block;
   cursor: pointer;
+  border-right: 5px solid transparent;
 }
 
 .nav.side-menu li a {

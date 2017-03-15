@@ -8,24 +8,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input } from '@angular/core';
-import { MenuItem } from "../../types/MenuItem";
-export var SidebarItemComponent = (function () {
-    function SidebarItemComponent() {
+export let SidebarItemComponent = class SidebarItemComponent {
+    constructor() {
     }
-    SidebarItemComponent.prototype.ngOnInit = function () {
-    };
-    __decorate([
-        Input(), 
-        __metadata('design:type', MenuItem)
-    ], SidebarItemComponent.prototype, "item", void 0);
-    SidebarItemComponent = __decorate([
-        Component({
-            selector: 'app-sidebar-item',
-            templateUrl: './sidebar-item.component.html',
-            styleUrls: ['./sidebar-item.component.scss']
-        }), 
-        __metadata('design:paramtypes', [])
-    ], SidebarItemComponent);
-    return SidebarItemComponent;
-}());
+    ngOnInit() {
+    }
+};
+__decorate([
+    Input(), 
+    __metadata('design:type', Object)
+], SidebarItemComponent.prototype, "item", void 0);
+SidebarItemComponent = __decorate([
+    Component({
+        selector: 'app-sidebar-item',
+        templateUrl: './sidebar-item.component.html',
+        styleUrls: ['./sidebar-item.component.scss']
+    }), 
+    __metadata('design:paramtypes', [])
+], SidebarItemComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/menu/sidebar/sidebar-item/sidebar-item.component.js.map

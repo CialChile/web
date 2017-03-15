@@ -14,9 +14,8 @@ import { ToastsManager } from "ng2-toastr";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ApiService } from "../../../../services/api.service";
 import { ModalDirective } from "ng2-bootstrap";
-export var AdminEditCompaniesComponent = (function () {
-    function AdminEditCompaniesComponent(formBuilder, apiService, toastr, router, route) {
-        var _this = this;
+export let AdminEditCompaniesComponent = class AdminEditCompaniesComponent {
+    constructor(formBuilder, apiService, toastr, router, route) {
         this.formBuilder = formBuilder;
         this.apiService = apiService;
         this.toastr = toastr;
@@ -46,70 +45,67 @@ export var AdminEditCompaniesComponent = (function () {
                 position: ['', [Validators.required]]
             })
         });
-        this.companyForm.controls['country'].valueChanges.subscribe(function (value) {
+        this.companyForm.controls['country'].valueChanges.subscribe((value) => {
             if (value) {
-                _this.apiService.all('state/' + value).subscribe(function (states) { return _this.states = states.data; });
+                this.apiService.all('state/' + value).subscribe(states => this.states = states.data);
             }
         });
     }
-    AdminEditCompaniesComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.apiService.all('country').subscribe(function (countries) { return _this.countries = countries.data; });
-        this.apiService.all('company-field/list').subscribe(function (fields) { return _this.fields = fields.data; });
-        this.route.params.subscribe(function (params) {
-            _this.apiService.one('admin/company', params['id'], 'responsible').subscribe(function (company) {
-                _this.loading = false;
-                _this.initForm(company.data);
+    ngOnInit() {
+        this.apiService.all('country').subscribe(countries => this.countries = countries.data);
+        this.apiService.all('company-field/list').subscribe(fields => this.fields = fields.data);
+        this.route.params.subscribe((params) => {
+            this.apiService.one('admin/company', params['id'], 'responsible').subscribe((company) => {
+                this.loading = false;
+                this.initForm(company.data);
             });
         });
-    };
-    AdminEditCompaniesComponent.prototype.initForm = function (company) {
+    }
+    initForm(company) {
         this.company = company;
         this.companyForm.reset(company);
-    };
-    AdminEditCompaniesComponent.prototype.onSubmit = function (form, $event) {
+    }
+    onSubmit(form, $event) {
         $event.preventDefault();
         this.saving = true;
-        var data = this.companyForm.value;
+        let data = this.companyForm.value;
         if (data.responsible.email != this.company.responsible.email) {
             this.promptModal.show();
         }
         else {
             this.save();
         }
-    };
-    AdminEditCompaniesComponent.prototype.save = function () {
-        var _this = this;
-        var data = this.companyForm.value;
+    }
+    save() {
+        let data = this.companyForm.value;
         this.promptModal.hide();
-        this.apiService.update('admin/company', this.company.id, data).subscribe(function (response) {
-            _this.saving = false;
-            _this.toastr.success('Empresa actualizada con exito');
-            _this.router.navigate(['/admin/companies']);
-        }, function (error) {
-            _this.toastr.error(error);
-            _this.saving = false;
+        this.apiService.update('admin/company', this.company.id, data).subscribe((response) => {
+            this.saving = false;
+            this.toastr.success('Empresa actualizada con exito');
+            this.router.navigate(['/admin/companies']);
+        }, (error) => {
+            this.toastr.error(error);
+            this.saving = false;
         });
-    };
-    AdminEditCompaniesComponent.prototype.cancelPrompt = function () {
+    }
+    cancelPrompt() {
         this.saving = false;
         this.promptModal.hide();
-    };
-    AdminEditCompaniesComponent.prototype.goBack = function () {
+    }
+    goBack() {
         this.router.navigate(['/admin/companies']);
-    };
-    __decorate([
-        ViewChild('prompt'), 
-        __metadata('design:type', ModalDirective)
-    ], AdminEditCompaniesComponent.prototype, "promptModal", void 0);
-    AdminEditCompaniesComponent = __decorate([
-        Component({
-            selector: 'admin-edit-companies',
-            templateUrl: './admin-edit-companies.component.html',
-            styleUrls: ['./admin-edit-companies.component.scss']
-        }), 
-        __metadata('design:paramtypes', [FormBuilder, ApiService, ToastsManager, Router, ActivatedRoute])
-    ], AdminEditCompaniesComponent);
-    return AdminEditCompaniesComponent;
-}());
+    }
+};
+__decorate([
+    ViewChild('prompt'), 
+    __metadata('design:type', ModalDirective)
+], AdminEditCompaniesComponent.prototype, "promptModal", void 0);
+AdminEditCompaniesComponent = __decorate([
+    Component({
+        selector: 'admin-edit-companies',
+        templateUrl: './admin-edit-companies.component.html',
+        styleUrls: ['./admin-edit-companies.component.scss']
+    }), 
+    __metadata('design:paramtypes', [FormBuilder, ApiService, ToastsManager, Router, ActivatedRoute])
+], AdminEditCompaniesComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/admin/companies/admin-edit-companies/admin-edit-companies.component.js.map

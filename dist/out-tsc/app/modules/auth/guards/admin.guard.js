@@ -12,28 +12,26 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from "../services/user.service";
 import 'rxjs/add/operator/map';
-export var AdminGuard = (function () {
-    function AdminGuard(userService, router) {
+export let AdminGuard = class AdminGuard {
+    constructor(userService, router) {
         this.userService = userService;
         this.router = router;
     }
-    AdminGuard.prototype.canActivate = function (next, state) {
-        var _this = this;
-        return this.userService.getUser().map(function (user) {
+    canActivate(next, state) {
+        return this.userService.getUser().map((user) => {
             if (!user['isSuperUser']) {
-                _this.router.navigate(['/login']);
+                this.router.navigate(['/login']);
                 return Observable.of(false);
             }
             return !!user['isSuperUser'];
         });
-    };
-    AdminGuard.prototype.canActivateChild = function (route, state) {
+    }
+    canActivateChild(route, state) {
         return this.canActivate(route, state);
-    };
-    AdminGuard = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [UserService, Router])
-    ], AdminGuard);
-    return AdminGuard;
-}());
+    }
+};
+AdminGuard = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [UserService, Router])
+], AdminGuard);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/guards/admin.guard.js.map

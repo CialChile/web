@@ -5,38 +5,39 @@ import {ToastrService} from "../../../services/toastr/toastr.service";
 
 @Injectable()
 export class PermissionGuard implements CanActivate,CanActivateChild {
-    constructor(private router: Router, public toastr: ToastrService) {
+  constructor(private router: Router, public toastr: ToastrService) {
+  }
+
+  canActivate(next: ActivatedRouteSnapshot,
+              state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    const routePermission = next.data['permission'];
+    let permissions: Array<string> = JSON.parse(localStorage.getItem('permissions'));
+    if (!permissions) {
+      permissions = [];
+    }
+    let permissionExist = permissions.filter((permission) => {
+      return permission == routePermission;
+    });
+
+    if (permissionExist.length > 0) {
+      return true;
     }
 
-    canActivate(next: ActivatedRouteSnapshot,
-                state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        const routePermission = next.data['permission'];
-        let permissions: Array<string> = JSON.parse(localStorage.getItem('permissions'));
-        if (!permissions) {
-            permissions = [];
-        }
-        let permissionExist = permissions.filter((permission)=> {
-            return permission == routePermission;
-        });
+    //this.toastr.showError('No tienes permiso para acceder a este recurso');
 
-        if (permissionExist.length > 0) {
-            return true;
-        }
+    const redirectTo = next.data['redirectTo'];
+    this.toastr.showError('No tiene permisos para acceder a esta sección');
 
-        //this.toastr.showError('No tienes permiso para acceder a este recurso');
-
-        const redirectTo = next.data['redirectTo'];
-
-        if (redirectTo) {
-            this.router.navigate([redirectTo]);
-            return false;
-        }
-
-        this.router.navigate(['/']);
-        return false;
+    if (redirectTo) {
+      this.router.navigate([redirectTo]);
+      return false;
     }
 
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        return this.canActivate(route, state);
-    }
+    this.router.navigate(['/']);
+    return false;
+  }
+
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    return this.canActivate(route, state);
+  }
 }

@@ -1,0 +1,73 @@
+<app-page-title [title]="'Mi Perfil'" [breadcrumbs]="breadcrumbs"></app-page-title>
+<form role="form" class="form-horizontal form-label-left" [formGroup]="profileForm"
+      (submit)="onSubmit(profileForm,$event)">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Información del Usuario
+          </h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!profileForm.controls['first_name'].valid  && profileForm.controls['first_name'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <input formControlName="first_name" class="form-control" placeholder="Nombre"
+                         id="first_name"/>
+                  <control-messages
+                    [control]="profileForm.controls['first_name']"></control-messages>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!profileForm.controls['last_name'].valid  && profileForm.controls['last_name'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Apellido</label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <input formControlName="last_name" class="form-control" placeholder="Apellido"
+                         id="last_name"/>
+                  <control-messages
+                    [control]="profileForm.controls['last_name']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!profileForm.controls['email'].valid  && profileForm.controls['email'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <input formControlName="email" class="form-control" placeholder="Email"
+                         id="responsible_email"/>
+                  <control-messages
+                    [control]="profileForm.controls['email']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="toolbar text-center">
+        <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+          <i class="fa fa-trash"></i>
+          Cancelar
+        </button>
+        <button class="btn btn-success btn-lg" type="submit" [disabled]="!profileForm.valid || saving">
+          <i class="fa fa-save"></i>
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

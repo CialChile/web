@@ -1,0 +1,18 @@
+.table-selectable {
+  tbody {
+    tr:hover {
+      cursor: pointer;
+      background: rgba(38, 185, 154, .16);
+    }
+  }
+}
+@media (max-width: 768px) {
+  .dataTables_info{
+    white-space: normal !important;
+    width: 100% !important;
+  }
+  .dataTables_filter{
+    width: 100% !important;
+    text-align: left !important;
+  }
+}

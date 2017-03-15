@@ -1,4 +1,4 @@
-<li routerLinkActive="active-route">
+<li routerLinkActive="active-route" *userCan="item.permission">
   <a (click)="anchorClicked($event)">
     <i [class]="['fa '+item.icon]"></i>
     {{item.name}}
@@ -6,7 +6,7 @@
   </a>
   <ul class="nav child_menu">
     <li *ngFor="let dropdownItem of item.items">
-      <a [routerLink]="dropdownItem.link">{{dropdownItem.name}}</a>
+      <a [routerLink]="dropdownItem.link" (click)="linkClicked($event)">{{dropdownItem.name}}</a>
     </li>
   </ul>
 </li>

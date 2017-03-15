@@ -12,27 +12,25 @@ import { Router } from "@angular/router";
 import { ToastsManager } from "ng2-toastr";
 import { ADMINMENUITEMS } from "../menu/AdminMenuItems";
 import { UserService } from "../../auth/services/user.service";
-export var AdminIndexComponent = (function () {
-    function AdminIndexComponent(userService, router, toastr) {
+export let AdminIndexComponent = class AdminIndexComponent {
+    constructor(userService, router, toastr) {
         this.userService = userService;
         this.router = router;
         this.toastr = toastr;
         this.menu = ADMINMENUITEMS;
     }
-    AdminIndexComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.userService.getUser().subscribe(function (user) {
-            _this.user = user;
-        }, function (error) { return console.log(error); });
-    };
-    AdminIndexComponent = __decorate([
-        Component({
-            selector: 'app-admin',
-            templateUrl: './admin-index.component.html',
-            styleUrls: ['./admin-index.component.scss']
-        }), 
-        __metadata('design:paramtypes', [UserService, Router, ToastsManager])
-    ], AdminIndexComponent);
-    return AdminIndexComponent;
-}());
+    ngOnInit() {
+        this.userService.getUser().subscribe((user) => {
+            this.user = user;
+        }, error => console.log(error));
+    }
+};
+AdminIndexComponent = __decorate([
+    Component({
+        selector: 'app-admin',
+        templateUrl: './admin-index.component.html',
+        styleUrls: ['./admin-index.component.scss']
+    }), 
+    __metadata('design:paramtypes', [UserService, Router, ToastsManager])
+], AdminIndexComponent);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/admin/index/admin-index.component.js.map

@@ -9,20 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-var routes = [
+const routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
-export var AppRoutingModule = (function () {
-    function AppRoutingModule() {
-    }
-    AppRoutingModule = __decorate([
-        NgModule({
-            imports: [RouterModule.forRoot(routes)],
-            exports: [RouterModule],
-            providers: []
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppRoutingModule);
-    return AppRoutingModule;
-}());
+export let AppRoutingModule = class AppRoutingModule {
+};
+AppRoutingModule = __decorate([
+    NgModule({
+        imports: [RouterModule.forRoot(routes)],
+        exports: [RouterModule],
+        providers: []
+    }), 
+    __metadata('design:paramtypes', [])
+], AppRoutingModule);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/app-routing.module.js.map

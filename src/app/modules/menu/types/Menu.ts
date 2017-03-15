@@ -1,8 +1,9 @@
 import {MenuItem} from "./MenuItem";
-export class Menu {
-    dropdown: boolean;
-    link: string;
-    name: string;
-    items?: MenuItem[];
-    icon: string;
+export interface Menu {
+  dropdown: boolean;
+  link: string;
+  name: string;
+  items?: MenuItem[];
+  icon: string;
+  permission: string;
 }

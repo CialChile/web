@@ -11,30 +11,28 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { UserService } from "../services/user.service";
-export var LoginGuard = (function () {
-    function LoginGuard(auth, userService, router) {
+export let LoginGuard = class LoginGuard {
+    constructor(auth, userService, router) {
         this.auth = auth;
         this.userService = userService;
         this.router = router;
     }
-    LoginGuard.prototype.canActivate = function () {
-        var _this = this;
+    canActivate() {
         if (this.auth.loggedIn()) {
-            return this.userService.getUser().map(function (user) {
+            return this.userService.getUser().map((user) => {
                 if (user['isSuperUser']) {
-                    _this.router.navigate(['/admin']);
+                    this.router.navigate(['/admin']);
                     return false;
                 }
-                _this.router.navigate(['/dashboard']);
+                this.router.navigate(['/client/dashboard']);
                 return false;
             });
         }
         return true;
-    };
-    LoginGuard = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [AuthService, UserService, Router])
-    ], LoginGuard);
-    return LoginGuard;
-}());
+    }
+};
+LoginGuard = __decorate([
+    Injectable(), 
+    __metadata('design:paramtypes', [AuthService, UserService, Router])
+], LoginGuard);
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/auth/guards/login-guard.service.js.map

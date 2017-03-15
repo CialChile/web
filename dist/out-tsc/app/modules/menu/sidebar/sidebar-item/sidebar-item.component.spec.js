@@ -1,20 +1,20 @@
 import { async, TestBed } from '@angular/core/testing';
 import { SidebarItemComponent } from './sidebar-item.component';
-describe('SidebarItemComponent', function () {
-    var component;
-    var fixture;
-    beforeEach(async(function () {
+describe('SidebarItemComponent', () => {
+    let component;
+    let fixture;
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [SidebarItemComponent]
         })
             .compileComponents();
     }));
-    beforeEach(function () {
+    beforeEach(() => {
         fixture = TestBed.createComponent(SidebarItemComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
-    it('should create', function () {
+    it('should create', () => {
         expect(component).toBeTruthy();
     });
 });

@@ -17,10 +17,10 @@ export class ApiService {
 
   private actionUrl = environment.baseUrl;
 
-  public all = (path: string, include?: string): Observable<any> => {
+  public all = (path: string, include?: string, header?): Observable<any> => {
     let fullPath = this.actionUrl + path;
     fullPath = include ? fullPath + '?include=' + include : fullPath;
-    return this.authHttp.get(fullPath)
+    return this.authHttp.get(fullPath, header)
       .map(res => this.extractData(res))
       .catch(this.handleError);
   };

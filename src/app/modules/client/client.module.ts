@@ -11,7 +11,6 @@ import {MyProfileComponent} from "./profile/my-profile/my-profile.component";
 import {ChangePasswordComponent} from './profile/change-password/change-password.component';
 import {EqualValidator} from "../../directives/forms/equal-validator.directive";
 import {WorkersListComponent} from './rrhh/workers/workers-list/workers-list.component';
-import {DataTablesModule} from "../../directives/datatable/angular-datatables.module";
 import {RolesListComponent} from './security/roles/roles-list/roles-list.component';
 import {UsersListComponent} from './security/users/users-list/users-list.component';
 import {SecurityIndexComponent} from "./security/security-index";
@@ -20,18 +19,24 @@ import {ManageUserComponent} from "./security/users/manage-user/manage-user.comp
 import {ManageWorkerComponent} from "./rrhh/workers/manage-worker/manage-worker.component";
 import {RrhhIndexComponent} from "./rrhh/rrhh-index";
 import {LayoutsModule} from "../../components/layouts/layouts.module";
+import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {ButtonModule} from "primeng/components/button/button";
+import {MultiSelectModule} from "primeng/components/multiselect/multiselect";
 
 @NgModule({
   imports: [
     CommonModule,
     ClientRoutingModule,
     MenuModule,
-    DataTablesModule,
     UserCanModule,
     FormsHelperModule,
     FormsModule,
     ReactiveFormsModule,
-    LayoutsModule
+    LayoutsModule,
+    DataTableModule,
+    SharedModule,
+    ButtonModule,
+    MultiSelectModule
   ],
   declarations: [DashboardComponent, MyProfileComponent, IndexComponent,
     ChangePasswordComponent, EqualValidator, WorkersListComponent, RolesListComponent,

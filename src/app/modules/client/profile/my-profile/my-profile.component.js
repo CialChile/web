@@ -9,12 +9,23 @@ var core_1 = require('@angular/core');
 var forms_1 = require("@angular/forms");
 var validation_service_1 = require("../../../../components/forms/validation/validation.service");
 var MyProfileComponent = (function () {
-    function MyProfileComponent(formBuilder, userService, toastr, router, apiService) {
+    function MyProfileComponent(formBuilder, userService, toastr, apiService) {
         this.formBuilder = formBuilder;
         this.userService = userService;
         this.toastr = toastr;
-        this.router = router;
         this.apiService = apiService;
+        this.breadcrumbs = [
+            {
+                title: 'Home',
+                link: '/client/dashboard',
+                active: false
+            },
+            {
+                title: 'Mi Perfil',
+                link: '/client/my-profile',
+                active: true
+            }
+        ];
         this.profileForm = this.formBuilder.group({
             first_name: ['', [forms_1.Validators.required]],
             last_name: ['', [forms_1.Validators.required]],

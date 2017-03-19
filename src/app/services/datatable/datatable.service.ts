@@ -1,5 +1,9 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment'
+import {DataTableColumn} from "../../types/table/data-table-column.type";
+import {ApiService} from "../api.service";
+import {URLSearchParams} from "@angular/http";
+import {objectToParams} from "../../utilities/url/objectToParams";
 
 @Injectable()
 export class DatatableService {
@@ -36,7 +40,7 @@ export class DatatableService {
     }
   };
 
-  constructor() {
+  constructor(private apiService: ApiService) {
   }
 
   init(url: string, columns: any[], include?: string) {
@@ -49,13 +53,48 @@ export class DatatableService {
       language: this.language,
       serverSide: true,
       procesing: true,
-      responsive:true,
-      dom:
-      "<'row'<'col-sm-6 col-xs-12'l><'col-sm-6 col-xs-12'f>>" +
+      responsive: true,
+      dom: "<'row'<'col-sm-6 col-xs-12'l><'col-sm-6 col-xs-12'f>>" +
       "<'row'<'col-xs-12 col-sm-12'tr>>" +
       "<'row'<'col-xs-12 col-sm-5'i><'col-xs-12 col-sm-7'p>>",
 
     }
+  }
+
+  getData(event, columns: DataTableColumn[], url: string, include?: string, search?: string) {
+    let order;
+    let columnFilter;
+    if (event.sortField) {
+      columnFilter = columns.filter((column) => {
+        return column.data == event.sortField;
+      })
+
+      if (columnFilter && event.sortOrder != 0) {
+        order = [{
+          column: columns.indexOf(columnFilter[0]),
+          dir: event.sortOrder > 0 ? 'asc' : event.sortOrder < 0 ? 'desc' : ''
+        }]
+      }
+    }
+    let input: URLSearchParams = new URLSearchParams(objectToParams({
+      draw: "1",
+      include: include ? include : '',
+      columns: columns.map((column) => {
+        return {
+          data: column.data,
+          name: column.data,
+          searchable: column.filter,
+          orderable: column.sort,
+          search: {value: "", regex: false}
+        }
+      }),
+      order: order,
+      start: event.first,
+      length: event.rows,
+      search: {value: search ? search : '', regex: "false"},
+    }));
+
+    return this.apiService.all(url, null, {search: input});
   }
 
 }

@@ -325,22 +325,5 @@
   </form>
 </div>
 
-<div #prompt="bs-modal" bsModal class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">¿Estas Seguro?</h4>
-      </div>
-      <div class="modal-body">
-        <p>Si Cambias el correo del usuario administrador, se invalidara el usuario anterior y se generara una nueva
-          contraseña,
-          ¿Esta seguro de continuar?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="save()">Si, Continuar</button>
-        <button type="button" class="btn btn-danger" (click)="cancelPrompt()">Cancelar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<p-confirmDialog header="Confirmación" icon="fa fa-question-circle" width="425"></p-confirmDialog>
+

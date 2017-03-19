@@ -5,6 +5,7 @@ import {ToastsManager} from "ng2-toastr";
 import {Router, ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../../../services/api.service";
 import {ModalDirective} from "ng2-bootstrap";
+import {ConfirmationService} from "primeng/components/common/api";
 
 @Component({
   selector: 'admin-edit-companies',
@@ -21,7 +22,7 @@ export class AdminEditCompaniesComponent implements OnInit {
   private loading: boolean = true;
   @ViewChild('prompt') public promptModal: ModalDirective;
 
-  constructor(private formBuilder: FormBuilder, private apiService: ApiService,
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private confirmationService: ConfirmationService,
               public toastr: ToastsManager, private router: Router, private route: ActivatedRoute) {
     this.companyForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -73,7 +74,13 @@ export class AdminEditCompaniesComponent implements OnInit {
     this.saving = true;
     let data = this.companyForm.value;
     if (data.responsible.email != this.company.responsible.email) {
-      this.promptModal.show();
+
+      this.confirmationService.confirm({
+        message: '¿Estas Seguro? Si Cambias el correo del usuario administrador, se invalidara el usuario anterior y se generara una nueva contraseña',
+        accept: () => {
+          this.save();
+        }
+      });
     } else {
       this.save();
     }

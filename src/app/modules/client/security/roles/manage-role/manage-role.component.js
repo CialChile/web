@@ -16,6 +16,29 @@ var ManageRoleComponent = (function () {
         this.router = router;
         this.route = route;
         this.saving = false;
+        this.title = 'Nuevo Rol';
+        this.breadcrumbs = [
+            {
+                title: 'Home',
+                link: '/client/dashboard',
+                active: false
+            },
+            {
+                title: 'Securidad',
+                link: '/client/dashboard',
+                active: false
+            },
+            {
+                title: 'Roles',
+                link: '/client/security/roles',
+                active: false
+            },
+            {
+                title: 'Crear',
+                link: '/client/security/roles/create',
+                active: true
+            }
+        ];
         this.roleForm = this.formBuilder.group({
             name: ['', [forms_1.Validators.required]],
             description: ['', [forms_1.Validators.required]],
@@ -46,6 +69,9 @@ var ManageRoleComponent = (function () {
         var _this = this;
         this.route.params.subscribe(function (params) {
             if (params['id']) {
+                _this.title = 'Editar Rol';
+                _this.breadcrumbs[_this.breadcrumbs.length - 1].title = 'Editar';
+                _this.breadcrumbs[_this.breadcrumbs.length - 1].link = '/client/security/roles/' + params['id'];
                 _this.roleId = params['id'];
                 _this.apiService.one('client/role', params['id'], 'permissions').subscribe(function (role) {
                     _this.apiService.all('client/permission').subscribe(function (response) {

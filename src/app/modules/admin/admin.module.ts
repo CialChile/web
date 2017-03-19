@@ -11,8 +11,13 @@ import {AdminEditCompaniesComponent} from './companies/admin-edit-companies/admi
 import {FormsHelperModule} from "../../components/forms/forms-helpers.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AdminListCompaniesComponent} from "./companies/admin-list-companies/admin-list-companies.component";
-import {ModalModule} from "ng2-bootstrap/modal";
-import {DataTablesModule} from "../../directives/datatable/angular-datatables.module";
+import {DataTableModule} from "primeng/components/datatable/datatable";
+import {SharedModule} from "primeng/components/common/shared";
+import {ButtonModule} from "primeng/components/button/button";
+import {MultiSelectModule} from "primeng/components/multiselect/multiselect";
+import {InputSwitchModule} from "primeng/components/inputswitch/inputswitch";
+import {ConfirmDialogModule} from "primeng/components/confirmdialog/confirmdialog";
+import {ConfirmationService} from "primeng/components/common/api";
 
 @NgModule({
   imports: [
@@ -20,11 +25,15 @@ import {DataTablesModule} from "../../directives/datatable/angular-datatables.mo
     AdminRoutingModule,
     MenuModule,
     UserCanModule,
-    DataTablesModule,
     FormsHelperModule,
     FormsModule,
     ReactiveFormsModule,
-    ModalModule
+    ConfirmDialogModule,
+    DataTableModule,
+    SharedModule,
+    ButtonModule,
+    MultiSelectModule,
+    InputSwitchModule
   ],
   declarations: [
     AdminIndexComponent,
@@ -34,6 +43,7 @@ import {DataTablesModule} from "../../directives/datatable/angular-datatables.mo
     AdminCreateCompaniesComponent,
     AdminEditCompaniesComponent
   ],
+  providers:[ConfirmationService]
 })
 export class AdminModule {
 }

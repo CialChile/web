@@ -1,6 +1,6 @@
 import {Component, ViewContainerRef, OnInit, OnDestroy} from '@angular/core';
 import {environment} from '../environments/environment';
-import {ToastsManager} from "ng2-toastr";
+import {ToastsManager} from 'ng2-toastr';
 import {Router, NavigationEnd, NavigationStart} from "@angular/router";
 import {Subscription} from "rxjs";
 
@@ -12,8 +12,8 @@ import {Subscription} from "rxjs";
 export class AppComponent implements OnInit, OnDestroy {
   title = environment.baseUrl;
 
-  constructor(public toastr: ToastsManager, vcr: ViewContainerRef, private router: Router) {
-    this.toastr.setRootViewContainerRef(vcr);
+  constructor(public toastr: ToastsManager, vRef: ViewContainerRef, private router: Router) {
+    this.toastr.setRootViewContainerRef(vRef);
   }
 
   private _routeScrollPositions: {[url: string]: number}[] = [];

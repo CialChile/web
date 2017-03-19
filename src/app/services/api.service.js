@@ -14,10 +14,10 @@ require('rxjs/add/operator/share');
 var environment_1 = require('../../environments/environment');
 var http_1 = require("@angular/http");
 var ApiService = (function () {
-    function ApiService(authHttp, http) {
+    function ApiService(authHttp, router) {
         var _this = this;
         this.authHttp = authHttp;
-        this.http = http;
+        this.router = router;
         this.actionUrl = environment_1.environment.baseUrl;
         this.all = function (path, include) {
             var fullPath = _this.actionUrl + path;
@@ -57,14 +57,26 @@ var ApiService = (function () {
         return body || {};
     };
     ApiService.prototype.handleError = function (error) {
-        var errMsg;
+        var errMsg = '';
         if (error instanceof http_1.Response) {
-            var body = error.json() || '';
-            var err = body.message || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+            var body_1 = error.json() || '';
+            if (body_1.hasOwnProperty('errors')) {
+                Object.keys(body_1.errors).forEach(function (key) {
+                    errMsg += body_1.errors[key] + ' - ';
+                });
+                errMsg = errMsg.substr(0, errMsg.length - 3);
+            }
+            else {
+                var err = body_1.message || JSON.stringify(body_1);
+                errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+            }
         }
         else {
             errMsg = error.message ? error.message : error.toString();
+            if (errMsg == 'No JWT present or has expired') {
+                errMsg = 'Sessión Expiro';
+                this.router.navigate(['/login']);
+            }
         }
         console.error(errMsg);
         return Observable_1.Observable.throw(errMsg);

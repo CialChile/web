@@ -6,15 +6,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
-var angular_datatables_directive_1 = require("../../../../directives/datatable/angular-datatables.directive");
+var angular_datatables_directive_1 = require("../../../../../directives/datatable/angular-datatables.directive");
 var WorkersListComponent = (function () {
-    function WorkersListComponent(datatableService, eventsService, router) {
+    function WorkersListComponent(datatableService, apiService, eventsService, router, toastr) {
         this.datatableService = datatableService;
+        this.apiService = apiService;
         this.eventsService = eventsService;
         this.router = router;
+        this.toastr = toastr;
         this.dtOptions = {};
         this.selectedWorker = null;
         this.selectedRowId = null;
+        this.breadcrumbs = [
+            {
+                title: 'Home',
+                link: '/client/dashboard',
+                active: false
+            },
+            {
+                title: 'RRHH',
+                link: '/client/dashboard',
+                active: false
+            },
+            {
+                title: 'Trabajadores',
+                link: '/client/rrhh/workers',
+                active: true
+            }
+        ];
         this.eventsService.on('menu-toggle', function () {
             console.log('hole');
         });
@@ -65,12 +84,22 @@ var WorkersListComponent = (function () {
         this.selectedWorker = data;
     };
     WorkersListComponent.prototype.create = function () {
-        this.router.navigate(['/client/workers/create']);
+        this.router.navigate(['/client/rrhh/workers/create']);
     };
     WorkersListComponent.prototype.edit = function () {
-        this.router.navigate(['/client/workers/' + this.selectedWorker.id]);
+        this.router.navigate(['/client/rrhh/workers/' + this.selectedWorker.id]);
     };
     WorkersListComponent.prototype.remove = function () {
+        var _this = this;
+        this.apiService.destroy('client/worker', this.selectedWorker.id).subscribe(function (response) {
+            _this.toastr.success('Trabajador Eliminado con Exito');
+            _this.selectedWorker = null;
+            _this.datatableEl.dtInstance.then(function (dtInstance) {
+                dtInstance.ajax.reload();
+            });
+        }, function (error) {
+            _this.toastr.error(error);
+        });
     };
     WorkersListComponent.prototype.ngOnDestroy = function () {
         this.eventsService.off('menu-toggle');

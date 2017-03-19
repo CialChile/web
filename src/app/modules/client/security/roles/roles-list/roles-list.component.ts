@@ -1,24 +1,38 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {DataTableDirective} from "../../../../../directives/datatable/angular-datatables.directive";
+import {Component, OnInit} from '@angular/core';
 import {DatatableService} from "../../../../../services/datatable/datatable.service";
-import {EventsService} from "../../../../../services/events/events.service";
 import {Router} from "@angular/router";
 import {ApiService} from "../../../../../services/api.service";
 import {ToastsManager} from "ng2-toastr";
-
+import {DataTableColumn} from "../../../../../types/table/data-table-column.type";
+import{} from '@angular/anim'
+import {LazyLoadEvent, SelectItem} from "primeng/components/common/api";
 @Component({
   selector: 'app-roles-list',
   templateUrl: './roles-list.component.html',
   styleUrls: ['./roles-list.component.scss']
 })
 export class RolesListComponent implements OnInit {
-  @ViewChild(DataTableDirective)
-  private datatableEl: DataTableDirective;
+  private totalRecords: number;
+  private pageLength: number = 10;
+  private globalSearch: string;
+  private roles: any;
+  columnOptions: SelectItem[];
+  private lastLoadEvent: LazyLoadEvent;
 
-  dtOptions: any = {};
-  selectedRole = null;
-  selectedRowId: number = null;
-  breadcrumbs = [
+  private columns: DataTableColumn[] = [
+    {
+      name: 'Nombre',
+      data: 'name',
+      sort: true,
+      filter: true,
+    }, {
+      name: 'Descripción',
+      data: 'description',
+      sort: true,
+      filter: true
+    }
+  ];
+  private breadcrumbs = [
     {
       title: 'Home',
       link: '/client/dashboard',
@@ -35,77 +49,47 @@ export class RolesListComponent implements OnInit {
       active: true
     }
   ];
+
   constructor(private datatableService: DatatableService, private apiService: ApiService,
-              private eventsService: EventsService, private router: Router, private toastr: ToastsManager,) {
-    this.eventsService.on('menu-toggle', () => {
-      console.log('hole');
-    })
+              private router: Router, private toastr: ToastsManager,) {
+
   }
 
 
   ngOnInit() {
-    const columns = [{
-      title: 'Nombre',
-      data: 'name'
-    }, {
-      title: 'Descripción',
-      data: 'description'
-    }];
-    this.dtOptions = this.datatableService.init('client/role/datatable', columns);
-    this.dtOptions.rowCallback = (nRow: any, aData: any) => {
-      let self = this;
-      if (aData.id == self.selectedRowId) {
-        $(nRow).children().addClass('row-selected');
-      }
-      $('td', nRow).unbind('click');
-      $('td', nRow).bind('click', () => {
-        let id = aData.id;
-        if (id === self.selectedRowId) {
-          self.selectedRowId = null;
-        } else {
-          self.selectedRowId = id;
-        }
-        if ($('td', nRow).hasClass('row-selected')) {
-          $('td', nRow).removeClass('row-selected');
-          self.selectedRole = null;
-        }
-        else {
-          $('td.row-selected').removeClass('row-selected');
-          $('td', nRow).addClass('row-selected');
-          self.rowClicked(aData);
-        }
-      });
+    this.columnOptions = [];
+    for (let i = 0; i < this.columns.length; i++) {
+      this.columnOptions.push({label: this.columns[i].name, value: this.columns[i]});
     }
   }
 
-  rowClicked(data) {
-    this.selectedRole = data;
+  reloadTable(event: LazyLoadEvent) {
+    this.lastLoadEvent = event;
+    this.datatableService.getData(event, this.columns, 'client/role/datatable', '', this.globalSearch)
+      .toPromise().then((response) => {
+      this.roles = response.data;
+      this.totalRecords = response.recordsFiltered;
+    })
   }
 
   create() {
     this.router.navigate(['/client/security/roles/create']);
+  }
+
+  edit(role) {
+    this.router.navigate(['/client/security/roles/' + role.id]);
 
   }
 
-  edit() {
-    this.router.navigate(['/client/security/roles/' + this.selectedRole.id]);
-
-  }
-
-  remove() {
-    this.apiService.destroy('client/role', this.selectedRole.id).subscribe((response) => {
+  remove(role) {
+    this.apiService.destroy('client/role', role.id).subscribe((response) => {
       this.toastr.success('Rol Eliminado con Exito');
-      this.selectedRole = null;
-      this.datatableEl.dtInstance.then((dtInstance) => {
-        dtInstance.ajax.reload();
-      });
-
+      this.reloadTable(this.lastLoadEvent);
     })
   }
 
   ngOnDestroy() {
-    this.eventsService.off('menu-toggle');
-  }
 
+  }
 
 }

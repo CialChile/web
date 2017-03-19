@@ -34,8 +34,7 @@ var EtrackUserCanDirective = (function () {
     });
     ;
     EtrackUserCanDirective.prototype.ngAfterContentInit = function () {
-        var userHavePermission = this.checkPermission();
-        this.performPermissionAction(userHavePermission);
+        this.performPermissionAction(this.permission == 'any' || this.permission == '' ? true : this.checkPermission());
     };
     EtrackUserCanDirective.prototype.checkPermission = function () {
         var _this = this;

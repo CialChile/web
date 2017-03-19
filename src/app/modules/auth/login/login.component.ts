@@ -7,7 +7,6 @@ import {UserService} from "../services/user.service";
 import {User} from "../types/User";
 import {FormBuilder, Validators} from "@angular/forms";
 import {ValidationService} from "../../../components/forms/validation/validation.service";
-import {Subscription, Observable} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -43,11 +42,10 @@ export class LoginComponent {
           localStorage.removeItem('token');
           localStorage.setItem('token', token);
           localStorage.removeItem('permissions');
-          this.toastr.success('Inicio de sesión exitoso');
           this.userService.getUserLogin().subscribe(
             (user) => {
               localStorage.setItem('permissions', JSON.stringify(user.permissions));
-              this.loginIn = false;
+              this.toastr.success('Inicio de sesión exitoso');
               this.user = user;
               if (this.user['isSuperUser']) {
                 this.router.navigate(['/admin/dashboard']);
@@ -64,6 +62,7 @@ export class LoginComponent {
         })
     }
   }
+
 
   ngOnDestroy() {
 

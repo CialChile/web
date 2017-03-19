@@ -15,6 +15,7 @@ var router_1 = require("@angular/router");
 var ng2_bootstrap_1 = require("ng2-bootstrap");
 var footer_component_1 = require("../../components/footer/footer.component");
 var topbar_dropdown_item_component_1 = require("./topnavbar/topbar-dropdown-item/topbar-dropdown-item.component");
+var user_can_module_1 = require("../../directives/user-can/user-can.module");
 var MenuModule = (function () {
     function MenuModule() {
     }
@@ -23,7 +24,8 @@ var MenuModule = (function () {
             imports: [
                 common_1.CommonModule,
                 router_1.RouterModule,
-                ng2_bootstrap_1.DropdownModule.forRoot()
+                ng2_bootstrap_1.DropdownModule.forRoot(),
+                user_can_module_1.UserCanModule
             ],
             declarations: [sidebar_component_1.SidebarComponent, topnavbar_component_1.TopNavBarComponent, footer_component_1.FooterComponent,
                 sidebar_dropdown_component_1.SidebarDropdownComponent, sidebar_item_component_1.SidebarItemComponent, topbar_dropdown_item_component_1.TopbarDropdownItemComponent],

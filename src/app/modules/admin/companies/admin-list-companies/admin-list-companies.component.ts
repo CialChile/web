@@ -1,8 +1,10 @@
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {DatatableService} from "../../../../services/datatable/datatable.service";
-import {EventsService} from "../../../../services/events/events.service";
 import {Router} from "@angular/router";
-import {DataTableDirective} from "../../../../directives/datatable/angular-datatables.directive";
+import {SelectItem, LazyLoadEvent} from "primeng/components/common/api";
+import {DataTableColumn} from "../../../../types/table/data-table-column.type";
+import {ApiService} from "../../../../services/api.service";
+import {ToastsManager} from "ng2-toastr";
 
 @Component({
   selector: 'admin-list-companies',
@@ -10,66 +12,51 @@ import {DataTableDirective} from "../../../../directives/datatable/angular-datat
   styleUrls: ['admin-list-companies.component.scss']
 })
 export class AdminListCompaniesComponent implements OnInit, OnDestroy {
-  @ViewChild(DataTableDirective)
-  private datatableEl: DataTableDirective;
+  private totalRecords: number;
+  private globalSearch: string;
+  private companies: any;
+  private pageLength: number = 10;
+  columnOptions: SelectItem[];
+  private lastLoadEvent: LazyLoadEvent;
+  private columns: DataTableColumn[] = [
+    {
+      name: 'Nombre',
+      data: 'name',
+      sort: true,
+      filter: true,
+    }, {
+      name: 'Nombre Comercial',
+      data: 'commercial_name',
+      sort: true,
+      filter: true
+    }, {
+      name: 'Identificación Fiscal',
+      data: 'fiscal_identification',
+      sort: true,
+      filter: true
+    }
+  ];
 
-  dtOptions: any = {};
-  selectedCompany = null;
-  selectedRowId: number = null;
+  constructor(private datatableService: DatatableService, private apiService: ApiService,
+              private router: Router, private toastr: ToastsManager) {
 
-  constructor(private datatableService: DatatableService, private eventsService: EventsService, private router: Router) {
-    this.eventsService.on('menu-toggle', () => {
-      console.log('hole');
-    })
   }
 
   ngOnInit() {
-    const columns = [{
-      title: 'Nombre',
-      data: 'name'
-    }, {
-      title: 'Nombre Comercial',
-      data: 'commercial_name'
-    }, {
-      title: 'Identificación Fiscal',
-      data: 'fiscal_identification'
-    }, {
-      title: 'Activo',
-      data: 'active',
-      render: (data, type, row) => {
-        console.log(data, row);
-        return row.active ? 'Si' : 'No';
-      }
-    }];
-    this.dtOptions = this.datatableService.init('admin/company/datatable', columns);
-    this.dtOptions.rowCallback = (nRow: any, aData: any) => {
-      let self = this;
-      if (aData.id == self.selectedRowId) {
-        $(nRow).children().addClass('row-selected');
-      }
-      $('td', nRow).unbind('click');
-      $('td', nRow).bind('click', () => {
-        let id = aData.id;
-        if (id === self.selectedRowId) {
-          self.selectedRowId = null;
-        } else {
-          self.selectedRowId = id;
-        }
-        if ($('td', nRow).hasClass('row-selected')) {
-          $('td', nRow).removeClass('row-selected');
-          self.selectedCompany = null;
-        }
-        else {
-          $('td.row-selected').removeClass('row-selected');
-          $('td', nRow).addClass('row-selected');
-          self.rowClicked(aData);
-        }
-      });
+    this.columnOptions = [];
+    for (let i = 0; i < this.columns.length; i++) {
+      this.columnOptions.push({label: this.columns[i].name, value: this.columns[i]});
     }
+
   }
 
-  rowClicked(data) {
-    this.selectedCompany = data;
+  reloadTable(event: LazyLoadEvent) {
+    this.lastLoadEvent = event;
+    this.datatableService.getData(event, this.columns, 'admin/company/datatable', '', this.globalSearch)
+      .toPromise().then((response) => {
+      this.companies = response.data;
+      this.totalRecords = response.recordsFiltered;
+    })
   }
 
   create() {
@@ -77,17 +64,27 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
 
   }
 
-  edit() {
-    this.router.navigate(['/admin/companies/' + this.selectedCompany.id]);
+  edit(company) {
+    this.router.navigate(['/admin/companies/' + company.id]);
 
   }
 
-  remove() {
+  remove(company) {
 
+  }
+
+  toggleActive(event, company) {
+    this.apiService.update('admin/company/toggle-active', company.id, company).toPromise().then((response) => {
+      if (company.active) {
+        this.toastr.success('La empresa ' + company.name + ' fue activada');
+      } else {
+        this.toastr.success('La empresa ' + company.name + ' fue desactivada');
+      }
+    })
   }
 
   ngOnDestroy() {
-    this.eventsService.off('menu-toggle');
+
   }
 
 }

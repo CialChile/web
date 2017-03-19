@@ -13,6 +13,23 @@ var ChangePasswordComponent = (function () {
         this.formBuilder = formBuilder;
         this.toastr = toastr;
         this.apiService = apiService;
+        this.breadcrumbs = [
+            {
+                title: 'Home',
+                link: '/client/dashboard',
+                active: false
+            },
+            {
+                title: 'Mi Perfil',
+                link: '/client/my-profile',
+                active: false
+            },
+            {
+                title: 'Cambiar Contraseña',
+                link: '/client/my-profile/change-password',
+                active: true
+            }
+        ];
         this.changePasswordForm = this.formBuilder.group({
             old_password: ['', [forms_1.Validators.required]],
             new_password: ['', forms_1.Validators.compose([forms_1.Validators.required, validation_service_1.ValidationService.passwordValidator])],

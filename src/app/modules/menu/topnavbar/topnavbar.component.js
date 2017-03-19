@@ -16,32 +16,7 @@ var TopNavBarComponent = (function () {
     }
     TopNavBarComponent.prototype.toggleClicked = function (event) {
         this.eventsService.broadcast('menu-toggle');
-        var target = event.srcElement.id;
         var body = document.getElementsByTagName('body')[0];
-        var menu = document.getElementById('sidebar-menu');
-        // toggle small or large menu
-        if (body.classList.contains('nav-md')) {
-            for (var _i = 0, _a = menu.querySelectorAll('li.active ul'); _i < _a.length; _i++) {
-                var el = _a[_i];
-                el.style.display = 'none';
-            }
-            for (var _b = 0, _c = menu.querySelectorAll('li.active'); _b < _c.length; _b++) {
-                var el = _c[_b];
-                el.classList.add('active-sm');
-                el.classList.remove('active');
-            }
-        }
-        else {
-            for (var _d = 0, _e = menu.querySelectorAll('li.active-sm ul'); _d < _e.length; _d++) {
-                var el = _e[_d];
-                el.style.display = 'block';
-            }
-            for (var _f = 0, _g = menu.querySelectorAll('li.active-sm'); _f < _g.length; _f++) {
-                var el = _g[_f];
-                el.classList.add('active');
-                el.classList.remove('active-sm');
-            }
-        }
         if (body.classList) {
             body.classList.toggle('nav-md');
             body.classList.toggle('nav-sm');

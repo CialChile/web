@@ -35,7 +35,6 @@ var AuthService = (function () {
     };
     AuthService.prototype.extractLoginData = function (res) {
         var body = res.json();
-        localStorage.setItem('token', body.token);
         return body.token || {};
     };
     AuthService.prototype.extractLogoutData = function (res) {

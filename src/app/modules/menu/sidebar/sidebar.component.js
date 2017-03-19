@@ -10,43 +10,6 @@ var SidebarComponent = (function () {
     function SidebarComponent(userService) {
         this.userService = userService;
     }
-    SidebarComponent.prototype.anchorClicked = function (event) {
-        var targetId = event.srcElement.id;
-        var target = event.srcElement;
-        if (!targetId && event.srcElement.classList.contains('fa')) {
-            target = event.srcElement.parentElement;
-        }
-        if (target.parentElement.classList.contains('active')) {
-            var dropdown = target.parentElement.querySelector('ul');
-            SidebarComponent.slideUp(dropdown);
-            target.parentElement.classList.remove('active');
-            target.parentElement.classList.remove('active-sm');
-        }
-        else {
-            if (!target.parentElement.classList.contains('child_menu')) {
-                for (var _i = 0, _a = document.getElementById('sidebar-menu').querySelectorAll('li'); _i < _a.length; _i++) {
-                    var menu = _a[_i];
-                    menu.classList.remove('active');
-                    menu.classList.remove('active-sm');
-                }
-                for (var _b = 0, _c = document.getElementById('sidebar-menu').querySelectorAll('li > ul'); _b < _c.length; _b++) {
-                    var menu = _c[_b];
-                    SidebarComponent.slideUp(menu);
-                }
-            }
-            target.parentElement.classList.add('active');
-            var dropdown = target.parentElement.querySelector('ul');
-            SidebarComponent.slideDown(dropdown);
-        }
-    };
-    SidebarComponent.slideDown = function (elem) {
-        elem.style.maxHeight = '1000px';
-        //   elem.style.opacity = '1';
-    };
-    SidebarComponent.slideUp = function (elem) {
-        elem.style.maxHeight = '0';
-        // elem.style.opacity = '0';
-    };
     SidebarComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.userService.getUser().subscribe(function (user) {

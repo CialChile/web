@@ -5,6 +5,7 @@
 @import 'assets/sass/dashboard/gentelella';
 @import 'assets/sass/toolbar/toolbar';
 @import 'assets/sass/tables/table';
+@import 'assets/sass/primeng/primeng';
 
 html, body {
   height: 100%;
@@ -34,6 +35,14 @@ html, body {
 @media (min-width: 992px) {
   .control-label.multiline {
     padding-top: 0;
+  }
+}
+
+a{
+  color: #5A738E;
+  &:hover{
+    color: #23527c;
+
   }
 }
 

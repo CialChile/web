@@ -4,7 +4,6 @@ import {ToastsManager} from "ng2-toastr";
 import {User} from "../../auth/types/User";
 import {AuthService} from "../../auth/services/auth.service";
 import {UserService} from "../../auth/services/user.service";
-import {EventsService} from "../../../services/events/events.service";
 
 @Component({
   selector: 'topnav-bar',
@@ -17,13 +16,11 @@ export class TopNavBarComponent {
   @Input() userMenu;
 
   constructor(private authService: AuthService, private router: Router,
-              private toastr: ToastsManager, private userService: UserService,
-              private  eventsService: EventsService) {
+              private toastr: ToastsManager, private userService: UserService) {
 
   }
 
   toggleClicked(event: MouseEvent) {
-    this.eventsService.broadcast('menu-toggle');
     const body = document.getElementsByTagName('body')[0];
 
     if (body.classList) {

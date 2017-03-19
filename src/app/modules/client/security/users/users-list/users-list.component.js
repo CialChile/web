@@ -17,6 +17,23 @@ var UsersListComponent = (function () {
         this.dtOptions = {};
         this.selectedUser = null;
         this.selectedUserId = null;
+        this.breadcrumbs = [
+            {
+                title: 'Home',
+                link: '/client/dashboard',
+                active: false
+            },
+            {
+                title: 'Seguridad',
+                link: '/client/dashboard',
+                active: false
+            },
+            {
+                title: 'Usuarios',
+                link: '/client/security/users',
+                active: true
+            }
+        ];
         this.eventsService.on('menu-toggle', function () {
             console.log('hole');
         });
@@ -32,8 +49,13 @@ var UsersListComponent = (function () {
             }, {
                 title: 'Correo Electrónico',
                 data: 'email'
+            }, {
+                title: 'Rol',
+                data: 'role.name',
+                searchable: false,
+                sortable: false
             }];
-        this.dtOptions = this.datatableService.init('client/secure-user/datatable', columns);
+        this.dtOptions = this.datatableService.init('client/secure-user/datatable', columns, 'role');
         this.dtOptions.rowCallback = function (nRow, aData) {
             var self = _this;
             if (aData.id == self.selectedUserId) {

@@ -10,6 +10,7 @@ import {FooterComponent} from "../../components/footer/footer.component";
 import {TopbarDropdownItemComponent} from "./topnavbar/topbar-dropdown-item/topbar-dropdown-item.component";
 import {UserCanModule} from "../../directives/user-can/user-can.module";
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -19,8 +20,7 @@ import {UserCanModule} from "../../directives/user-can/user-can.module";
   ],
   declarations: [SidebarComponent, TopNavBarComponent, FooterComponent,
     SidebarDropdownComponent, SidebarItemComponent, TopbarDropdownItemComponent],
-  exports: [SidebarComponent, TopNavBarComponent, FooterComponent,
-    SidebarDropdownComponent, SidebarItemComponent, TopbarDropdownItemComponent]
+  exports: [SidebarComponent, TopNavBarComponent, FooterComponent]
 })
 export class MenuModule {
 }

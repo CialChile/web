@@ -30,6 +30,12 @@ var UserService = (function () {
         }
         return this.userSubject.asObservable();
     };
+    UserService.prototype.getUserLogin = function () {
+        this._user = null;
+        return this.authHttp.get(this.url)
+            .map(UserService.extractData)
+            .catch(UserService.handleError);
+    };
     UserService.extractData = function (res) {
         var user = res.json();
         localStorage.setItem('permissions', JSON.stringify(user.data.permissions));

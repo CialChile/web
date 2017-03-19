@@ -4,7 +4,7 @@ import {PageTitleComponent} from "./page-title/page-title.component";
 import {RouterModule} from "@angular/router";
 
 @NgModule({
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   declarations: [PageTitleComponent],
   exports: [PageTitleComponent]
 

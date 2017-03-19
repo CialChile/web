@@ -7,7 +7,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require('@angular/core');
 var SidebarDropdownComponent = (function () {
-    function SidebarDropdownComponent() {
+    function SidebarDropdownComponent(eventService) {
+        this.eventService = eventService;
+        this.eventService.on('menu-toggle', function () {
+            for (var _i = 0, _a = document.getElementById('sidebar-menu').querySelectorAll('li'); _i < _a.length; _i++) {
+                var menu = _a[_i];
+                menu.classList.remove('active');
+                menu.classList.remove('active-sm');
+            }
+            for (var _b = 0, _c = document.getElementById('sidebar-menu').querySelectorAll('li > ul'); _b < _c.length; _b++) {
+                var menu = _c[_b];
+                SidebarDropdownComponent.slideUp(menu);
+            }
+        });
     }
     SidebarDropdownComponent.prototype.ngOnInit = function () {
     };
@@ -17,7 +29,7 @@ var SidebarDropdownComponent = (function () {
         if (!targetId && event.srcElement.classList.contains('fa')) {
             target = event.srcElement.parentElement;
         }
-        if (target.parentElement.classList.contains('active')) {
+        if (target.parentElement.classList.contains('active') && document.body.classList.contains('nav-md')) {
             var dropdown = target.parentElement.querySelector('ul');
             SidebarDropdownComponent.slideUp(dropdown);
             target.parentElement.classList.remove('active');
@@ -47,6 +59,12 @@ var SidebarDropdownComponent = (function () {
     SidebarDropdownComponent.slideUp = function (elem) {
         elem.style.maxHeight = '0';
         // elem.style.opacity = '0';
+    };
+    SidebarDropdownComponent.prototype.linkClicked = function (event) {
+        if (document.body.classList.contains('nav-sm')) {
+            var targetUl = event.srcElement.parentElement.parentElement;
+            SidebarDropdownComponent.slideUp(targetUl);
+        }
     };
     __decorate([
         core_1.Input()

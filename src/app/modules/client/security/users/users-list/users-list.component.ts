@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {DataTableDirective} from "../../../../../directives/datatable/angular-datatables.directive";
+import {Component, OnInit} from '@angular/core';
 import {DatatableService} from "../../../../../services/datatable/datatable.service";
 import {ApiService} from "../../../../../services/api.service";
-import {EventsService} from "../../../../../services/events/events.service";
 import {Router} from "@angular/router";
 import {ToastsManager} from "ng2-toastr";
+import {SelectItem, LazyLoadEvent} from "primeng/components/common/api";
+import {DataTableColumn} from "../../../../../types/table/data-table-column.type";
 
 @Component({
   selector: 'app-users-list',
@@ -12,12 +12,35 @@ import {ToastsManager} from "ng2-toastr";
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  @ViewChild(DataTableDirective)
-  private datatableEl: DataTableDirective;
-
-  dtOptions: any = {};
-  selectedUser = null;
-  selectedUserId: number = null;
+  private totalRecords: number;
+  private pageLength: number = 10;
+  private globalSearch: string;
+  private users: any;
+  columnOptions: SelectItem[];
+  private lastLoadEvent: LazyLoadEvent;
+  private columns: DataTableColumn[] = [
+    {
+      name: 'Nombre',
+      data: 'first_name',
+      sort: true,
+      filter: true,
+    }, {
+      name: 'Apellido',
+      data: 'last_name',
+      sort: true,
+      filter: true
+    }, {
+      name: 'Correo Electrónico',
+      data: 'email',
+      sort: true,
+      filter: true
+    }, {
+      name: 'Rol',
+      data: 'role.name',
+      sort: false,
+      filter: false
+    }
+  ];
   breadcrumbs = [
     {
       title: 'Home',
@@ -35,83 +58,45 @@ export class UsersListComponent implements OnInit {
       active: true
     }
   ];
+
   constructor(private datatableService: DatatableService, private apiService: ApiService,
-              private eventsService: EventsService, private router: Router, private toastr: ToastsManager,) {
-    this.eventsService.on('menu-toggle', () => {
-      console.log('hole');
-    })
+               private router: Router, private toastr: ToastsManager,) {
+
   }
 
   ngOnInit() {
-    const columns = [{
-      title: 'Nombre',
-      data: 'first_name'
-    }, {
-      title: 'Apellido',
-      data: 'last_name'
-    }, {
-      title: 'Correo Electrónico',
-      data: 'email'
-    }, {
-      title: 'Rol',
-      data: 'role.name',
-      searchable: false,
-      sortable: false
-    }];
-    this.dtOptions = this.datatableService.init('client/secure-user/datatable', columns, 'role');
-    this.dtOptions.rowCallback = (nRow: any, aData: any) => {
-      let self = this;
-      if (aData.id == self.selectedUserId) {
-        $(nRow).children().addClass('row-selected');
-      }
-      $('td', nRow).unbind('click');
-      $('td', nRow).bind('click', () => {
-        let id = aData.id;
-        if (id === self.selectedUserId) {
-          self.selectedUserId = null;
-        } else {
-          self.selectedUserId = id;
-        }
-        if ($('td', nRow).hasClass('row-selected')) {
-          $('td', nRow).removeClass('row-selected');
-          self.selectedUser = null;
-        }
-        else {
-          $('td.row-selected').removeClass('row-selected');
-          $('td', nRow).addClass('row-selected');
-          self.rowClicked(aData);
-        }
-      });
+    this.columnOptions = [];
+    for (let i = 0; i < this.columns.length; i++) {
+      this.columnOptions.push({label: this.columns[i].name, value: this.columns[i]});
     }
   }
 
-  rowClicked(data) {
-    this.selectedUser = data;
+  reloadTable(event: LazyLoadEvent) {
+    this.lastLoadEvent = event;
+    this.datatableService.getData(event, this.columns, 'client/secure-user/datatable', 'role', this.globalSearch)
+      .toPromise().then((response) => {
+      this.users = response.data;
+      this.totalRecords = response.recordsFiltered;
+    })
   }
 
   create() {
     this.router.navigate(['/client/security/users/create']);
+  }
+
+  edit(user) {
+    this.router.navigate(['/client/security/users/' + user.id]);
 
   }
 
-  edit() {
-    this.router.navigate(['/client/security/users/' + this.selectedUser.id]);
-
-  }
-
-  remove() {
-    this.apiService.destroy('client/secure-user', this.selectedUser.id).subscribe((response) => {
+  remove(user) {
+    this.apiService.destroy('client/secure-user', user.id).subscribe((response) => {
       this.toastr.success('Usuario Eliminado con Exito');
-      this.selectedUser = null;
-      this.datatableEl.dtInstance.then((dtInstance) => {
-        dtInstance.ajax.reload();
-      });
-
+      this.reloadTable(this.lastLoadEvent);
     })
   }
 
   ngOnDestroy() {
-    this.eventsService.off('menu-toggle');
   }
 
 }

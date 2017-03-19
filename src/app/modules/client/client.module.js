@@ -17,13 +17,18 @@ var forms_1 = require("@angular/forms");
 var my_profile_component_1 = require("./profile/my-profile/my-profile.component");
 var change_password_component_1 = require('./profile/change-password/change-password.component');
 var equal_validator_directive_1 = require("../../directives/forms/equal-validator.directive");
-var workers_list_component_1 = require('./rrhh/workers-list/workers-list.component');
+var workers_list_component_1 = require('./rrhh/workers/workers-list/workers-list.component');
 var angular_datatables_module_1 = require("../../directives/datatable/angular-datatables.module");
 var roles_list_component_1 = require('./security/roles/roles-list/roles-list.component');
 var users_list_component_1 = require('./security/users/users-list/users-list.component');
 var security_index_1 = require("./security/security-index");
 var manage_role_component_1 = require("./security/roles/manage-role/manage-role.component");
 var manage_user_component_1 = require("./security/users/manage-user/manage-user.component");
+var manage_worker_component_1 = require("./rrhh/workers/manage-worker/manage-worker.component");
+var rrhh_index_1 = require("./rrhh/rrhh-index");
+var layouts_module_1 = require("../../components/layouts/layouts.module");
+var tables_module_1 = require("../../components/tables/tables.module");
+var primeng_1 = require('primeng/primeng');
 var ClientModule = (function () {
     function ClientModule() {
     }
@@ -38,10 +43,15 @@ var ClientModule = (function () {
                 forms_helpers_module_1.FormsHelperModule,
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule,
+                layouts_module_1.LayoutsModule,
+                tables_module_1.TablesModule,
+                primeng_1.DataTableModule,
+                primeng_1.SharedModule
             ],
             declarations: [dashboard_component_1.DashboardComponent, my_profile_component_1.MyProfileComponent, index_component_1.IndexComponent,
                 change_password_component_1.ChangePasswordComponent, equal_validator_directive_1.EqualValidator, workers_list_component_1.WorkersListComponent, roles_list_component_1.RolesListComponent,
-                manage_role_component_1.ManageRoleComponent, users_list_component_1.UsersListComponent, manage_user_component_1.ManageUserComponent, security_index_1.SecurityIndexComponent],
+                manage_role_component_1.ManageRoleComponent, manage_worker_component_1.ManageWorkerComponent, users_list_component_1.UsersListComponent, manage_user_component_1.ManageUserComponent,
+                security_index_1.SecurityIndexComponent, rrhh_index_1.RrhhIndexComponent],
         })
     ], ClientModule);
     return ClientModule;

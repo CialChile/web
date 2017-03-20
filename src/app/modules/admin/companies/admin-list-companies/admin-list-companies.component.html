@@ -53,24 +53,24 @@
               <p-column *ngFor="let col of columns" [field]="col.data" [header]="col.name"
                         [sortable]="col.sort"></p-column>
               <p-column styleClass="col-button">
-                <template pTemplate="header">
+                <ng-template pTemplate="header">
                   Activo
-                </template>
-                <template let-company="rowData" pTemplate="body">
+                </ng-template>
+                <ng-template let-company="rowData" pTemplate="body">
                   <p-inputSwitch onLabel="Si" offLabel="No" [(ngModel)]="company.active"
                                  (onChange)="toggleActive($event,company)"></p-inputSwitch>
-                </template>
+                </ng-template>
               </p-column>
               <p-column styleClass="col-button">
-                <template pTemplate="header">
+                <ng-template pTemplate="header">
                   Acciones
-                </template>
-                <template let-role="rowData" pTemplate="body">
+                </ng-template>
+                <ng-template let-role="rowData" pTemplate="body">
                   <button type="button" pButton (click)="edit(role)" class="ui-button-warning"
                           icon="fa-pencil"></button>
                   <button type="button" pButton (click)="remove(role)" class="ui-button-danger"
                           icon="fa-trash"></button>
-                </template>
+                </ng-template>
               </p-column>
             </p-dataTable>
 

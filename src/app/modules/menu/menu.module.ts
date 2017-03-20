@@ -9,6 +9,7 @@ import {DropdownModule} from "ng2-bootstrap";
 import {FooterComponent} from "../../components/footer/footer.component";
 import {TopbarDropdownItemComponent} from "./topnavbar/topbar-dropdown-item/topbar-dropdown-item.component";
 import {UserCanModule} from "../../directives/user-can/user-can.module";
+import {EventsService} from "../../services/events/events.service";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {UserCanModule} from "../../directives/user-can/user-can.module";
   ],
   declarations: [SidebarComponent, TopNavBarComponent, FooterComponent,
     SidebarDropdownComponent, SidebarItemComponent, TopbarDropdownItemComponent],
+  providers: [EventsService],
   exports: [SidebarComponent, TopNavBarComponent, FooterComponent]
 })
 export class MenuModule {

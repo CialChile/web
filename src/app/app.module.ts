@@ -14,6 +14,7 @@ import {ToastrService} from "./services/toastr/toastr.service";
 import {DatatableService} from "./services/datatable/datatable.service";
 import {ToastModule, ToastsManager, ToastOptions} from "ng2-toastr/ng2-toastr";
 import {authHttpServiceFactory} from './auth.service.factory'
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {authHttpServiceFactory} from './auth.service.factory'
     ClientModule,
     AdminModule,
     ToastModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [{
     provide: AuthHttp,

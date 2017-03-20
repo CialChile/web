@@ -1,5 +1,4 @@
-import {Directive, ElementRef, TemplateRef, ViewContainerRef, AfterContentInit} from '@angular/core';
-import {Input} from "@angular/core/src/metadata/directives";
+import {TemplateRef, ViewContainerRef, AfterContentInit, Directive, Input} from '@angular/core';
 
 @Directive({
   selector: '[userCan]'

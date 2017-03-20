@@ -1,5 +1,6 @@
-
-import {isJsObject} from "@angular/common/src/facade/lang";
+function isJsObject(o: any) {
+  return o !== null && (typeof o === 'function' || typeof o === 'object');
+}
 /**
  * Converts an object to a parametrised string.
  * @param object

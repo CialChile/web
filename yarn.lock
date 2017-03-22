@@ -3032,6 +3032,10 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+ng-loading-bar:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/ng-loading-bar/-/ng-loading-bar-0.0.7.tgz#db8bd4dfc9e97bc9f9f11b5a014169bd255763f7"
+
 ng2-bootstrap@1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.4.2.tgz#39f3886967f21cffd362d8feb28cc47eecacf153"

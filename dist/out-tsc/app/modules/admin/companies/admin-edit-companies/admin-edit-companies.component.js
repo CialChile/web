@@ -50,16 +50,16 @@ var AdminEditCompaniesComponent = (function () {
         });
         this.companyForm.controls['country'].valueChanges.subscribe(function (value) {
             if (value) {
-                _this.apiService.all('state/' + value).subscribe(function (states) { return _this.states = states.data; });
+                _this.apiService.all('states/' + value).subscribe(function (states) { return _this.states = states.data; });
             }
         });
     }
     AdminEditCompaniesComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.apiService.all('country').subscribe(function (countries) { return _this.countries = countries.data; });
-        this.apiService.all('company-field/list').subscribe(function (fields) { return _this.fields = fields.data; });
+        this.apiService.all('countries').subscribe(function (countries) { return _this.countries = countries.data; });
+        this.apiService.all('company-fields/list').subscribe(function (fields) { return _this.fields = fields.data; });
         this.route.params.subscribe(function (params) {
-            _this.apiService.one('admin/company', params['id'], 'responsible').subscribe(function (company) {
+            _this.apiService.one('admin/companies', params['id'], 'responsible').subscribe(function (company) {
                 _this.loading = false;
                 _this.initForm(company.data);
             });
@@ -90,7 +90,7 @@ var AdminEditCompaniesComponent = (function () {
         var _this = this;
         var data = this.companyForm.value;
         this.promptModal.hide();
-        this.apiService.update('admin/company', this.company.id, data).subscribe(function (response) {
+        this.apiService.update('admin/companies', this.company.id, data).subscribe(function (response) {
             _this.saving = false;
             _this.toastr.success('Empresa actualizada con exito');
             _this.router.navigate(['/admin/companies']);

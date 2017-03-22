@@ -21,7 +21,7 @@ __decorate([
 ], TopbarDropdownItemComponent.prototype, "item", void 0);
 TopbarDropdownItemComponent = __decorate([
     Component({
-        selector: 'app-topbar-dropdown-item',
+        selector: '[app-topbar-dropdown-item]',
         templateUrl: './topbar-dropdown-item.component.html',
         styleUrls: ['./topbar-dropdown-item.component.scss']
     }),

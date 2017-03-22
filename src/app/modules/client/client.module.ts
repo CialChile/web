@@ -19,9 +19,15 @@ import {ManageUserComponent} from "./security/users/manage-user/manage-user.comp
 import {ManageWorkerComponent} from "./rrhh/workers/manage-worker/manage-worker.component";
 import {RrhhIndexComponent} from "./rrhh/rrhh-index";
 import {LayoutsModule} from "../../components/layouts/layouts.module";
-import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {DataTableModule, SharedModule} from 'primeng/primeng';
 import {ButtonModule} from "primeng/components/button/button";
 import {MultiSelectModule} from "primeng/components/multiselect/multiselect";
+import {CalendarModule} from 'primeng/primeng';
+import {FileUploadModule} from 'primeng/primeng';
+import {DataGridModule} from 'primeng/primeng';
+import {ToggleButtonModule} from 'primeng/primeng';
+import {PanelModule} from "primeng/components/panel/panel";
+import {DialogModule} from "primeng/components/dialog/dialog";
 
 @NgModule({
   imports: [
@@ -36,7 +42,13 @@ import {MultiSelectModule} from "primeng/components/multiselect/multiselect";
     DataTableModule,
     SharedModule,
     ButtonModule,
-    MultiSelectModule
+    MultiSelectModule,
+    CalendarModule,
+    FileUploadModule,
+    DataGridModule,
+    ToggleButtonModule,
+    PanelModule,
+    DialogModule
   ],
   declarations: [DashboardComponent, MyProfileComponent, IndexComponent,
     ChangePasswordComponent, EqualValidator, WorkersListComponent, RolesListComponent,

@@ -15,6 +15,7 @@ import {EventsService} from "../../../services/events/events.service";
 export class TopNavBarComponent {
   private user: User;
   @Input() userMenu;
+  private profilePicture: string;
 
   constructor(private authService: AuthService, private router: Router, private eventService: EventsService,
               private toastr: ToastsManager, private userService: UserService) {
@@ -51,6 +52,7 @@ export class TopNavBarComponent {
     this.userService.getUser().subscribe(
       (user) => {
         this.user = user;
+        this.profilePicture = this.user.thumb ? this.user.thumb : 'assets/img/missing.png'
       },
       error => console.log(error));
   }

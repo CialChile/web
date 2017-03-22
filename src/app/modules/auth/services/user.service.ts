@@ -22,6 +22,7 @@ export class UserService {
 
   }
 
+
   getUser(refresh?: boolean): Observable<User> {
     if (refresh || !this._user) {
       this._user = this.authHttp.get(this.url)

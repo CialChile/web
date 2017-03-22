@@ -43,20 +43,20 @@ export class AdminCreateCompaniesComponent implements OnInit {
     });
     this.companyForm.controls['country'].valueChanges.subscribe((value) => {
       if (value) {
-        this.apiService.all('state/' + value).subscribe(states => this.states = states.data)
+        this.apiService.all('states/' + value).subscribe(states => this.states = states.data)
       }
     });
   }
 
   ngOnInit() {
-    this.apiService.all('country').subscribe(countries => this.countries = countries.data)
-    this.apiService.all('company-field/list').subscribe(fields => this.fields = fields.data)
+    this.apiService.all('countries').subscribe(countries => this.countries = countries.data)
+    this.apiService.all('company-fields/list').subscribe(fields => this.fields = fields.data)
   }
 
   onSubmit() {
     let data = this.companyForm.value;
     this.saving = true;
-    this.apiService.create('admin/company', data).subscribe((response) => {
+    this.apiService.create('admin/companies', data).subscribe((response) => {
         this.saving = false;
         this.toastr.success('Empresa creada con exito');
         this.toastr.success('Un correo electrónico ha sido enviado a la dirección de usuario especificado con mas instrucciones para acceder a la cuenta');

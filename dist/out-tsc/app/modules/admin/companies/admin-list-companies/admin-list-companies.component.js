@@ -47,7 +47,7 @@ var AdminListCompaniesComponent = (function () {
     AdminListCompaniesComponent.prototype.reloadTable = function (event) {
         var _this = this;
         this.lastLoadEvent = event;
-        this.datatableService.getData(event, this.columns, 'admin/company/datatable', '', this.globalSearch)
+        this.datatableService.getData(event, this.columns, 'admin/companies/datatable', '', this.globalSearch)
             .toPromise().then(function (response) {
             _this.companies = response.data;
             _this.totalRecords = response.recordsFiltered;
@@ -63,7 +63,7 @@ var AdminListCompaniesComponent = (function () {
     };
     AdminListCompaniesComponent.prototype.toggleActive = function (event, company) {
         var _this = this;
-        this.apiService.update('admin/company/toggle-active', company.id, company).toPromise().then(function (response) {
+        this.apiService.update('admin/companies/toggle-active', company.id, company).toPromise().then(function (response) {
             if (company.active) {
                 _this.toastr.success('La empresa ' + company.name + ' fue activada');
             }

@@ -51,7 +51,7 @@ export class ManageUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.all('client/role').subscribe((roles) => {
+    this.apiService.all('client/roles').subscribe((roles) => {
       this.roles = roles.data
     });
     this.route.params.subscribe((params) => {
@@ -60,7 +60,7 @@ export class ManageUserComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/security/users/' + params['id'];
         this.userId = params['id'];
-        this.apiService.one('client/secure-user', params['id'], 'role').subscribe((user) => {
+        this.apiService.one('client/secure-users', params['id'], 'role').subscribe((user) => {
           user.data.role = user.data.role.id;
           this.initForm(user.data)
         })
@@ -76,7 +76,7 @@ export class ManageUserComponent implements OnInit {
     let data = this.userForm.value;
     this.saving = true;
     if (this.userId) {
-      this.apiService.update('client/secure-user', this.userId, data).subscribe((response) => {
+      this.apiService.update('client/secure-users', this.userId, data).subscribe((response) => {
           this.saving = false;
           this.toastr.success('Usuario actualizado con exito');
           this.router.navigate(['/client/security/users'])
@@ -86,7 +86,7 @@ export class ManageUserComponent implements OnInit {
           this.saving = false;
         })
     } else {
-      this.apiService.create('client/secure-user', data).subscribe((response) => {
+      this.apiService.create('client/secure-users', data).subscribe((response) => {
           this.saving = false;
           this.toastr.success('Usuario creado con exito');
           this.router.navigate(['/client/security/users'])

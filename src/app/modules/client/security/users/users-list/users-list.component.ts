@@ -73,7 +73,7 @@ export class UsersListComponent implements OnInit {
 
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
-    this.datatableService.getData(event, this.columns, 'client/secure-user/datatable', 'role', this.globalSearch)
+    this.datatableService.getData(event, this.columns, 'client/secure-users/datatable', 'role', this.globalSearch)
       .toPromise().then((response) => {
       this.users = response.data;
       this.totalRecords = response.recordsFiltered;
@@ -90,7 +90,7 @@ export class UsersListComponent implements OnInit {
   }
 
   remove(user) {
-    this.apiService.destroy('client/secure-user', user.id).subscribe((response) => {
+    this.apiService.destroy('client/secure-users', user.id).subscribe((response) => {
       this.toastr.success('Usuario Eliminado con Exito');
       this.reloadTable(this.lastLoadEvent);
     })

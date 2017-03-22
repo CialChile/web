@@ -1,0 +1,37 @@
+<div class="image-upload">
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <div class="image-container">
+        <img class="img-thumbnail"
+             *ngIf="file.objectURL"
+             [src]="file.objectURL">
+        <img class="img-thumbnail"
+             *ngIf="!file.objectURL"
+             [src]="defaultImageUrl">
+        <div *ngIf="file.notDefault" class="x-mark" (click)="deleteFile(file)">
+          <span class="close"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+
+          <label class="upload-button btn btn-info">
+            <span>
+              <i class="fa fa-upload"></i>
+              {{buttonMessage}}
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              (change)="fileChange(input.files)"
+              #input>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

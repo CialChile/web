@@ -37,8 +37,8 @@ AppModule = __decorate([
             HttpModule,
             AuthModule,
             AppRoutingModule,
-            ClientModule,
             AdminModule,
+            ClientModule,
             ToastModule,
             ReactiveFormsModule,
             BrowserAnimationsModule

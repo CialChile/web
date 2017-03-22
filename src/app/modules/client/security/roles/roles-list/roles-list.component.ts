@@ -65,7 +65,7 @@ export class RolesListComponent implements OnInit {
 
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
-    this.datatableService.getData(event, this.columns, 'client/role/datatable', '', this.globalSearch)
+    this.datatableService.getData(event, this.columns, 'client/roles/datatable', '', this.globalSearch)
       .toPromise().then((response) => {
       this.roles = response.data;
       this.totalRecords = response.recordsFiltered;
@@ -82,7 +82,7 @@ export class RolesListComponent implements OnInit {
   }
 
   remove(role) {
-    this.apiService.destroy('client/role', role.id).subscribe((response) => {
+    this.apiService.destroy('client/roles', role.id).subscribe((response) => {
       this.toastr.success('Rol Eliminado con Exito');
       this.reloadTable(this.lastLoadEvent);
     })

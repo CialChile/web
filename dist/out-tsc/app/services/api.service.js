@@ -15,12 +15,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/share';
 import { environment } from '../../environments/environment';
-import { Response } from "@angular/http";
+import { Response, Headers, RequestOptions, Http } from "@angular/http";
 import { Router } from "@angular/router";
 var ApiService = (function () {
-    function ApiService(authHttp, router) {
+    function ApiService(authHttp, http, router) {
         var _this = this;
         this.authHttp = authHttp;
+        this.http = http;
         this.router = router;
         this.actionUrl = environment.baseUrl;
         this.all = function (path, include, header) {
@@ -52,6 +53,27 @@ var ApiService = (function () {
         this.destroy = function (path, id) {
             var fullPath = _this.actionUrl + path + '/' + id;
             return _this.authHttp.delete(fullPath)
+                .map(function (res) { return _this.extractData(res); })
+                .catch(_this.handleError);
+        };
+        this.formDataUpdate = function (path, id, data) {
+            var headers = new Headers();
+            //headers.append('Content-Type', 'multipart/form-data');
+            headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            var options = new RequestOptions({ headers: headers });
+            var fullPath = _this.actionUrl + path + '/' + id;
+            data.append('_method', 'put');
+            return _this.http.post(fullPath, data, options)
+                .map(function (res) { return _this.extractData(res); })
+                .catch(_this.handleError);
+        };
+        this.formDataCreate = function (path, data) {
+            var headers = new Headers();
+            //headers.append('Content-Type', 'multipart/form-data');
+            headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            var options = new RequestOptions({ headers: headers });
+            var fullPath = _this.actionUrl + path;
+            return _this.http.post(fullPath, data, options)
                 .map(function (res) { return _this.extractData(res); })
                 .catch(_this.handleError);
         };
@@ -89,7 +111,7 @@ var ApiService = (function () {
 }());
 ApiService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [AuthHttp, Router])
+    __metadata("design:paramtypes", [AuthHttp, Http, Router])
 ], ApiService);
 export { ApiService };
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/services/api.service.js.map

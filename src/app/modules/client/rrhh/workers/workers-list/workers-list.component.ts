@@ -16,6 +16,8 @@ export class WorkersListComponent implements OnInit {
   private pageLength: number = 10;
   private globalSearch: string;
   private workers: any;
+  private defaultImage: string = 'assets/img/missing.png';
+  private tableView: boolean = true;
   columnOptions: SelectItem[];
   private lastLoadEvent: LazyLoadEvent;
   private columns: DataTableColumn[] = [
@@ -58,6 +60,8 @@ export class WorkersListComponent implements OnInit {
       active: true
     }
   ];
+  private displayDetails: boolean;
+  private selectedWorker: any;
 
   constructor(private datatableService: DatatableService, private apiService: ApiService,
               private router: Router, private toastr: ToastsManager) {
@@ -71,13 +75,28 @@ export class WorkersListComponent implements OnInit {
 
   }
 
+  searchGlobally() {
+    this.lastLoadEvent.globalFilter = this.globalSearch;
+    this.reloadTable(this.lastLoadEvent);
+  }
+
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
-    this.datatableService.getData(event, this.columns, 'client/worker/datatable', '', this.globalSearch)
+    this.datatableService.getData(event, this.columns, 'client/workers/datatable', '', this.globalSearch)
       .toPromise().then((response) => {
       this.workers = response.data;
       this.totalRecords = response.recordsFiltered;
     })
+  }
+
+  showDetail(worker: any) {
+    this.selectedWorker = worker;
+    this.displayDetails = true;
+  }
+
+
+  onDialogHide() {
+    this.selectedWorker = null;
   }
 
   create() {
@@ -91,7 +110,7 @@ export class WorkersListComponent implements OnInit {
   }
 
   remove(worker) {
-    this.apiService.destroy('client/worker', worker.id).subscribe((response) => {
+    this.apiService.destroy('client/workers', worker.id).subscribe((response) => {
         this.toastr.success('Trabajador Eliminado con Exito');
         this.reloadTable(this.lastLoadEvent);
       },

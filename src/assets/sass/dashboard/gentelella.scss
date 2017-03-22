@@ -1613,7 +1613,6 @@ ul.msg_list li a .message {
 }
 
 .dropdown-menu {
-  border: medium none;
   box-shadow: none;
   display: none;
   float: left;
@@ -1631,8 +1630,18 @@ ul.msg_list li a .message {
 
 }
 
-.dropdown-menu > li > a {
-  color: #5A738E;
+.dropdown-menu {
+  li {
+    a {
+      color: #5A738E !important;
+    }
+  }
+}
+
+.nav .toggle {
+  a {
+    color: #5A738E !important;
+  }
 }
 
 .navbar-nav .open .dropdown-menu {

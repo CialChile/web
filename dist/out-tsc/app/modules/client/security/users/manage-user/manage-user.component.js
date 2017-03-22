@@ -54,7 +54,7 @@ var ManageUserComponent = (function () {
     }
     ManageUserComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.apiService.all('client/role').subscribe(function (roles) {
+        this.apiService.all('client/roles').subscribe(function (roles) {
             _this.roles = roles.data;
         });
         this.route.params.subscribe(function (params) {
@@ -63,7 +63,7 @@ var ManageUserComponent = (function () {
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].title = 'Editar';
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].link = '/client/security/users/' + params['id'];
                 _this.userId = params['id'];
-                _this.apiService.one('client/secure-user', params['id'], 'role').subscribe(function (user) {
+                _this.apiService.one('client/secure-users', params['id'], 'role').subscribe(function (user) {
                     user.data.role = user.data.role.id;
                     _this.initForm(user.data);
                 });
@@ -78,7 +78,7 @@ var ManageUserComponent = (function () {
         var data = this.userForm.value;
         this.saving = true;
         if (this.userId) {
-            this.apiService.update('client/secure-user', this.userId, data).subscribe(function (response) {
+            this.apiService.update('client/secure-users', this.userId, data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Usuario actualizado con exito');
                 _this.router.navigate(['/client/security/users']);
@@ -88,7 +88,7 @@ var ManageUserComponent = (function () {
             });
         }
         else {
-            this.apiService.create('client/secure-user', data).subscribe(function (response) {
+            this.apiService.create('client/secure-users', data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Usuario creado con exito');
                 _this.router.navigate(['/client/security/users']);

@@ -6,13 +6,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/share'
 import {environment} from '../../environments/environment'
-import {Response} from "@angular/http";
+import {Response, Headers, RequestOptions, Http} from "@angular/http";
 import {Router} from "@angular/router";
 
 @Injectable()
 export class ApiService {
 
-  constructor(private authHttp: AuthHttp, private router: Router) {
+  constructor(private authHttp: AuthHttp, private http: Http, private router: Router) {
   }
 
   private actionUrl = environment.baseUrl;
@@ -81,6 +81,29 @@ export class ApiService {
     }
     console.error(errMsg);
     return Observable.throw(errMsg);
+  }
+
+  public formDataUpdate = (path: string, id, data) => {
+    let headers = new Headers();
+    //headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    let options = new RequestOptions({headers: headers});
+    let fullPath = this.actionUrl + path + '/' + id;
+    data.append('_method', 'put');
+    return this.http.post(fullPath, data, options)
+      .map(res => this.extractData(res))
+      .catch(this.handleError);
+  }
+
+  public formDataCreate = (path: string, data) => {
+    let headers = new Headers();
+    //headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    let options = new RequestOptions({headers: headers});
+    let fullPath = this.actionUrl + path;
+    return this.http.post(fullPath, data, options)
+      .map(res => this.extractData(res))
+      .catch(this.handleError);
   }
 
 

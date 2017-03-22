@@ -69,7 +69,7 @@ var UsersListComponent = (function () {
     UsersListComponent.prototype.reloadTable = function (event) {
         var _this = this;
         this.lastLoadEvent = event;
-        this.datatableService.getData(event, this.columns, 'client/secure-user/datatable', 'role', this.globalSearch)
+        this.datatableService.getData(event, this.columns, 'client/secure-users/datatable', 'role', this.globalSearch)
             .toPromise().then(function (response) {
             _this.users = response.data;
             _this.totalRecords = response.recordsFiltered;
@@ -83,7 +83,7 @@ var UsersListComponent = (function () {
     };
     UsersListComponent.prototype.remove = function (user) {
         var _this = this;
-        this.apiService.destroy('client/secure-user', user.id).subscribe(function (response) {
+        this.apiService.destroy('client/secure-users', user.id).subscribe(function (response) {
             _this.toastr.success('Usuario Eliminado con Exito');
             _this.reloadTable(_this.lastLoadEvent);
         });

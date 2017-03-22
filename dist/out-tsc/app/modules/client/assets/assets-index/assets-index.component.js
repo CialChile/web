@@ -1,0 +1,27 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Component } from '@angular/core';
+var AssetsIndexComponent = (function () {
+    function AssetsIndexComponent() {
+    }
+    AssetsIndexComponent.prototype.ngOnInit = function () {
+    };
+    return AssetsIndexComponent;
+}());
+AssetsIndexComponent = __decorate([
+    Component({
+        selector: 'app-assets-index',
+        templateUrl: './assets-index.component.html',
+        styleUrls: ['./assets-index.component.scss']
+    }),
+    __metadata("design:paramtypes", [])
+], AssetsIndexComponent);
+export { AssetsIndexComponent };
+//# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/app/modules/client/assets/assets-index/assets-index.component.js.map

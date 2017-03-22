@@ -52,7 +52,7 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
 
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
-    this.datatableService.getData(event, this.columns, 'admin/company/datatable', '', this.globalSearch)
+    this.datatableService.getData(event, this.columns, 'admin/companies/datatable', '', this.globalSearch)
       .toPromise().then((response) => {
       this.companies = response.data;
       this.totalRecords = response.recordsFiltered;
@@ -74,7 +74,7 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
   }
 
   toggleActive(event, company) {
-    this.apiService.update('admin/company/toggle-active', company.id, company).toPromise().then((response) => {
+    this.apiService.update('admin/companies/toggle-active', company.id, company).toPromise().then((response) => {
       if (company.active) {
         this.toastr.success('La empresa ' + company.name + ' fue activada');
       } else {

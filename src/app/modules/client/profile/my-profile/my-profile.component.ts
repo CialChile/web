@@ -4,6 +4,7 @@ import {ToastsManager} from "ng2-toastr";
 import {ApiService} from "../../../../services/api.service";
 import {ValidationService} from "../../../../components/forms/validation/validation.service";
 import {UserService} from "../../../auth/services/user.service";
+import {objectToFormData} from "../../../../utilities/form/objectToFormData";
 
 @Component({
   selector: 'client-profile',
@@ -15,6 +16,11 @@ export class MyProfileComponent implements OnInit {
   private loading: boolean;
   private user: any;
   private saving: boolean;
+  private image: any = {
+    objectURL: '',
+    notDefault: false,
+    deleted: false
+  };
   breadcrumbs = [
     {
       title: 'Home',
@@ -27,6 +33,7 @@ export class MyProfileComponent implements OnInit {
       active: true
     }
   ];
+
   constructor(private formBuilder: FormBuilder, private userService: UserService,
               public toastr: ToastsManager, private apiService: ApiService) {
     this.profileForm = this.formBuilder.group({
@@ -41,6 +48,11 @@ export class MyProfileComponent implements OnInit {
       (user) => {
         this.loading = false;
         this.initForm(user)
+        this.image = {
+          notDefault: !!user.image,
+          deleted: false,
+          objectURL: user.image,
+        };
       },
       error => console.log(error));
   }
@@ -51,11 +63,20 @@ export class MyProfileComponent implements OnInit {
 
   }
 
+  imageChange(image) {
+    this.image = image;
+  }
+
   onSubmit(form, $event: any) {
     $event.preventDefault();
+    let formData = objectToFormData(this.profileForm.value);
+    if (this.image instanceof File) {
+      formData.append('image', this.image);
+    } else if (this.image.deleted) {
+      formData.append('removeImage', true);
+    }
     this.saving = true;
-    let data = this.profileForm.value;
-    this.apiService.update('client/user', this.user.id, data).subscribe((response) => {
+    this.apiService.formDataUpdate('client/user', this.user.id, formData).subscribe((response) => {
         this.saving = false;
         this.toastr.success('Perfil actualizado con exito');
         this.userService.getUser(true).subscribe(

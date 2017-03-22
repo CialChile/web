@@ -47,6 +47,7 @@ var TopNavBarComponent = (function () {
         var _this = this;
         this.userService.getUser().subscribe(function (user) {
             _this.user = user;
+            _this.profilePicture = _this.user.thumb ? _this.user.thumb : 'assets/img/missing.png';
         }, function (error) { return console.log(error); });
     };
     TopNavBarComponent.prototype.ngAfterViewInit = function () {

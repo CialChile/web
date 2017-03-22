@@ -78,9 +78,17 @@ var ManageRoleComponent = (function () {
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].title = 'Editar';
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].link = '/client/security/roles/' + params['id'];
                 _this.roleId = params['id'];
-                _this.apiService.one('client/role', params['id'], 'permissions').subscribe(function (role) {
-                    _this.apiService.all('client/permission').subscribe(function (response) {
+                _this.apiService.one('client/roles', params['id'], 'permissions').subscribe(function (role) {
+                    _this.apiService.all('client/permissions').subscribe(function (response) {
                         _this.configurePermissions(response);
+                        role.data.permissions = response.map(function (value, index) {
+                            for (var i = 0; i < role.data.permissions.length; i++) {
+                                if (role.data.permissions[i].slug === value.abilitiesList.slug) {
+                                    return role.data.permissions[i];
+                                }
+                            }
+                            return value.abilitiesList;
+                        });
                         _this.initForm(role.data);
                     });
                 });
@@ -153,7 +161,7 @@ var ManageRoleComponent = (function () {
         var data = this.roleForm.value;
         this.saving = true;
         if (this.roleId) {
-            this.apiService.update('client/role', this.roleId, data).subscribe(function (response) {
+            this.apiService.update('client/roles', this.roleId, data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Rol actualizado con exito');
                 _this.router.navigate(['/client/security/roles']);
@@ -163,7 +171,7 @@ var ManageRoleComponent = (function () {
             });
         }
         else {
-            this.apiService.create('client/role', data).subscribe(function (response) {
+            this.apiService.create('client/roles', data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Rol creado con exito');
                 _this.router.navigate(['/client/security/roles']);

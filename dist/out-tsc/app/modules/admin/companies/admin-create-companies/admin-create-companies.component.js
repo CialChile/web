@@ -45,20 +45,20 @@ var AdminCreateCompaniesComponent = (function () {
         });
         this.companyForm.controls['country'].valueChanges.subscribe(function (value) {
             if (value) {
-                _this.apiService.all('state/' + value).subscribe(function (states) { return _this.states = states.data; });
+                _this.apiService.all('states/' + value).subscribe(function (states) { return _this.states = states.data; });
             }
         });
     }
     AdminCreateCompaniesComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.apiService.all('country').subscribe(function (countries) { return _this.countries = countries.data; });
-        this.apiService.all('company-field/list').subscribe(function (fields) { return _this.fields = fields.data; });
+        this.apiService.all('countries').subscribe(function (countries) { return _this.countries = countries.data; });
+        this.apiService.all('company-fields/list').subscribe(function (fields) { return _this.fields = fields.data; });
     };
     AdminCreateCompaniesComponent.prototype.onSubmit = function () {
         var _this = this;
         var data = this.companyForm.value;
         this.saving = true;
-        this.apiService.create('admin/company', data).subscribe(function (response) {
+        this.apiService.create('admin/companies', data).subscribe(function (response) {
             _this.saving = false;
             _this.toastr.success('Empresa creada con exito');
             _this.toastr.success('Un correo electrónico ha sido enviado a la dirección de usuario especificado con mas instrucciones para acceder a la cuenta');

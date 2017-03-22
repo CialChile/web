@@ -48,16 +48,16 @@ export class AdminEditCompaniesComponent implements OnInit {
     });
     this.companyForm.controls['country'].valueChanges.subscribe((value) => {
       if (value) {
-        this.apiService.all('state/' + value).subscribe(states => this.states = states.data)
+        this.apiService.all('states/' + value).subscribe(states => this.states = states.data)
       }
     });
   }
 
   ngOnInit() {
-    this.apiService.all('country').subscribe(countries => this.countries = countries.data);
-    this.apiService.all('company-field/list').subscribe(fields => this.fields = fields.data);
+    this.apiService.all('countries').subscribe(countries => this.countries = countries.data);
+    this.apiService.all('company-fields/list').subscribe(fields => this.fields = fields.data);
     this.route.params.subscribe((params) => {
-      this.apiService.one('admin/company', params['id'], 'responsible').subscribe((company) => {
+      this.apiService.one('admin/companies', params['id'], 'responsible').subscribe((company) => {
         this.loading = false;
         this.initForm(company.data)
       })
@@ -89,7 +89,7 @@ export class AdminEditCompaniesComponent implements OnInit {
   save() {
     let data = this.companyForm.value;
     this.promptModal.hide();
-    this.apiService.update('admin/company', this.company.id, data).subscribe((response) => {
+    this.apiService.update('admin/companies', this.company.id, data).subscribe((response) => {
         this.saving = false;
         this.toastr.success('Empresa actualizada con exito');
         this.router.navigate(['/admin/companies']);

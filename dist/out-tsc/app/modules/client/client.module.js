@@ -28,6 +28,12 @@ import { LayoutsModule } from "../../components/layouts/layouts.module";
 import { DataTableModule, SharedModule } from 'primeng/primeng';
 import { ButtonModule } from "primeng/components/button/button";
 import { MultiSelectModule } from "primeng/components/multiselect/multiselect";
+import { CalendarModule } from 'primeng/primeng';
+import { FileUploadModule } from 'primeng/primeng';
+import { DataGridModule } from 'primeng/primeng';
+import { ToggleButtonModule } from 'primeng/primeng';
+import { PanelModule } from "primeng/components/panel/panel";
+import { DialogModule } from "primeng/components/dialog/dialog";
 var ClientModule = (function () {
     function ClientModule() {
     }
@@ -47,7 +53,13 @@ ClientModule = __decorate([
             DataTableModule,
             SharedModule,
             ButtonModule,
-            MultiSelectModule
+            MultiSelectModule,
+            CalendarModule,
+            FileUploadModule,
+            DataGridModule,
+            ToggleButtonModule,
+            PanelModule,
+            DialogModule
         ],
         declarations: [DashboardComponent, MyProfileComponent, IndexComponent,
             ChangePasswordComponent, EqualValidator, WorkersListComponent, RolesListComponent,

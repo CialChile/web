@@ -9,13 +9,14 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="" dropdown>
           <a class="user-profile" href id="single-button" dropdownToggle>
-            <img src="assets/img/missing.png" alt="">
+            <img [src]="profilePicture" alt="">
             <span class="hidden-xs hidden-sm" *ngIf="user">{{user.first_name}} {{user.last_name}}</span>
             <span class=" fa fa-angle-down"></span>
           </a>
           <ul dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="single-button">
             <ng-container *ngFor="let item of userMenu">
-              <app-topbar-dropdown-item [item]="item"></app-topbar-dropdown-item>
+
+              <li routerLinkActive="active-route" app-topbar-dropdown-item [item]="item"></li>
             </ng-container>
             <li>
               <a (click)="logout()">

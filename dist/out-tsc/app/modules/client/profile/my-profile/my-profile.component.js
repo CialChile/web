@@ -13,12 +13,18 @@ import { ToastsManager } from "ng2-toastr";
 import { ApiService } from "../../../../services/api.service";
 import { ValidationService } from "../../../../components/forms/validation/validation.service";
 import { UserService } from "../../../auth/services/user.service";
+import { objectToFormData } from "../../../../utilities/form/objectToFormData";
 var MyProfileComponent = (function () {
     function MyProfileComponent(formBuilder, userService, toastr, apiService) {
         this.formBuilder = formBuilder;
         this.userService = userService;
         this.toastr = toastr;
         this.apiService = apiService;
+        this.image = {
+            objectURL: '',
+            notDefault: false,
+            deleted: false
+        };
         this.breadcrumbs = [
             {
                 title: 'Home',
@@ -42,18 +48,32 @@ var MyProfileComponent = (function () {
         this.userService.getUser().subscribe(function (user) {
             _this.loading = false;
             _this.initForm(user);
+            _this.image = {
+                notDefault: !!user.image,
+                deleted: false,
+                objectURL: user.image,
+            };
         }, function (error) { return console.log(error); });
     };
     MyProfileComponent.prototype.initForm = function (user) {
         this.user = user;
         this.profileForm.reset(user);
     };
+    MyProfileComponent.prototype.imageChange = function (image) {
+        this.image = image;
+    };
     MyProfileComponent.prototype.onSubmit = function (form, $event) {
         var _this = this;
         $event.preventDefault();
+        var formData = objectToFormData(this.profileForm.value);
+        if (this.image instanceof File) {
+            formData.append('image', this.image);
+        }
+        else if (this.image.deleted) {
+            formData.append('removeImage', true);
+        }
         this.saving = true;
-        var data = this.profileForm.value;
-        this.apiService.update('client/user', this.user.id, data).subscribe(function (response) {
+        this.apiService.formDataUpdate('client/user', this.user.id, formData).subscribe(function (response) {
             _this.saving = false;
             _this.toastr.success('Perfil actualizado con exito');
             _this.userService.getUser(true).subscribe(function (user) {

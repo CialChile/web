@@ -59,7 +59,7 @@ var RolesListComponent = (function () {
     RolesListComponent.prototype.reloadTable = function (event) {
         var _this = this;
         this.lastLoadEvent = event;
-        this.datatableService.getData(event, this.columns, 'client/role/datatable', '', this.globalSearch)
+        this.datatableService.getData(event, this.columns, 'client/roles/datatable', '', this.globalSearch)
             .toPromise().then(function (response) {
             _this.roles = response.data;
             _this.totalRecords = response.recordsFiltered;
@@ -73,7 +73,7 @@ var RolesListComponent = (function () {
     };
     RolesListComponent.prototype.remove = function (role) {
         var _this = this;
-        this.apiService.destroy('client/role', role.id).subscribe(function (response) {
+        this.apiService.destroy('client/roles', role.id).subscribe(function (response) {
             _this.toastr.success('Rol Eliminado con Exito');
             _this.reloadTable(_this.lastLoadEvent);
         });

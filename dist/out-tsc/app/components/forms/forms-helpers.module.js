@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { ControlMessageComponent } from "./control-message/control-message.component";
 import { CommonModule } from "@angular/common";
+import { EtrackImageUploadComponent } from "./image-upload/etrack-image-upload.component";
 var FormsHelperModule = (function () {
     function FormsHelperModule() {
     }
@@ -15,8 +16,8 @@ var FormsHelperModule = (function () {
 FormsHelperModule = __decorate([
     NgModule({
         imports: [CommonModule],
-        declarations: [ControlMessageComponent],
-        exports: [ControlMessageComponent]
+        declarations: [ControlMessageComponent, EtrackImageUploadComponent],
+        exports: [ControlMessageComponent, EtrackImageUploadComponent]
     })
 ], FormsHelperModule);
 export { FormsHelperModule };

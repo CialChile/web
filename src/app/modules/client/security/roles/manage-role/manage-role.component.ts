@@ -77,9 +77,17 @@ export class ManageRoleComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/security/roles/' + params['id'];
         this.roleId = params['id'];
-        this.apiService.one('client/role', params['id'], 'permissions').subscribe((role) => {
-          this.apiService.all('client/permission').subscribe((response) => {
+        this.apiService.one('client/roles', params['id'], 'permissions').subscribe((role) => {
+          this.apiService.all('client/permissions').subscribe((response) => {
             this.configurePermissions(response);
+            role.data.permissions = response.map((value, index) => {
+              for (let i = 0; i < role.data.permissions.length; i++) {
+                if (role.data.permissions[i].slug === value.abilitiesList.slug) {
+                  return role.data.permissions[i];
+                }
+              }
+              return value.abilitiesList;
+            });
             this.initForm(role.data)
           });
         })
@@ -151,7 +159,7 @@ export class ManageRoleComponent implements OnInit {
     let data = this.roleForm.value;
     this.saving = true;
     if (this.roleId) {
-      this.apiService.update('client/role', this.roleId, data).subscribe((response) => {
+      this.apiService.update('client/roles', this.roleId, data).subscribe((response) => {
           this.saving = false;
           this.toastr.success('Rol actualizado con exito');
           this.router.navigate(['/client/security/roles'])
@@ -161,7 +169,7 @@ export class ManageRoleComponent implements OnInit {
           this.saving = false;
         })
     } else {
-      this.apiService.create('client/role', data).subscribe((response) => {
+      this.apiService.create('client/roles', data).subscribe((response) => {
           this.saving = false;
           this.toastr.success('Rol creado con exito');
           this.router.navigate(['/client/security/roles'])

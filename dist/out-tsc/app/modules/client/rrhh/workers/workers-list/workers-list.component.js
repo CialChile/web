@@ -19,6 +19,8 @@ var WorkersListComponent = (function () {
         this.router = router;
         this.toastr = toastr;
         this.pageLength = 10;
+        this.defaultImage = 'assets/img/missing.png';
+        this.tableView = true;
         this.columns = [
             {
                 name: 'Nombre',
@@ -66,14 +68,25 @@ var WorkersListComponent = (function () {
             this.columnOptions.push({ label: this.columns[i].name, value: this.columns[i] });
         }
     };
+    WorkersListComponent.prototype.searchGlobally = function () {
+        this.lastLoadEvent.globalFilter = this.globalSearch;
+        this.reloadTable(this.lastLoadEvent);
+    };
     WorkersListComponent.prototype.reloadTable = function (event) {
         var _this = this;
         this.lastLoadEvent = event;
-        this.datatableService.getData(event, this.columns, 'client/worker/datatable', '', this.globalSearch)
+        this.datatableService.getData(event, this.columns, 'client/workers/datatable', '', this.globalSearch)
             .toPromise().then(function (response) {
             _this.workers = response.data;
             _this.totalRecords = response.recordsFiltered;
         });
+    };
+    WorkersListComponent.prototype.showDetail = function (worker) {
+        this.selectedWorker = worker;
+        this.displayDetails = true;
+    };
+    WorkersListComponent.prototype.onDialogHide = function () {
+        this.selectedWorker = null;
     };
     WorkersListComponent.prototype.create = function () {
         this.router.navigate(['/client/rrhh/workers/create']);
@@ -83,7 +96,7 @@ var WorkersListComponent = (function () {
     };
     WorkersListComponent.prototype.remove = function (worker) {
         var _this = this;
-        this.apiService.destroy('client/worker', worker.id).subscribe(function (response) {
+        this.apiService.destroy('client/workers', worker.id).subscribe(function (response) {
             _this.toastr.success('Trabajador Eliminado con Exito');
             _this.reloadTable(_this.lastLoadEvent);
         }, function (error) {

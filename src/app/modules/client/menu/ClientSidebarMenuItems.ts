@@ -8,6 +8,13 @@ export const CLIENTSIDEBARMENUITEMS: Menu[] = [
     permission: ''
   },
   {
+    dropdown: false,
+    link: '/assets',
+    name: 'Activos',
+    icon: 'fa-database',
+    permission: 'client-assets.list',
+  },
+  {
     dropdown: true,
     link: '/rrhh',
     name: 'RRHH',

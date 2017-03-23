@@ -14,6 +14,10 @@ import {ManageUserComponent} from "./security/users/manage-user/manage-user.comp
 import {PermissionGuard} from "../auth/guards/permission.guard";
 import {RrhhIndexComponent} from "./rrhh/rrhh-index";
 import {ManageWorkerComponent} from "./rrhh/workers/manage-worker/manage-worker.component";
+import {WorkerDetailsComponent} from "./rrhh/workers/worker-details/worker-details.component";
+import {AssetsIndexComponent} from "./assets/assets-index.component";
+import {AssetsListComponent} from "./assets/assets-list/assets-list.component";
+import {ManageAssetsComponent} from "./assets/manage-assets/manage-assets.component";
 
 export const routes: Routes = [
   {
@@ -61,6 +65,37 @@ export const routes: Routes = [
             data: {
               redirectTo: 'client/dashboard',
               permission: 'client-rrhh-workers.show'
+            }
+          },
+          {
+            path: 'workers/:id/info',
+            component: WorkerDetailsComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-security-users.show'
+            }
+          }
+        ]
+      },
+      {
+        path: 'assets',
+        component: AssetsIndexComponent,
+        canActivateChild: [AuthGuard, ClientGuard, PermissionGuard],
+        children: [
+          {
+            path: '',
+            component: AssetsListComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-assets.list'
+            }
+          },
+          {
+            path: 'create',
+            component: ManageAssetsComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-assets.store'
             }
           },
         ]
@@ -115,11 +150,12 @@ export const routes: Routes = [
             component: ManageUserComponent,
             data: {
               redirectTo: 'client/dashboard',
-              permission: 'client-security-users.show'
+              permission: 'client-security-users.update'
             }
-          }
+          },
         ]
       }
+
     ]
   }
 ];

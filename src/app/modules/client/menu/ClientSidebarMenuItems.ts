@@ -9,14 +9,14 @@ export const CLIENTSIDEBARMENUITEMS: Menu[] = [
   },
   {
     dropdown: false,
-    link: '/assets',
+    link: '/client/assets',
     name: 'Activos',
     icon: 'fa-database',
     permission: 'client-assets.list',
   },
   {
     dropdown: true,
-    link: '/rrhh',
+    link: '/client/rrhh',
     name: 'RRHH',
     icon: 'fa-users',
     permission: 'client-rrhh',

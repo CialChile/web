@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-xs-12 col-md-2">
                   <div>
-                    <p-toggleButton onIcon="fa-th" onLabel="Lista" offLabel="Table" offIcon="fa-table"
+                    <p-toggleButton onIcon="fa-th" onLabel="Lista" offLabel="Tabla" offIcon="fa-table"
                                     [(ngModel)]="tableView"></p-toggleButton>
                   </div>
                 </div>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="col-xs-12 col-md-2">
                   <div>
-                    <p-toggleButton onIcon="fa-th" onLabel="Lista" offLabel="Table" offIcon="fa-table"
+                    <p-toggleButton onIcon="fa-th" onLabel="Lista" offLabel="Tabla" offIcon="fa-table"
                                     [(ngModel)]="tableView"></p-toggleButton>
                   </div>
                 </div>
@@ -134,47 +134,6 @@
             </ng-template>
           </p-dataGrid>
         </div>
-        <p-dialog header="Detalles del trabajador" [(visible)]="displayDetails" [responsive]="true" showEffect="fade"
-                  [modal]="true" width="500" [draggable]="true" (onAfterHide)="onDialogHide()">
-          <div class="row" *ngIf="selectedWorker"
-               style="font-size:16px">
-            <div class="col-xs-12">
-              <div class="row text-center">
-                <div class="col-xs-12" style="text-align:center">
-                  <img [src]="selectedWorker.image?selectedWorker.image:defaultImage">
-                </div>
-              </div>
-              <div style="padding: 20px">
-                <div class="row">
-                  <div class="col-xs-12 col-md-4"><b>Nombre:</b></div>
-                  <div class="col-xs-12 col-md-8">{{selectedWorker.first_name}} {{selectedWorker.last_name}}</div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12 col-md-4"><b>Rut/Pasaporte:</b></div>
-                  <div class="col-xs-12 col-md-8">{{selectedWorker.rut_passport}}</div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12 col-md-4"><b>Cargo:</b></div>
-                  <div class="col-xs-12 col-md-8">{{selectedWorker.position}}</div>
-                </div>
-              </div>
-              <div class="btn-group btn-group-justified" role="group">
-                <div class="btn-group" role="group">
-
-                  <button class="btn btn-sm btn-warning" (click)="edit(selectedWorker)">
-                    <i class="fa fa-pencil"></i>
-                  </button>
-                </div>
-                <div class="btn-group" role="group">
-                  <button class="btn btn-sm btn-danger" (click)="remove(selectedWorker)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </p-dialog>
       </div>
     </div>
   </div>

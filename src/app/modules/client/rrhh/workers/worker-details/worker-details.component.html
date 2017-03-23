@@ -1,0 +1,111 @@
+<app-page-title [title]="'Información del Trabajador'" [breadcrumbs]="breadcrumbs"></app-page-title>
+<div class="row" *ngIf="worker">
+  <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="x_panel">
+      <div class="x_content">
+        <div class=" profile_left">
+          <div class="profile_img">
+            <div id="crop-avatar" class="text-center">
+              <!-- Current avatar -->
+              <img class="avatar-view" [src]="worker.image?worker.image:defaultImage" alt="Avatar"
+                   title="Change the avatar">
+            </div>
+          </div>
+          <h3>{{worker.full_name}}</h3>
+
+          <div class="user_data">
+            <div class="user_data-item">
+              <i class="fa fa-map-marker user_data-item-icon"></i>
+              <div class="user_data-item-data">
+                {{worker.address}}, {{worker.city}} - {{worker.state}}, {{worker.country}} {{worker.zip_code}}
+              </div>
+            </div>
+            <div class="user_data-item">
+              <i class="fa fa-phone user_data-item-icon"></i>
+              <div class="user_data-item-data">
+
+                {{worker.telephone}}
+              </div>
+            </div>
+
+            <div class="user_data-item">
+              <i class="fa fa-briefcase user_data-item-icon"></i>
+              <div class="user_data-item-data">
+                {{worker.position}}
+              </div>
+            </div>
+            <div class="user_data-item">
+              <i class="fa fa-id-card user_data-item-icon"></i>
+              <div class="user_data-item-data">
+
+                {{worker.rut_passport}}
+              </div>
+            </div>
+            <div class="user_data-item">
+              <i class="fa fa-envelope user_data-item-icon"></i>
+              <div class="user_data-item-data">
+
+                {{worker.email}}
+              </div>
+            </div>
+            <div class="user_data-item">
+              <i class="fa fa-birthday-cake user_data-item-icon"></i>
+              <div class="user_data-item-data">
+
+                {{worker.birthday}}
+              </div>
+            </div>
+          </div>
+          <br>
+          <h4>Contacto de Emergencia</h4>
+          <div class="user_data">
+            <div class="user_data-item">
+              <i class="fa fa-user user_data-item-icon"></i>
+              <div class="user_data-item-data">
+                {{worker.emergency_contact}}
+              </div>
+            </div>
+            <div class="user_data-item">
+              <i class="fa fa-phone user_data-item-icon"></i>
+              <div class="user_data-item-data">
+                {{worker.emergency_telephone}}
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+              <button class="btn btn-warning" (click)="edit()">
+                <i class="fa fa-pencil"></i>
+                Editar
+              </button>
+            </div>
+            <div class="btn-group" role="group">
+              <button class="btn btn-danger" (click)="remove()">
+                <i class="fa fa-trash"></i>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8 col-sm-8 col-xs-12">
+    <div class="x_panel">
+      <div class="x_content">
+        <p-tabView>
+          <p-tabPanel header="Activos">
+
+            <!-- start user projects -->
+            <h3>Por implementar</h3>
+            <!-- end user projects -->
+          </p-tabPanel>
+          <p-tabPanel header="Actividades">
+            <h3>Por implementar</h3>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+</div>

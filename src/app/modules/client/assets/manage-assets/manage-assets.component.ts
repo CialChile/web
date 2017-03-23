@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-manage-assets',
@@ -7,7 +7,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageAssetsComponent implements OnInit {
 
-  constructor() { }
+  breadcrumbs = [
+    {
+      title: 'Home',
+      link: '/client/dashboard',
+      active: false
+    },
+    {
+      title: 'Activos',
+      link: '/client/assets',
+      active: false
+    },
+    {
+      title: 'Crear',
+      link: '/client/assets/create',
+      active: true
+    }
+  ];
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

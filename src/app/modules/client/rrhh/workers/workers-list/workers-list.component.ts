@@ -60,8 +60,6 @@ export class WorkersListComponent implements OnInit {
       active: true
     }
   ];
-  private displayDetails: boolean;
-  private selectedWorker: any;
 
   constructor(private datatableService: DatatableService, private apiService: ApiService,
               private router: Router, private toastr: ToastsManager) {
@@ -90,14 +88,10 @@ export class WorkersListComponent implements OnInit {
   }
 
   showDetail(worker: any) {
-    this.selectedWorker = worker;
-    this.displayDetails = true;
+    this.router.navigate(['/client/rrhh/workers/'+worker.id+'/info']);
+
   }
 
-
-  onDialogHide() {
-    this.selectedWorker = null;
-  }
 
   create() {
     this.router.navigate(['/client/rrhh/workers/create']);

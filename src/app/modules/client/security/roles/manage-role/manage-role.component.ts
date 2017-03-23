@@ -16,6 +16,7 @@ export class ManageRoleComponent implements OnInit {
   private saving: boolean = false;
   private basePermissions: any[];
   private roleId: number;
+  private loading: boolean = false;
   private title: string = 'Nuevo Rol';
   private breadcrumbs = [
     {
@@ -77,6 +78,7 @@ export class ManageRoleComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/security/roles/' + params['id'];
         this.roleId = params['id'];
+        this.loading = true;
         this.apiService.one('client/roles', params['id'], 'permissions').subscribe((role) => {
           this.apiService.all('client/permissions').subscribe((response) => {
             this.configurePermissions(response);
@@ -88,11 +90,16 @@ export class ManageRoleComponent implements OnInit {
               }
               return value.abilitiesList;
             });
+            this.loading = false;
             this.initForm(role.data)
+          }, (error) => {
+            this.loading = false;
           });
+        }, (error) => {
+          this.loading = false;
         })
       } else {
-        this.apiService.all('client/permission').subscribe((response) => {
+        this.apiService.all('client/permissions').subscribe((response) => {
           this.configurePermissions(response)
         })
       }

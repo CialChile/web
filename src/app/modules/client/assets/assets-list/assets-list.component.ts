@@ -15,7 +15,9 @@ export class AssetsListComponent implements OnInit {
   private totalRecords: number;
   private pageLength: number = 10;
   private globalSearch: string;
-  private workers: any;
+  private assets: any;
+  private defaultImage: string = 'assets/img/missing.png';
+  private tableView: boolean = true;
   columnOptions: SelectItem[];
   private lastLoadEvent: LazyLoadEvent;
   private columns: DataTableColumn[] = [
@@ -51,7 +53,7 @@ export class AssetsListComponent implements OnInit {
       title: 'Activos',
       link: '/client/assets',
       active: true
-    },
+    }
   ];
 
   constructor(private datatableService: DatatableService, private apiService: ApiService,
@@ -66,28 +68,38 @@ export class AssetsListComponent implements OnInit {
 
   }
 
+  searchGlobally() {
+    this.lastLoadEvent.globalFilter = this.globalSearch;
+    this.reloadTable(this.lastLoadEvent);
+  }
+
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
     this.datatableService.getData(event, this.columns, 'client/assets/datatable', '', this.globalSearch)
       .toPromise().then((response) => {
-      this.workers = response.data;
+      this.assets = response.data;
       this.totalRecords = response.recordsFiltered;
     })
   }
 
+  showDetail(asset: any) {
+    this.router.navigate(['/client/assets/' + asset.id + '/info']);
+
+  }
+
   create() {
-    this.router.navigate(['/client/rrhh/assets/create']);
+    this.router.navigate(['/client/assets/create']);
 
   }
 
-  edit(worker) {
-    this.router.navigate(['/client/rrhh/assets/' + worker.id]);
+  edit(asset) {
+    this.router.navigate(['/client/assets/' + asset.id]);
 
   }
 
-  remove(worker) {
-    this.apiService.destroy('client/assets', worker.id).subscribe((response) => {
-        this.toastr.success('Trabajador Eliminado con Exito');
+  remove(asset) {
+    this.apiService.destroy('client/assets', asset.id).subscribe((response) => {
+        this.toastr.success('Activo Eliminado con Exito');
         this.reloadTable(this.lastLoadEvent);
       },
       (error) => {

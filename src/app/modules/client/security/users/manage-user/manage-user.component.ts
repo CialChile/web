@@ -15,6 +15,7 @@ export class ManageUserComponent implements OnInit {
   private saving: boolean = false;
   private userId: number;
   private roles: any;
+  private loading: boolean = false;
   private title: string = 'Nuevo Usuario';
   private breadcrumbs = [
     {
@@ -60,9 +61,13 @@ export class ManageUserComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/security/users/' + params['id'];
         this.userId = params['id'];
+        this.loading = true;
         this.apiService.one('client/secure-users', params['id'], 'role').subscribe((user) => {
           user.data.role = user.data.role.id;
+          this.loading = false;
           this.initForm(user.data)
+        }, (error) => {
+          this.loading = false;
         })
       }
     });

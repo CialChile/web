@@ -16,6 +16,7 @@ export class ManageWorkerComponent implements OnInit {
   private workerForm: any;
   private saving: boolean = false;
   private workerId: number;
+  private loading: boolean = false;
   private title: string = 'Nuevo Trabajador';
   private breadcrumbs = [
     {
@@ -84,14 +85,17 @@ export class ManageWorkerComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/rrhh/workers/' + params['id'];
         this.workerId = params['id'];
+        this.loading = true;
         this.apiService.one('client/workers', params['id']).subscribe((worker) => {
           this.initForm(worker.data);
-
+          this.loading = false;
           this.image = {
             objectURL: worker.data.image,
             notDefault: !!worker.data.image,
             deleted: false
           };
+        }, (error) => {
+          this.loading = false;
         })
       }
     });

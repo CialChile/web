@@ -28,6 +28,10 @@ import {DataGridModule} from 'primeng/primeng';
 import {ToggleButtonModule} from 'primeng/primeng';
 import {PanelModule} from "primeng/components/panel/panel";
 import {DialogModule} from "primeng/components/dialog/dialog";
+import {RrhhModule} from "./rrhh/rrhh.module";
+import {ProfileModule} from "./profile/profile.module";
+import {SecurityModule} from "./security/security.module";
+import {AssetsModule} from "./assets/assets.module";
 
 @NgModule({
   imports: [
@@ -35,25 +39,12 @@ import {DialogModule} from "primeng/components/dialog/dialog";
     ClientRoutingModule,
     MenuModule,
     UserCanModule,
-    FormsHelperModule,
-    FormsModule,
-    ReactiveFormsModule,
-    LayoutsModule,
-    DataTableModule,
-    SharedModule,
-    ButtonModule,
-    MultiSelectModule,
-    CalendarModule,
-    FileUploadModule,
-    DataGridModule,
-    ToggleButtonModule,
-    PanelModule,
-    DialogModule
+    RrhhModule,
+    ProfileModule,
+    SecurityModule,
+    AssetsModule
   ],
-  declarations: [DashboardComponent, MyProfileComponent, IndexComponent,
-    ChangePasswordComponent, EqualValidator, WorkersListComponent, RolesListComponent,
-    ManageRoleComponent, ManageWorkerComponent, UsersListComponent, ManageUserComponent,
-    SecurityIndexComponent, RrhhIndexComponent],
+  declarations: [DashboardComponent, IndexComponent],
 })
 export class ClientModule {
 }

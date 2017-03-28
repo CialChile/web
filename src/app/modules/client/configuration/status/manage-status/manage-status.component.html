@@ -1,0 +1,62 @@
+<app-page-title [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+<form role="form" class="form-horizontal form-label-left" [formGroup]="statusForm" (submit)="onSubmit()">
+  <ng-template #loadingIndicator>
+    <div class="text-center">
+      <img width="70px" src="assets/img/gears2.svg" alt="">
+      <h4>Cargando Status...</h4>
+    </div>
+  </ng-template>
+  <div *ngIf="!loading; else loadingIndicator">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Información General
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!statusForm.controls['name'].valid  && statusForm.controls['name'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="name" class="form-control" placeholder="Nombre del Status"
+                           id="name"/>
+                    <control-messages [control]="statusForm.controls['name']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!statusForm.controls['type'].valid  && statusForm.controls['type'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-dropdown [options]="STATUS_TYPES" formControlName="type" [filter]="true"
+                                placeholder="Seleccione un tipo"></p-dropdown>
+                    <control-messages [control]="statusForm.controls['type']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="toolbar text-center">
+          <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+            <i class="fa fa-trash"></i>
+            Cancelar
+          </button>
+          <button class="btn btn-success btn-lg" type="submit" [disabled]="!statusForm.valid || saving">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

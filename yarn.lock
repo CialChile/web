@@ -71,6 +71,10 @@
     webpack-merge "^2.4.0"
     zone.js "^0.7.2"
 
+"@angular/common@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.2.1.tgz#ad7996a865b7b11fc315363827f2414a48c6589c"
+
 "@angular/common@next":
   version "4.0.0-rc.5"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-4.0.0-rc.5.tgz#27c1ff77d3a86fa77533255f9829a9b7b366be60"
@@ -87,9 +91,21 @@
   version "4.0.0-rc.5"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-4.0.0-rc.5.tgz#3f5c0fc99c0fd843287a3f2efc62e28b0d8fa177"
 
+"@angular/compiler@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.2.1.tgz#16e7faf588cf9121a0f6c16d0bae2830f4cafdc1"
+
 "@angular/core@>=2.3.1 <5.0.0 || >=4.0.0-beta <5.0.0", "@angular/core@next":
   version "4.0.0-rc.5"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-4.0.0-rc.5.tgz#2e4a2d8ca2f1466857ebb634240e17ff9b697ec5"
+
+"@angular/core@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.2.1.tgz#86fdc34a370a4fcfe84ed9de4b3c43548612919c"
+
+"@angular/forms@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.2.1.tgz#0e7154acc5127c583b4b52c59eac45d672c29da4"
 
 "@angular/forms@next":
   version "4.0.0-rc.5"
@@ -99,9 +115,17 @@
   version "4.0.0-rc.5"
   resolved "https://registry.yarnpkg.com/@angular/http/-/http-4.0.0-rc.5.tgz#59c17065a57eb07d8494447e1a52a5ec3bafb347"
 
+"@angular/platform-browser-dynamic@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.2.1.tgz#561d32982fee4b68b474ba474c7f3c4d94bfeb6c"
+
 "@angular/platform-browser-dynamic@next":
   version "4.0.0-rc.5"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-4.0.0-rc.5.tgz#75218aef8993559900b6cccd41404ec54c58b24d"
+
+"@angular/platform-browser@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.2.1.tgz#d51b36260089f3054e745efad05993523d5a5293"
 
 "@angular/platform-browser@next":
   version "4.0.0-rc.5"
@@ -227,6 +251,12 @@ amdefine@>=0.0.4:
 angular2-jwt@^0.1.28:
   version "0.1.28"
   resolved "https://registry.yarnpkg.com/angular2-jwt/-/angular2-jwt-0.1.28.tgz#4896dbb88ec561382cf485ff9eaa6f96a683f4d1"
+
+angular2-text-mask:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/angular2-text-mask/-/angular2-text-mask-7.0.0.tgz#46bb451b99a743df83779773d7b678228aeeceb6"
+  dependencies:
+    text-mask-core "^4.0.0"
 
 ansi-align@^1.1.0:
   version "1.1.0"
@@ -2546,6 +2576,14 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
+jquery-mask-plugin@^1.14.8:
+  version "1.14.10"
+  resolved "https://registry.yarnpkg.com/jquery-mask-plugin/-/jquery-mask-plugin-1.14.10.tgz#72468dfac2fced869818e7b704d713ada713417a"
+
+jquery@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
+
 jquery@^3.1.1, jquery@>=1.9.1:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.0.tgz#3bdbba66e1eee0785532dddadb0e0d2521ca584b"
@@ -3041,6 +3079,21 @@ ng2-bootstrap@1.4.2:
   resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.4.2.tgz#39f3886967f21cffd362d8feb28cc47eecacf153"
   dependencies:
     moment "2.17.1"
+
+ng2-input-mask:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/ng2-input-mask/-/ng2-input-mask-0.0.7.tgz#d64f67e23d38778b4ca1e31a451cbe4990769d9e"
+  dependencies:
+    "@angular/common" "2.2.1"
+    "@angular/compiler" "2.2.1"
+    "@angular/core" "2.2.1"
+    "@angular/forms" "2.2.1"
+    "@angular/platform-browser" "2.2.1"
+    "@angular/platform-browser-dynamic" "2.2.1"
+    jquery "^2.2.4"
+    jquery-mask-plugin "^1.14.8"
+    rxjs "5.0.0-beta.12"
+    zone.js "^0.6.23"
 
 ng2-toastr@1.6.0:
   version "1.6.0"
@@ -4131,6 +4184,12 @@ rxjs@^5.0.1, rxjs@^5.1.0:
   dependencies:
     symbol-observable "^1.0.1"
 
+rxjs@5.0.0-beta.12:
+  version "5.0.0-beta.12"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.0.0-beta.12.tgz#cdfde2d8c4639d20ae7794bff8fddf32da7ad337"
+  dependencies:
+    symbol-observable "^1.0.1"
+
 safe-buffer@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
@@ -4624,6 +4683,10 @@ temp@0.8.3:
 tether@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/tether/-/tether-1.4.0.tgz#0f9fa171f75bf58485d8149e94799d7ae74d1c1a"
+
+text-mask-core@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/text-mask-core/-/text-mask-core-4.0.0.tgz#edefaba552012b0adea6726e6ae317b2345f276e"
 
 through@^2.3.6, through@X.X.X:
   version "2.3.8"
@@ -5281,6 +5344,10 @@ yeast@0.1.2:
 yn@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-1.2.0.tgz#d237a4c533f279b2b89d3acac2db4b8c795e4a63"
+
+zone.js@^0.6.23:
+  version "0.6.26"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.6.26.tgz#067c13b8b80223a89b62e9dc82680f09762c4636"
 
 zone.js@^0.7.2:
   version "0.7.8"

@@ -1,0 +1,108 @@
+<app-page-title [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+<form role="form" class="form-horizontal form-label-left" [formGroup]="categoryForm" (submit)="onSubmit()">
+  <ng-template #loadingIndicator>
+    <div class="text-center">
+      <img width="70px" src="assets/img/gears2.svg" alt="">
+      <h4>Cargando Categoría...</h4>
+    </div>
+  </ng-template>
+  <div *ngIf="!loading; else loadingIndicator">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Información General
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!categoryForm.controls['name'].valid  && categoryForm.controls['name'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="name" class="form-control" placeholder="Nombre de la categoría"
+                           id="name"/>
+                    <control-messages [control]="categoryForm.controls['name']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Campos Personalizados de la categoría
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div formArrayName="custom_fields_config">
+              <div *ngIf="!custom_fields_config.controls.length">
+                <div class="text-center">
+                  <h4>Puede agregar hasta 5 campos personalizados a la categoría, estos campos se pediran en los activos
+                    que pertenezcan a esta categoría</h4>
+                </div>
+              </div>
+              <div *ngFor="let customField of custom_fields_config.controls; let i=index"
+                   [formGroupName]="i">
+                <div class="row">
+                  <div class="col-xs-2 col-md-1">
+                    <button type="button" class="btn btn-danger" (click)="removeCustomField(i)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                  <div class="col-xs-10 col-md-5">
+                    <div class="form-group"
+                         [ngClass]="{'has-error':!customField.controls['label'].valid  && customField.controls['label'].touched}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Nombre Del Campo</label>
+                      <div class="col-xs-12 col-md-9 col-sm-9">
+                        <input formControlName="label" class="form-control" placeholder="Nombre del campo personalizado"
+                               [id]="'label'+i"/>
+                        <control-messages [control]="customField.controls['label']"></control-messages>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">
+                        <input type="checkbox" formControlName="required">
+                        Requerido
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 text-right">
+                <button class="btn btn-info" type="button" (click)="addCustomField()"
+                        [disabled]="custom_fields_config.controls.length > 4">Añadir Campo Personalizado
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="toolbar text-center">
+          <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+            <i class="fa fa-trash"></i>
+            Cancelar
+          </button>
+          <button class="btn btn-success btn-lg" type="submit" [disabled]="!categoryForm.valid || saving">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

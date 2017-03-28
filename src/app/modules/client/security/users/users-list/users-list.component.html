@@ -10,7 +10,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <p-dataTable [value]="users" [lazy]="true" [responsive]="true" [globalFilter]="gb" [rows]="pageLength"
+        <p-dataTable [value]="users" [lazy]="true" [responsive]="true" [rows]="pageLength"
                      [paginator]="true" resizableColumns="true" emptyMessage="No se encontraron registros"
                      (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords"  [pageLinks]="3">
           <p-header>
@@ -30,7 +30,7 @@
               </div>
               <div class="col-xs-12 col-md-4">
                 <div>
-                  <input #gb type="text" class="form-control" [(ngModel)]="globalSearch" placeholder="Buscar..">
+                  <input (keyup)="searchGlobally()" type="text" class="form-control" [(ngModel)]="globalSearch" placeholder="Buscar...">
                 </div>
               </div>
             </div>

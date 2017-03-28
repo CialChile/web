@@ -76,9 +76,9 @@ export class DatatableService {
         }]
       }
     }
+
     let input: URLSearchParams = new URLSearchParams(objectToParams({
       draw: "1",
-      include: include ? include : '',
       columns: columns.map((column) => {
         return {
           data: column.data,
@@ -94,6 +94,7 @@ export class DatatableService {
       search: {value: search ? search : '', regex: "false"},
     }));
 
+    url = include ? url + '?include=' + include : url;
     return this.apiService.all(url, null, {search: input});
   }
 

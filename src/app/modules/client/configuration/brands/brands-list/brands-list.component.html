@@ -1,0 +1,125 @@
+<app-page-title [title]="'Marcas'" [breadcrumbs]="breadcrumbs"></app-page-title>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Marcas
+          <small>Listado</small>
+        </h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div *ngIf="tableView">
+          <p-dataTable [value]="brands" [lazy]="true" [responsive]="true" [rows]="10"
+                       [paginator]="true" emptyMessage="No se encontraron registros" [pageLinks]="3"
+                       [rowsPerPageOptions]="[10,20,50]"
+                       (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords">
+            <p-header>
+              <div class="row">
+                <div class="col-xs-12 col-md-3 text-left">
+                  <div>
+                    <button class="btn btn-success" type="button" (click)="create()">
+                      <i class="fa fa-plus"></i>
+                      Nueva Marca
+                    </button>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <div class=" text-left">
+                    <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"></p-multiSelect>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <div>
+                    <input (keyup)="searchGlobally()" type="text" class="form-control" [(ngModel)]="globalSearch" placeholder="Buscar...">
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                  <div>
+                    <p-toggleButton onIcon="fa-th" onLabel="Lista" offLabel="Tabla" offIcon="fa-table"
+                                    [(ngModel)]="tableView"></p-toggleButton>
+                  </div>
+                </div>
+              </div>
+            </p-header>
+            <p-column *ngFor="let col of columns" [field]="col.data" [header]="col.name"
+                      [sortable]="col.sort"></p-column>
+            <p-column styleClass="col-button">
+              <ng-template pTemplate="header">
+                Acciones
+              </ng-template>
+              <ng-template let-brand="rowData" pTemplate="body">
+                <button type="button" pButton (click)="edit(brand)" class="ui-button-warning"
+                        icon="fa-pencil"></button>
+                <button type="button" pButton (click)="remove(brand)" class="ui-button-danger"
+                        icon="fa-trash"></button>
+              </ng-template>
+            </p-column>
+          </p-dataTable>
+        </div>
+        <div *ngIf="!tableView">
+
+          <p-dataGrid [value]="brands" [lazy]="true" [rows]="10"
+                      [paginator]="true" emptyMessage="No se encontraron registros" [pageLinks]="3"
+                      [rowsPerPageOptions]="[10,20,50]"
+                      (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords">
+            <p-header>
+              <div class="row">
+                <div class="col-xs-12 col-md-3 text-left">
+                  <div>
+                    <button class="btn btn-success" type="button" (click)="create()">
+                      <i class="fa fa-plus"></i>
+                      Nueva Marca
+                    </button>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <div>
+                    <input #gb type="text" class="form-control" [(ngModel)]="globalSearch" (keyup)="searchGlobally()"
+                           placeholder="Buscar..">
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                  <div>
+                    <p-toggleButton onIcon="fa-th" onLabel="Lista" offLabel="Tabla" offIcon="fa-table"
+                                    [(ngModel)]="tableView"></p-toggleButton>
+                  </div>
+                </div>
+              </div>
+            </p-header>
+            <ng-template let-brand pTemplate="item">
+              <div style="padding:3px" class="ui-g-12 ui-md-3">
+                <p-panel [header]="brand.name" [style]="{'text-align':'center'}">
+                  <div class="brand-detail">
+                    <div class="text-left">
+                      <div>
+                        <b>Creada El:</b> {{brand.created_at}}
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="ui-widget-content" style="border-top:0">
+                  <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-sm btn-warning" (click)="edit(brand)">
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-sm btn-danger" (click)="remove(brand)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </p-panel>
+              </div>
+            </ng-template>
+          </p-dataGrid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

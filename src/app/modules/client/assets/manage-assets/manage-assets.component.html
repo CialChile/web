@@ -1,5 +1,282 @@
 <app-page-title [title]="'Nuevo Activo'" [breadcrumbs]="breadcrumbs"></app-page-title>
 
-<div class="text-center">
-  <h3>Por Implementar</h3>
-</div>
+<form role="form" class="form-horizontal form-label-left form-assets" [formGroup]="assetForm" (submit)="onSubmit(assetForm,$event)">
+
+  <ng-template #loadingIndicator>
+    <div class="text-center">
+      <img width="70px" src="assets/img/gears2.svg" alt="">
+      <h4>Cargando Activo...</h4>
+    </div>
+  </ng-template>
+
+  <div *ngIf="!loading; else loadingIndicator">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Información General
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-8">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['sku'].valid  && assetForm.controls['sku'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Código de Identificación</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="sku" [textMask]="{mask: skuMask}" class="form-control"
+                           placeholder="Código de Identificación"
+                           id="sku"/>
+                    <control-messages [control]="assetForm.controls['sku']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['name'].valid  && assetForm.controls['name'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="name" class="form-control"
+                           placeholder="Nombre del activo"
+                           id="name"/>
+                    <control-messages [control]="assetForm.controls['name']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['serial'].valid  && assetForm.controls['serial'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Nº de Serial</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="serial" class="form-control" placeholder="Número de Serial"
+                           id="serial"/>
+                    <control-messages [control]="assetForm.controls['serial']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['validity_time'].valid  && assetForm.controls['validity_time'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Vida útil estimada en años</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="validity_time" [textMask]="{mask: validityMask,guide:false}"
+                           class="form-control"
+                           placeholder="Vida útil estimada en Años"
+                           id="validity_time"/>
+                    <control-messages [control]="assetForm.controls['validity_time']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['integration_date'].valid  && assetForm.controls['integration_date'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline multiline">Fecha de integración
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-calendar formControlName="integration_date" dateFormat="dd/mm/yy" [locale]="es"
+                                inputStyleClass="form-control" [yearNavigator]="true"
+                                [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+
+                    <control-messages [control]="assetForm.controls['integration_date']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['end_service_life_date'].valid  && assetForm.controls['end_service_life_date'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline multiline">Fecha término vida útil
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-calendar formControlName="end_service_life_date" dateFormat="dd/mm/yy" [locale]="es"
+                                inputStyleClass="form-control" [yearNavigator]="true"
+                                [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+
+                    <control-messages [control]="assetForm.controls['end_service_life_date']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['warranty_date'].valid  && assetForm.controls['warranty_date'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline multiline">Fecha de término de
+                    garantía
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-calendar formControlName="warranty_date" dateFormat="dd/mm/yy" [locale]="es"
+                                inputStyleClass="form-control" [yearNavigator]="true"
+                                [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+
+                    <control-messages [control]="assetForm.controls['warranty_date']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['disincorporation_date'].valid  && assetForm.controls['disincorporation_date'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Fecha de desincorporación</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-calendar formControlName="disincorporation_date" dateFormat="dd/mm/yy" [locale]="es"
+                                inputStyleClass="form-control" [yearNavigator]="true"
+                                [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+
+                    <control-messages [control]="assetForm.controls['disincorporation_date']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['status_id'].valid  && assetForm.controls['status_id'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-dropdown [options]="status" formControlName="status_id" [filter]="true"
+                                placeholder="Seleccione un Status"></p-dropdown>
+                    <control-messages [control]="assetForm.controls['status_id']"></control-messages>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-xs-12 col-md-4">
+                <div class="row">
+                  <div class="col-xs-12 col-md-8 col-md-offset-2">
+                    <etrack-image-upload [file]="image"
+                                         defaultImageUrl="http://etrack.dev/images/missing/assets/missing.jpg"
+                                         (fileUpdated)="imageChange($event)"></etrack-image-upload>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Trabajador Responsable del Activo
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="ui-fluid">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['worker'].valid  && assetForm.controls['worker'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Trabajador</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-autoComplete formControlName="worker" [suggestions]="workers" [size]="10"
+                                    [minLength]="1" (onDropdownClick)="searchWorker($event)"
+                                    placeholder="Buscar Trabajador por nombre..."
+                                    (completeMethod)="searchWorker($event)" [dropdown]="true" field="full_name">
+                      <ng-template let-worker pTemplate="item">
+                        <div class="media">
+                          <div class="media-left">
+                            <a href="#">
+                              <img class="media-object img-circle" width="35" height="35"
+                                   [src]="worker.thumbnail?worker.thumbnail:defaultWorkerImage" alt="...">
+                            </a>
+                          </div>
+                          <div class="media-body" style="vertical-align: middle;">
+                            <h4 class="media-heading">{{worker.full_name}}</h4>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-autoComplete>
+                    <control-messages [control]="assetForm.controls['worker']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Configuración
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['brand_id'].valid  && assetForm.controls['brand_id'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Marca</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-dropdown [options]="brands" formControlName="brand_id" [filter]="true"
+                                placeholder="Seleccione una Marca"></p-dropdown>
+                    <control-messages [control]="assetForm.controls['brand_id']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['category_id'].valid  && assetForm.controls['category_id'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Categoría</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-dropdown [options]="categories" formControlName="category_id" [filter]="true"
+                                placeholder="Seleccione una categoría"></p-dropdown>
+                    <control-messages [control]="assetForm.controls['category_id']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['workplace_id'].valid  && assetForm.controls['workplace_id'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Lugar de Trabajo
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-dropdown [options]="workplaces" formControlName="workplace_id" [filter]="true"
+                                placeholder="Seleccione un Lugar de Trabajo"></p-dropdown>
+                    <control-messages [control]="assetForm.controls['workplace_id']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['model_id'].valid  && assetForm.controls['model_id'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Modelo</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-dropdown [options]="brandModels" formControlName="model_id" [filter]="true"
+                                placeholder="Seleccione un modelo"></p-dropdown>
+                    <control-messages [control]="assetForm.controls['model_id']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!assetForm.controls['sub_category_id'].valid  && assetForm.controls['sub_category_id'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Sub Categoría</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-dropdown [options]="subcategories" formControlName="sub_category_id" [filter]="true"
+                                placeholder="Seleccione una subcategoría"></p-dropdown>
+                    <control-messages [control]="assetForm.controls['sub_category_id']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="x_panel" *ngIf="custom_fields.controls.length">
+          <div class="x_title">
+            <h2>Campos Personalizados
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div formArrayName="custom_fields">
+              <div *ngFor="let customField of custom_fields.controls; let i=index; let odd=odd; let even=even;"
+                   [formGroupName]="i">
+                <div [ngClass]="{ row: odd}">
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group"
+                         [ngClass]="{'has-error':!customField.controls['value'].valid  && customField.controls['value'].touched}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        {{customField.controls['label'].value}}
+                      </label>
+                      <div class="col-xs-12 col-md-9 col-sm-9">
+                        <input type="text" class="form-control" formControlName="value">
+                        <control-messages [control]="customField.controls['value']"></control-messages>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="toolbar text-center">
+          <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+            <i class="fa fa-trash"></i>
+            Cancelar
+          </button>
+          <button class="btn btn-success btn-lg" type="submit" [disabled]="!assetForm.valid || saving">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+

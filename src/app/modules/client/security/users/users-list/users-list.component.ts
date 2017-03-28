@@ -71,6 +71,11 @@ export class UsersListComponent implements OnInit {
     }
   }
 
+  searchGlobally() {
+    this.lastLoadEvent.globalFilter = this.globalSearch;
+    this.reloadTable(this.lastLoadEvent);
+  }
+
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
     this.datatableService.getData(event, this.columns, 'client/secure-users/datatable', 'role', this.globalSearch)

@@ -1,3 +1,4 @@
+import {isArray} from "util";
 function isJsObject(o: any) {
   return o !== null && (typeof o === 'function' || typeof o === 'object') && !(o instanceof Date);
 }
@@ -19,29 +20,72 @@ function dateToJSON(date) {
  */
 export function objectToFormData(object): FormData {
   let formData: FormData = new FormData();
-  Object.keys(object).forEach((key) => {
-      if (isJsDate(object[key])) {
-        formData.append(key, dateToJSON(object[key]))
+  Object.keys(object).forEach((property) => {
+      if (isArray(object[property])) {
+        for (let i = 0; i < object[property].length; i++) {
+          formData = arrayToFormData(object[property][i], formData, property + '[' + i + ']')
+        }
       } else {
-        if (isJsObject(object[key])) {
-          formData = subObjectToFormData(key, object[key], formData)
+        if (isJsDate(object[property])) {
+          formData.append(property, dateToJSON(object[property]))
         } else {
-          formData.append(key, object[key])
+          if (isJsObject(object[property])) {
+            formData = subObjectToFormData(property, object[property], formData)
+          } else {
+            formData.append(property, object[property])
+          }
         }
       }
     }
   );
   return formData;
 }
+/**
+ * Converts an array to a parametrised string.
+ * @param object
+ * @param namespace
+ * @param formData
+ * @returns {string}
+ */
+function arrayToFormData(object, formData, namespace) {
+  // if the property is an object, but not a File or an Array,
+  // use recursivity.
+  let formKey;
+  for (let property in object) {
+    if (object.hasOwnProperty(property) && object[property]) {
+      if (namespace) {
+        formKey = namespace + '[' + property + ']';
+      } else {
+        formKey = property;
+      }
+
+      // if the property is an object, but not a File,
+      // use recursivity.
+      if ((typeof object[property] === 'object' && !(object[property] instanceof File)) || isArray(object[property])) {
+        if (isArray(object[property])) {
+          for (let i = 0; i < object[property].length; i++) {
+            formData = arrayToFormData(object[property][i], formData, property + '[' + i + ']')
+          }
+        } else {
+          formData = subObjectToFormData(property, object, formData);
+        }
+      } else {
+        formData.append(formKey, object[property]);
+      }
+    }
+  }
+
+  return formData;
+}
 
 /**
  * Converts a sub-object to a parametrised string.
- * @param key
+ * @param property
  * @param object
  * @param formData
  * @returns {string}
  */
-function subObjectToFormData(key: string, object, formData: FormData): FormData {
+function subObjectToFormData(property: string, object, formData: FormData): FormData {
   Object.keys(object).forEach((childKey) => {
       if (isJsObject(object[childKey])) {
         formData = subObjectToFormData(childKey, object[childKey], formData);

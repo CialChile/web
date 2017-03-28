@@ -32,6 +32,7 @@ import {RrhhModule} from "./rrhh/rrhh.module";
 import {ProfileModule} from "./profile/profile.module";
 import {SecurityModule} from "./security/security.module";
 import {AssetsModule} from "./assets/assets.module";
+import {ConfigurationModule} from "./configuration/configuration.module";
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import {AssetsModule} from "./assets/assets.module";
     RrhhModule,
     ProfileModule,
     SecurityModule,
-    AssetsModule
+    AssetsModule,
+    ConfigurationModule
   ],
   declarations: [DashboardComponent, IndexComponent],
 })

@@ -3,5 +3,4 @@ export interface DataTableColumn {
   data: string;
   sort: boolean;
   filter: boolean;
-  render?;
 }

@@ -5,6 +5,7 @@ import {DatatableService} from "../../../../services/datatable/datatable.service
 import {Router} from "@angular/router";
 import {ToastsManager} from "ng2-toastr";
 import {ApiService} from "../../../../services/api.service";
+import {ASSETSCOLUMNS} from "./assetsColumns";
 
 @Component({
   selector: 'app-assets-list',
@@ -18,43 +19,10 @@ export class AssetsListComponent implements OnInit {
   private assets: any;
   private defaultImage: string = 'assets/img/missing.png';
   private tableView: boolean = true;
+  private assetsColumns = ASSETSCOLUMNS;
   columnOptions: SelectItem[];
   private lastLoadEvent: LazyLoadEvent;
-  private columns: DataTableColumn[] = [
-    {
-      name: 'Nombre',
-      data: 'first_name',
-      sort: true,
-      filter: true,
-    }, {
-      name: 'Apellido',
-      data: 'last_name',
-      sort: true,
-      filter: true
-    }, {
-      name: 'Rut/Pasaporte',
-      data: 'rut_passport',
-      sort: true,
-      filter: true
-    }, {
-      name: 'Cargo',
-      data: 'position',
-      sort: true,
-      filter: true
-    }
-  ];
-  breadcrumbs = [
-    {
-      title: 'Home',
-      link: '/client/dashboard',
-      active: false
-    },
-    {
-      title: 'Activos',
-      link: '/client/assets',
-      active: true
-    }
-  ];
+  private columns: DataTableColumn[] = [];
 
   constructor(private datatableService: DatatableService, private apiService: ApiService,
               private router: Router, private toastr: ToastsManager) {
@@ -62,10 +30,12 @@ export class AssetsListComponent implements OnInit {
 
   ngOnInit() {
     this.columnOptions = [];
-    for (let i = 0; i < this.columns.length; i++) {
-      this.columnOptions.push({label: this.columns[i].name, value: this.columns[i]});
+    for (let i = 0; i < this.assetsColumns.length; i++) {
+      if (i < 3) {
+        this.columns.push(this.assetsColumns[i]);
+      }
+      this.columnOptions.push({label: this.assetsColumns[i].name, value: this.assetsColumns[i]});
     }
-
   }
 
   searchGlobally() {
@@ -75,7 +45,7 @@ export class AssetsListComponent implements OnInit {
 
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
-    this.datatableService.getData(event, this.columns, 'client/assets/datatable', '', this.globalSearch)
+    this.datatableService.getData(event, this.columns, 'client/assets/datatable', 'brand,brandModel,category,subcategory,workplace,status', this.globalSearch)
       .toPromise().then((response) => {
       this.assets = response.data;
       this.totalRecords = response.recordsFiltered;

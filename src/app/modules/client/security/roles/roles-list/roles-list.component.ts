@@ -63,6 +63,11 @@ export class RolesListComponent implements OnInit {
     }
   }
 
+  searchGlobally() {
+    this.lastLoadEvent.globalFilter = this.globalSearch;
+    this.reloadTable(this.lastLoadEvent);
+  }
+
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
     this.datatableService.getData(event, this.columns, 'client/roles/datatable', '', this.globalSearch)

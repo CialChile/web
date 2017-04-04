@@ -13,5 +13,20 @@ export const ADMINMENUITEMS: Menu[] = [
     name: 'Empresas',
     icon: 'fa-building',
     permission: ''
-  }
+  },
+  {
+    dropdown: true,
+    link: '/admin/security',
+    name: 'Seguridad',
+    icon: 'fa-lock',
+    permission: '',
+    items: [
+      {
+        link: '/admin/security/users',
+        name: 'Usuarios',
+        icon: 'fa-users',
+        permission: ''
+      },
+    ]
+  },
 ];

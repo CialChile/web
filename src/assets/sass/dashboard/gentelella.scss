@@ -1,5 +1,5 @@
 .left_col {
-  background: #2A3F54;
+  background: $tp-dark;
 }
 
 .nav-sm .container.body .col-md-3.left_col {
@@ -43,12 +43,6 @@
   margin: 13px 0 0 3px;
 }
 
-.site_title i {
-  border: 1px solid #EAEAEA;
-  padding: 5px 6px;
-  border-radius: 50%;
-}
-
 .nav-sm .main_container .top_nav {
   display: block;
   margin-left: 70px;
@@ -64,7 +58,7 @@
 
 .nav-sm .nav.child_menu li.active,
 .nav-sm .nav.side-menu li.active-sm {
-  border-right: 5px solid #1ABB9C;
+  border-right: 5px solid $tp-red;
 }
 
 .nav-sm ul.nav.child_menu ul,
@@ -75,11 +69,11 @@
 }
 
 .nav-sm > .nav.side-menu > li.active-sm > a {
-  color: #1ABB9C !important;
+  color: $tp-red !important;
 }
 
 .nav-sm > .nav.side-menu > li.active-route > a {
-  color: #1ABB9C !important;
+  color: $tp-red !important;
 }
 
 .nav-sm .nav.side-menu li a i.toggle-up {
@@ -99,7 +93,7 @@
   top: 0;
   width: 210px;
   z-index: 4000;
-  background: #3E5367;
+  background: lighten($tp-dark, 10);
   // display: none;
 }
 
@@ -213,8 +207,25 @@
 }
 
 .nav_menu {
+  .nav.navbar-nav > li > a {
+    color: white !important;
+  }
+  .nav > li > a {
+    &:hover, &:focus {
+      background: darken($tp-red, 2) !important;
+    }
+  }
+  .nav .open > a {
+    background: darken($tp-red, 2) !important;
+  }
+  a {
+    color: white;
+    &:hover {
+      color: lighten($link-color, 5);
+    }
+  }
   float: left;
-  background: #EDEDED;
+  background: $tp-red;
   border-bottom: 1px solid #D9DEE4;
   margin-bottom: 10px;
   width: 100%;
@@ -253,7 +264,7 @@ body .container.body .right_col {
 .nav_title {
   width: 230px;
   float: left;
-  background: #2A3F54;
+  background: $tp-red;
   border-radius: 0;
   height: 57px;
 }
@@ -407,7 +418,7 @@ body .container.body .right_col {
 
 body {
   color: #73879C;
-  background: #2A3F54;
+  background: $tp-dark;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -542,8 +553,11 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 a {
-  color: #5A738E;
+  color: $tp-red;
   text-decoration: none;
+  &:hover {
+    color: darken($tp-red, 10%);
+  }
 }
 
 a, a:visited, a:focus, a:active, :visited, :focus, :active, .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
@@ -638,11 +652,11 @@ a:hover, a:focus {
 
 .nav.child_menu li:hover,
 .nav.child_menu li.active {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: lighten($tp-dark, 10);
 }
 
 .nav.child_menu li.active-route {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: lighten($tp-dark, 10);
 }
 
 .nav.child_menu li {
@@ -707,12 +721,12 @@ a:hover, a:focus {
 
 .nav.side-menu, .nav.side-menu {
   li.current-page, li.active {
-    border-right: 5px solid #1ABB9C;
+    border-right: 5px solid $tp-red;
 
   }
 
   li.current-page, li.active-route {
-    border-right: 5px solid #1ABB9C;
+    border-right: 5px solid $tp-red;
 
   }
 }
@@ -732,10 +746,10 @@ a:hover, a:focus {
 .nav.side-menu li.active > a, .nav.side-menu li.active-route > a {
   text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5b6479), color-stop(100%, #4c5566)), #686e78;
-  background: -webkit-linear-gradient(#334556, #2C4257), #2A3F54;
-  background: -moz-linear-gradient(#334556, #2C4257), #2A3F54;
-  background: -o-linear-gradient(#334556, #2C4257), #2A3F54;
-  background: linear-gradient(#334556, #2C4257), #2A3F54;
+  background: -webkit-linear-gradient(lighten($tp-dark, 5), lighten($tp-dark, 2)), lighten($tp-dark, 1);
+  background: -moz-linear-gradient(lighten($tp-dark, 5), lighten($tp-dark, 2)), lighten($tp-dark, 1);
+  background: -o-linear-gradient(lighten($tp-dark, 5), lighten($tp-dark, 2)), lighten($tp-dark, 1);
+  background: linear-gradient(lighten($tp-dark, 5), lighten($tp-dark, 2)), lighten($tp-dark, 1);
   -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
   -moz-box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
   box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
@@ -2415,7 +2429,7 @@ span.section {
 }
 
 .form-control {
-  border-radius: 0;
+  //border-radius: 0;
   width: 100%;
 }
 

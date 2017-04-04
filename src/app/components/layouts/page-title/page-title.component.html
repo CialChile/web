@@ -1,9 +1,10 @@
 <div class="page-title">
   <div class="title_left">
-    <h3>{{title}}</h3>
+    <h3>
+      <a *ngIf="back" [routerLink]="back"><i class="fa fa-arrow-circle-left "></i></a>&nbsp;&nbsp;{{title}}</h3>
   </div>
   <div class="title_right" *ngIf="breadcrumbs">
-    <div class="col-xs-12 pull-right text-right hidden-xs hidden-sm">
+    <div class="pull-right text-right hidden-xs">
       <ol class="breadcrumb">
         <li *ngFor="let breadcrumb of breadcrumbs">
           <a [routerLink]="breadcrumb.link" [ngClass]="{'active': breadcrumb.active}">{{breadcrumb.title}}</a>

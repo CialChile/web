@@ -18,6 +18,9 @@ import {MultiSelectModule} from "primeng/components/multiselect/multiselect";
 import {InputSwitchModule} from "primeng/components/inputswitch/inputswitch";
 import {ConfirmDialogModule} from "primeng/components/confirmdialog/confirmdialog";
 import {ConfirmationService} from "primeng/components/common/api";
+import {TextMaskModule} from "angular2-text-mask";
+import {AdminProfileModule} from "./profile/admin-profile.module";
+import {AdminSecurityModule} from "./security/admin-security.module";
 
 @NgModule({
   imports: [
@@ -33,7 +36,10 @@ import {ConfirmationService} from "primeng/components/common/api";
     SharedModule,
     ButtonModule,
     MultiSelectModule,
-    InputSwitchModule
+    InputSwitchModule,
+    TextMaskModule,
+    AdminProfileModule,
+    AdminSecurityModule
   ],
   declarations: [
     AdminIndexComponent,

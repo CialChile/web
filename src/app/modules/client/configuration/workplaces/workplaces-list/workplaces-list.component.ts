@@ -31,8 +31,8 @@ export class WorkplacesListComponent implements OnInit {
 
   ngOnInit() {
     this.columnOptions = [];
-    this.columns = this.workplacesColumns;
     for (let i = 0; i < this.workplacesColumns.length; i++) {
+      this.columns.push(this.workplacesColumns[i]);
       this.columnOptions.push({label: this.workplacesColumns[i].name, value: this.workplacesColumns[i]});
     }
   }
@@ -49,6 +49,18 @@ export class WorkplacesListComponent implements OnInit {
       this.workplaces = response.data;
       this.totalRecords = response.recordsFiltered;
     })
+  }
+
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.workplacesColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.workplacesColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.workplacesColumns[i]);
+      }
+    }
   }
 
   create() {

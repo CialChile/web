@@ -7,6 +7,12 @@ import {AdminCreateCompaniesComponent} from "./companies/admin-create-companies/
 import {AdminListCompaniesComponent} from "./companies/admin-list-companies/admin-list-companies.component";
 import {Routes} from '@angular/router';
 import {AdminEditCompaniesComponent} from "./companies/admin-edit-companies/admin-edit-companies.component";
+import {AdminProfileComponent} from "./profile/my-profile/admin-profile.component";
+import {AdminChangePasswordComponent} from "./profile/change-password/admin-change-password.component";
+import {AdminSecurityIndexComponent} from "./security/admin-security-index";
+import {ClientGuard} from "../auth/guards/client.guard";
+import {AdminUsersListComponent} from "./security/users/users-list/admin-users-list.component";
+import {AdminManageUserComponent} from "./security/users/manage-user/admin-manage-user.component";
 
 export const routes: Routes = [
   {
@@ -18,6 +24,14 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: AdminDashboardComponent,
+      },
+      {
+        path: 'my-profile',
+        component: AdminProfileComponent,
+      },
+      {
+        path: 'my-profile/change-password',
+        component: AdminChangePasswordComponent
       },
       {
         path: 'companies',
@@ -36,6 +50,29 @@ export const routes: Routes = [
             component: AdminEditCompaniesComponent,
           }
         ]
+      },
+      {
+        path: 'security',
+        component: AdminSecurityIndexComponent,
+        canActivateChild: [AuthGuard, AdminGuard],
+        children: [
+          {
+            path: 'users',
+            component: AdminUsersListComponent,
+          },
+          {
+            path: 'users/create',
+            component: AdminManageUserComponent,
+          },
+          {
+            path: 'users/:id',
+            component: AdminManageUserComponent,
+          },
+        ]
+      },
+      {
+        path: '**',
+        component: AdminDashboardComponent
       }
     ]
   },

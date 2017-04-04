@@ -20,13 +20,13 @@ import {MultiSelectModule} from "primeng/components/multiselect/multiselect";
 import {ToggleButtonModule} from "primeng/components/togglebutton/togglebutton";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {FormsHelperModule} from "../../../components/forms/forms-helpers.module";
-import {RouterModule} from "@angular/router";
 import {DropdownModule} from "primeng/components/dropdown/dropdown";
 import {PanelModule} from "primeng/components/panel/panel";
 import {AssetConfigComponent} from './assets/asset-config/asset-config.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { StatusListComponent } from './status/status-list/status-list.component';
 import { ManageStatusComponent } from './status/manage-status/manage-status.component';
+import {ConfigurationRoutingModule} from "./configuration-routing.module";
 
 @NgModule({
   imports: [
@@ -41,10 +41,10 @@ import { ManageStatusComponent } from './status/manage-status/manage-status.comp
     ReactiveFormsModule,
     FormsHelperModule,
     FormsModule,
-    RouterModule,
     DropdownModule,
     PanelModule,
-    TextMaskModule
+    TextMaskModule,
+    ConfigurationRoutingModule
   ],
   declarations: [ConfigurationIndexComponent, BrandsListComponent, ManageBrandsComponent,
     ManageBrandModelsComponent, BrandModelsListComponent, ManageCategoriesComponent,

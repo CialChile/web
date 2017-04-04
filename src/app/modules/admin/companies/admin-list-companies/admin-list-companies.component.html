@@ -24,8 +24,9 @@
           </div>
           <div class="x_content">
             <p-dataTable [value]="companies" [lazy]="true" [responsive]="true" [globalFilter]="gb" [rows]="pageLength"
-                         [paginator]="true" resizableColumns="true" emptyMessage="No se encontraron registros"
+                         [paginator]="true" emptyMessage="No se encontraron registros"
                          [pageLinks]="3"
+                         expandableRows="true"
                          (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords"
                          [rowsPerPageOptions]="[10,20,50]">
               <p-header>
@@ -40,7 +41,8 @@
                   </div>
                   <div class="col-xs-12 col-md-4">
                     <div class=" text-left">
-                      <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"></p-multiSelect>
+                      <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"
+                                     (onChange)="columnsChange($event)"></p-multiSelect>
                     </div>
                   </div>
                   <div class="col-xs-12 col-md-4">
@@ -50,21 +52,16 @@
                   </div>
                 </div>
               </p-header>
+              <p-column expander="true" styleClass="col-icon"></p-column>
               <p-column *ngFor="let col of columns" [field]="col.data" [header]="col.name"
                         [sortable]="col.sort"></p-column>
-              <p-column styleClass="col-button">
-                <ng-template pTemplate="header">
-                  Activo
-                </ng-template>
+              <p-column styleClass="col-button" [header]="'Activo'">
                 <ng-template let-company="rowData" pTemplate="body">
                   <p-inputSwitch onLabel="Si" offLabel="No" [(ngModel)]="company.active"
                                  (onChange)="toggleActive($event,company)"></p-inputSwitch>
                 </ng-template>
               </p-column>
-              <p-column styleClass="col-button">
-                <ng-template pTemplate="header">
-                  Acciones
-                </ng-template>
+              <p-column styleClass="col-button" [header]="'Acciones'">
                 <ng-template let-role="rowData" pTemplate="body">
                   <button type="button" pButton (click)="edit(role)" class="ui-button-warning"
                           icon="fa-pencil"></button>
@@ -72,6 +69,28 @@
                           icon="fa-trash"></button>
                 </ng-template>
               </p-column>
+              <ng-template let-company pTemplate="rowexpansion">
+                <div class="row">
+                  <div class="col-xs-12 col-md-2 text-center" style="text-align:center">
+                    <img style="max-width: 100%;" [src]="company.responsible.image ?company.responsible.image:'assets/img/missing.png'">
+                  </div>
+                  <div class="col-xs-12 col-md-10" style="	font-size: 16px;">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h3>Usuario Responsable</h3>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-3"><b>Nombre:</b></div>
+                      <div class="col-xs-12 col-md-9">{{company.responsible?.full_name}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-3"><b>Correo Electrónico:</b></div>
+                      <div class="col-xs-12 col-md-9">{{company.responsible?.email}}</div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
             </p-dataTable>
 
           </div>

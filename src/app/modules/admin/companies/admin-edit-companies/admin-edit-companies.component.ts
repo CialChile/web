@@ -20,6 +20,8 @@ export class AdminEditCompaniesComponent implements OnInit {
   protected states: string[];
   protected fields: any[];
   private loading: boolean = true;
+  private validityMask: any[] = [/[1-9]/, /\d/];
+
   @ViewChild('prompt') public promptModal: ModalDirective;
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService, private confirmationService: ConfirmationService,

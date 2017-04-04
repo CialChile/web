@@ -1,0 +1,172 @@
+<app-page-title back="/client/assets" [title]="'Información del Activo'" [breadcrumbs]="breadcrumbs"></app-page-title>
+<div class="row" *ngIf="asset">
+  <div class="col-md-3 col-sm-4 col-xs-12">
+    <div class="x_panel">
+      <div class="x_content">
+        <div class=" profile_left project_detail">
+          <div class="profile_img">
+            <div id="crop-avatar" class="text-center">
+              <!-- Current avatar -->
+              <p-lightbox [images]="[asset.coverImage]" styleClass="cover-image"></p-lightbox>
+            </div>
+          </div>
+          <div class="text-center">
+            <h3 class="green">{{asset.name}}</h3>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Marca</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p class="title-value">{{asset.brand?.name}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Modelo</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p> {{asset.brandModel?.name || 'No Posee'}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Categoría</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p>{{asset.category?.name}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">SubCategoría</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p> {{asset.subcategory?.name || 'No Posee'}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Lugar de Trabajo</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p>{{asset.workplace?.name}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Status</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p> {{asset.status?.name || 'No Posee'}}</p>
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+              <button class="btn btn-warning" (click)="edit()">
+                <i class="fa fa-pencil"></i>
+                Editar
+              </button>
+            </div>
+            <div class="btn-group" role="group">
+              <button class="btn btn-danger" (click)="remove()">
+                <i class="fa fa-trash"></i>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="x_panel">
+      <div class="x_content">
+        <h4>Trabajador Responsable</h4>
+        <div class=" profile_left">
+          <div class="profile_img">
+            <div class="text-center">
+              <!-- Current avatar -->
+              <img class="worker-avatar-view" [src]="asset.worker.image?asset.worker.image:defaultWorkerImage"
+                   alt="Avatar"
+                   title="Change the avatar">
+            </div>
+          </div>
+          <h4>{{asset.worker.full_name}}</h4>
+
+          <div class="user_data">
+            <div class="user_data-item">
+              <i class="fa fa-briefcase user_data-item-icon"></i>
+              <div class="user_data-item-data">
+                {{asset.worker.position}}
+              </div>
+            </div>
+            <div class="user_data-item">
+              <i class="fa fa-envelope user_data-item-icon"></i>
+              <div class="user_data-item-data">
+                {{asset.worker.email}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9 col-sm-8 col-xs-12">
+    <div class="x_panel" style="padding-bottom: 0;">
+      <div class="x_content">
+        <div class="row tile_count" *ngIf="asset">
+          <div class="col-md-3 col-sm-6 col-xs-6 tile_stats_count">
+            <div class="count_top">
+              <i class="fa fa-calendar"></i>
+              Fecha de Incorporación
+            </div>
+            <div class="count">{{asset.integration_date}}</div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-6 tile_stats_count">
+            <div class="count_top">
+              <i class="fa fa-calendar"></i>
+              Fecha de Término de vida util
+            </div>
+            <div class="count">{{asset.end_service_life_date}}</div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-6 tile_stats_count">
+            <div class="count_top">
+              <i class="fa fa-calendar"></i>
+              Fecha de término de garantía
+            </div>
+            <div class="count">{{asset.warranty_date || '--/--/----'}}</div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-6 tile_stats_count">
+            <div class="count_top">
+              <i class="fa fa-calendar"></i>
+              Fecha de desincorporación
+            </div>
+            <div class="count">{{asset.disincorporation_date || '--/--/----'}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <p-tabView>
+              <p-tabPanel header="Actividades">
+                <h3>Por implementar</h3>
+              </p-tabPanel>
+            </p-tabView>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_content">
+            <h4>Imagenes</h4>
+
+            <p-lightbox [images]="asset.images"></p-lightbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

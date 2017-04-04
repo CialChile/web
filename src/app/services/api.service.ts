@@ -8,11 +8,12 @@ import 'rxjs/add/operator/share'
 import {environment} from '../../environments/environment'
 import {Response, Headers, RequestOptions, Http} from "@angular/http";
 import {Router} from "@angular/router";
+import {ToastsManager} from "ng2-toastr";
 
 @Injectable()
 export class ApiService {
 
-  constructor(private authHttp: AuthHttp, private http: Http, private router: Router) {
+  constructor(private authHttp: AuthHttp, private http: Http, private router: Router, private toastr: ToastsManager) {
   }
 
   private actionUrl = environment.baseUrl;
@@ -22,7 +23,7 @@ export class ApiService {
     fullPath = include ? fullPath + '?include=' + include : fullPath;
     return this.authHttp.get(fullPath, header)
       .map(res => this.extractData(res))
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
   };
 
   public one = (path: string, id: number, include?: string): Observable<any> => {
@@ -30,28 +31,28 @@ export class ApiService {
     fullPath = include ? fullPath + '?include=' + include : fullPath;
     return this.authHttp.get(fullPath)
       .map(res => this.extractData(res))
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
   };
 
   public create = (path: string, data: any): Observable<any> => {
     let fullPath = this.actionUrl + path;
     return this.authHttp.post(fullPath, data)
       .map(res => this.extractData(res))
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
   };
 
   public update = (path: string, id, data): Observable<any> => {
     let fullPath = this.actionUrl + path + '/' + id;
     return this.authHttp.put(fullPath, data)
       .map(res => this.extractData(res))
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
   };
 
   public destroy = (path: string, id): Observable<any> => {
     let fullPath = this.actionUrl + path + '/' + id;
     return this.authHttp.delete(fullPath)
       .map(res => this.extractData(res))
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
   };
 
   private extractData(res: Response) {
@@ -69,8 +70,15 @@ export class ApiService {
         });
         errMsg = errMsg.substr(0, errMsg.length - 3);
       } else {
+
         const err = body.message || JSON.stringify(body);
         errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+        if (error.status == 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('permissions');
+          this.router.navigate(['/login']);
+          this.toastr.error(errMsg);
+        }
       }
     } else {
       errMsg = error.message ? error.message : error.toString();

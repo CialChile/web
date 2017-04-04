@@ -1,4 +1,22 @@
-.col-button{
+.col-button {
   width: 15%;
   text-align: center;
+}
+
+.col-icon {
+  width: 45px;
+  text-align: center;
+  span {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 35em) {
+  .ui-datatable-reflow .ui-datatable-data.ui-widget-content {
+    border: 1px solid #c7c7c7 !important;
+  }
+
+  .col-icon {
+    display: none !important;
+  }
 }

@@ -17,7 +17,7 @@ export class AssetsListComponent implements OnInit {
   private pageLength: number = 10;
   private globalSearch: string;
   private assets: any;
-  private defaultImage: string = 'assets/img/missing.png';
+  private defaultImage: string = 'assets/img/missing/assets/missing.jpg';
   private tableView: boolean = true;
   private assetsColumns = ASSETSCOLUMNS;
   columnOptions: SelectItem[];
@@ -45,11 +45,37 @@ export class AssetsListComponent implements OnInit {
 
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
-    this.datatableService.getData(event, this.columns, 'client/assets/datatable', 'brand,brandModel,category,subcategory,workplace,status', this.globalSearch)
+    this.datatableService.getData(event, this.columns, 'client/assets/datatable', 'brand,brandModel,category,subcategory,workplace,status,coverImage', this.globalSearch)
       .toPromise().then((response) => {
       this.assets = response.data;
       this.totalRecords = response.recordsFiltered;
     })
+  }
+
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.assetsColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.assetsColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.assetsColumns[i]);
+      }
+    }
+  }
+
+  getData(asset, property) {
+    const properties = property.split('.');
+    if (properties.length > 1) {
+      return this.getData(asset[properties[0]], properties.reduce((previous, actual, index) => {
+        if (index != 1) {
+          return previous + '.' + actual;
+        }
+        return actual
+      }))
+    }
+
+    return asset[property];
   }
 
   showDetail(asset: any) {

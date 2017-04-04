@@ -1,6 +1,7 @@
-<app-page-title [title]="'Nuevo Activo'" [breadcrumbs]="breadcrumbs"></app-page-title>
+<app-page-title back="/client/assets" [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
 
-<form role="form" class="form-horizontal form-label-left form-assets" [formGroup]="assetForm" (submit)="onSubmit(assetForm,$event)">
+<form role="form" class="form-horizontal form-label-left form-assets" [formGroup]="assetForm"
+      (submit)="onSubmit(assetForm,$event)">
 
   <ng-template #loadingIndicator>
     <div class="text-center">
@@ -87,7 +88,7 @@
                 </div>
                 <div class="form-group"
                      [ngClass]="{'has-error':!assetForm.controls['warranty_date'].valid  && assetForm.controls['warranty_date'].touched}">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline multiline">Fecha de término de
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Fecha de término de
                     garantía
                   </label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
@@ -262,6 +263,35 @@
             </div>
           </div>
 
+        </div>
+        <div class="x_panel" *ngIf="assetId">
+          <div class="x_title">
+            <h2>Imagenes
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12">
+                <p-fileUpload name="images[]" [url]="imageUploadUrl" multiple="multiple"
+                              accept="image/*" chooseLabel="Añadir Imagen" uploadLabel="Subir Imagenes"
+                              cancelLabel="Cancelar" (onBeforeSend)="configImageUpload($event)"
+                              (onUpload)="fileUploaded($event)" [auto]="true" [disabled]="disableUpload">
+                  <ng-template pTemplate="toolbar">
+                    <div>Puedes Subir hasta 5 imagenes</div>
+                  </ng-template>
+                  <ng-template pTemplate="content">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-3" *ngFor="let image of assetImages">
+                        <app-image-display [canDelete]="true" [image]="image"
+                                           (onDeleteFile)="removeImage($event)"></app-image-display>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-fileUpload>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-xs-12">

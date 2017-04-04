@@ -16,6 +16,7 @@ export class AdminCreateCompaniesComponent implements OnInit {
   private countries: string[];
   private states: string[];
   private fields: any[];
+  private validityMask: any[] = [/[1-9]/, /\d/];
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,
               public toastr: ToastsManager, private router: Router) {

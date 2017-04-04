@@ -15,6 +15,8 @@ import {DatatableService} from "./services/datatable/datatable.service";
 import {ToastModule, ToastsManager, ToastOptions} from "ng2-toastr/ng2-toastr";
 import {authHttpServiceFactory} from './auth.service.factory'
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrDefaultOptions} from "./components/toastr/toastr-default-options";
+import {ActivitiesModule} from "./modules/client/activities/activities.module";
 
 @NgModule({
   declarations: [
@@ -28,15 +30,16 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     AppRoutingModule,
     AdminModule,
     ClientModule,
-    ToastModule,
+    ToastModule.forRoot(),
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ActivitiesModule
   ],
-  providers: [{
+  providers: [{provide: ToastOptions, useClass: ToastrDefaultOptions}, {
     provide: AuthHttp,
     useFactory: authHttpServiceFactory,
     deps: [Http, RequestOptions]
-  }, ToastsManager, ToastOptions, ApiService, ToastrService, DatatableService],
+  }, ToastsManager, ApiService, ToastrService, DatatableService],
   bootstrap: [AppComponent]
 })
 

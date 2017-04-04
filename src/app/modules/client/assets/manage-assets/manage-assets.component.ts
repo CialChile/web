@@ -6,6 +6,8 @@ import {ToastsManager} from "ng2-toastr";
 import {Router, ActivatedRoute} from "@angular/router";
 import {objectToFormData} from "../../../../utilities/form/objectToFormData";
 import {parseMask} from "../../../../utilities/form/maskParser";
+import {environment} from "../../../../../environments/environment";
+
 
 @Component({
   selector: 'app-manage-assets',
@@ -18,6 +20,7 @@ export class ManageAssetsComponent implements OnInit {
   private assetId: number;
   private loading: boolean = false;
   private title: string = 'Nuevo Activo';
+  private disableUpload = false;
   breadcrumbs = [
     {
       title: 'Home',
@@ -36,6 +39,7 @@ export class ManageAssetsComponent implements OnInit {
     }
   ];
   private es = DATEPICKERSPANISH;
+  private imageUploadUrl: string = environment.baseUrl;
   private image: any = {
     objectURL: '',
     notDefault: false,
@@ -53,6 +57,7 @@ export class ManageAssetsComponent implements OnInit {
   private status: any;
   private workers: any;
   private defaultWorkerImage: string = 'assets/img/missing.png';
+  private assetImages: any[] = [];
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,
               public toastr: ToastsManager, private router: Router, private route: ActivatedRoute) {
@@ -94,20 +99,6 @@ export class ManageAssetsComponent implements OnInit {
         this.setEndServiceLifeDate(this.assetForm.controls['validity_time'].value, value)
       }
     });
-
-    this.assetForm.controls['category_id'].valueChanges.subscribe((value) => {
-      if (value) {
-        let selectedCategory = this.rawCategories.filter((category) => {
-          return category.id == value
-        });
-        if (selectedCategory.length) {
-          this.addCustomFields(selectedCategory[0].custom_fields_config);
-        }
-        this.apiService.all('client/assets/config/categories/' + value + '/subcategories').subscribe(subcategories => this.subcategories = subcategories.data.map((subcategory) => {
-          return {label: subcategory.name, value: subcategory.id}
-        }))
-      }
-    });
   }
 
   get custom_fields(): FormArray {
@@ -129,7 +120,11 @@ export class ManageAssetsComponent implements OnInit {
 
   setEndServiceLifeDate(validityTime, integrationDate) {
     if (validityTime) {
-      integrationDate = new Date(integrationDate.getTime());
+      if (integrationDate instanceof Date) {
+        integrationDate = new Date(integrationDate.getTime());
+      } else {
+        integrationDate = new Date(Date.parse(integrationDate.replace(/([0-9]+)\/([0-9]+)/, '$2/$1')))
+      }
       let date = integrationDate.setFullYear(integrationDate.getFullYear() + parseInt(validityTime));
       this.assetForm.controls['end_service_life_date'].setValue(new Date(date));
     }
@@ -164,23 +159,49 @@ export class ManageAssetsComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/assets/' + params['id'];
         this.assetId = params['id'];
+        this.imageUploadUrl += 'client/assets/' + params['id'] + '/images';
         this.loading = true;
-        this.apiService.one('client/assets', params['id']).subscribe((worker) => {
-          this.initForm(worker.data);
+        this.apiService.one('client/assets', params['id'], 'worker,category,images,coverImage').subscribe((asset) => {
+          this.assetImages = asset.data.images;
+          if (this.assetImages.length >= 5) {
+            this.disableUpload = true;
+          }
+          this.initForm(asset.data);
+          this.subscribeToCategoriesChanges();
           this.loading = false;
-          this.image = {
-            objectURL: worker.data.image,
-            notDefault: !!worker.data.image,
-            deleted: false
-          };
+          if (asset.data.coverImage) {
+            this.image = {
+              objectURL: asset.data.coverImage.normal,
+              notDefault: true,
+              deleted: false
+            };
+          } else {
+            this.image = {
+              objectURL: '',
+              notDefault: false,
+              deleted: false
+            };
+          }
         }, (error) => {
           this.loading = false;
         })
+      } else {
+        this.subscribeToCategoriesChanges();
       }
     });
   }
 
   initForm(asset) {
+    let customFields = [];
+    for (let i = 0; i < asset.category.custom_fields_config.length; i++) {
+      const duplicated = asset.custom_fields.filter((customField) => customField.label === asset.category.custom_fields_config[i].label)
+      if (!duplicated.length) {
+        customFields.push(asset.category.custom_fields_config[i])
+      }
+    }
+
+    asset.custom_fields = asset.custom_fields.concat(customFields);
+    this.addCustomFields(asset.custom_fields);
     this.assetForm.reset(asset)
   }
 
@@ -189,6 +210,42 @@ export class ManageAssetsComponent implements OnInit {
       this.workers = results.data;
     })
   };
+
+  configImageUpload(event) {
+    const uploadedImagesCount = this.assetImages.length;
+    let filesToUploadCount = 0;
+    event.formData.forEach((data) => {
+      filesToUploadCount++
+    });
+    if (uploadedImagesCount + filesToUploadCount > 5) {
+      event.xhr.abort();
+      this.toastr.error('Recuerda que no puedes subir mas de 5 imagenes por activo');
+    } else {
+      event.xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+      event.xhr.setRequestHeader('Accept', 'application/json, text/plain, */*');
+    }
+  }
+
+  fileUploaded(event) {
+    const images = JSON.parse(event.xhr.responseText);
+    this.assetImages = images.data;
+    if (this.assetImages.length >= 5) {
+      this.disableUpload = true;
+    }
+  }
+
+  removeImage(imageId) {
+    this.apiService.destroy('client/assets/' + this.assetId + '/images', imageId).toPromise().then((response) => {
+      this.assetImages = this.assetImages.filter((image) => {
+        return image.id != imageId;
+      });
+
+      if (this.assetImages.length < 5) {
+        this.disableUpload = false;
+      }
+      this.toastr.success('Imagen eliminada con exito');
+    })
+  }
 
   onSubmit(form, $event: any) {
     $event.preventDefault();
@@ -242,6 +299,22 @@ export class ManageAssetsComponent implements OnInit {
 
   imageChange(image) {
     this.image = image;
+  }
+
+  subscribeToCategoriesChanges() {
+    this.assetForm.controls['category_id'].valueChanges.subscribe((value) => {
+      if (value) {
+        let selectedCategory = this.rawCategories.filter((category) => {
+          return category.id == value
+        });
+        if (selectedCategory.length) {
+          this.addCustomFields(selectedCategory[0].custom_fields_config);
+        }
+        this.apiService.all('client/assets/config/categories/' + value + '/subcategories').subscribe(subcategories => this.subcategories = subcategories.data.map((subcategory) => {
+          return {label: subcategory.name, value: subcategory.id}
+        }))
+      }
+    });
   }
 
   cancel() {

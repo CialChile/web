@@ -210,7 +210,7 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Número de Usuarios</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="users_number" class="form-control" placeholder="Número de Usuarios"
-                           id="users_number"/>
+                           id="users_number" [textMask]="{mask: validityMask,guide:false}"/>
                     <control-messages [control]="companyForm.controls['users_number']"></control-messages>
                   </div>
                 </div>

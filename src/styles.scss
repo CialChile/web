@@ -1,11 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'assets/sass/variables';
-@import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap';
+@import 'assets/sass/menu/sidebar';
+@import 'assets/sass/primeng/primeng';
+@import 'assets/sass/bootstrap/bootstrap';
 @import 'assets/sass/libs/ng2-toastr/ng2-toastr';
 @import 'assets/sass/dashboard/gentelella';
 @import 'assets/sass/toolbar/toolbar';
 @import 'assets/sass/tables/table';
-@import 'assets/sass/primeng/primeng';
 
 html, body {
   height: 100%;
@@ -38,11 +39,4 @@ html, body {
   }
 }
 
-a{
-  color: #5A738E;
-  &:hover{
-    color: #23527c;
-
-  }
-}
 

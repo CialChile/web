@@ -4,7 +4,6 @@ import {Router} from "@angular/router";
 import {ApiService} from "../../../../../services/api.service";
 import {ToastsManager} from "ng2-toastr";
 import {DataTableColumn} from "../../../../../types/table/data-table-column.type";
-import{} from '@angular/anim'
 import {LazyLoadEvent, SelectItem} from "primeng/components/common/api";
 @Component({
   selector: 'app-roles-list',
@@ -19,7 +18,9 @@ export class RolesListComponent implements OnInit {
   columnOptions: SelectItem[];
   private lastLoadEvent: LazyLoadEvent;
 
-  private columns: DataTableColumn[] = [
+  private columns: DataTableColumn[] = [];
+
+  private roleColumns: DataTableColumn[] = [
     {
       name: 'Nombre',
       data: 'name',
@@ -58,8 +59,11 @@ export class RolesListComponent implements OnInit {
 
   ngOnInit() {
     this.columnOptions = [];
-    for (let i = 0; i < this.columns.length; i++) {
-      this.columnOptions.push({label: this.columns[i].name, value: this.columns[i]});
+    for (let i = 0; i < this.roleColumns.length; i++) {
+      if (i < 2) {
+        this.columns.push(this.roleColumns[i]);
+      }
+      this.columnOptions.push({label: this.roleColumns[i].name, value: this.roleColumns[i]});
     }
   }
 
@@ -75,6 +79,18 @@ export class RolesListComponent implements OnInit {
       this.roles = response.data;
       this.totalRecords = response.recordsFiltered;
     })
+  }
+
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.roleColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.roleColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.roleColumns[i]);
+      }
+    }
   }
 
   create() {

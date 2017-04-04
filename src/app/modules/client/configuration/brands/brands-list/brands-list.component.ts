@@ -30,8 +30,8 @@ export class BrandsListComponent implements OnInit {
 
   ngOnInit() {
     this.columnOptions = [];
-    this.columns = this.brandsColumns;
     for (let i = 0; i < this.brandsColumns.length; i++) {
+      this.columns.push(this.brandsColumns[i]);
       this.columnOptions.push({label: this.brandsColumns[i].name, value: this.brandsColumns[i]});
     }
   }
@@ -48,6 +48,18 @@ export class BrandsListComponent implements OnInit {
       this.brands = response.data;
       this.totalRecords = response.recordsFiltered;
     })
+  }
+
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.brandsColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.brandsColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.brandsColumns[i]);
+      }
+    }
   }
 
   create() {

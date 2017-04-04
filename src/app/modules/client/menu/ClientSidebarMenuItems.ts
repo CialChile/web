@@ -15,6 +15,13 @@ export const CLIENTSIDEBARMENUITEMS: Menu[] = [
     permission: 'client-assets.list',
   },
   {
+    dropdown: false,
+    link: '/client/activities',
+    name: 'Actividades',
+    icon: 'fa-calendar',
+    permission: 'client-activities.list',
+  },
+  {
     dropdown: true,
     link: '/client/rrhh',
     name: 'RRHH',

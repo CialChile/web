@@ -5,12 +5,8 @@ import {DataTableModule} from "primeng/components/datatable/datatable";
 import {SharedModule} from "primeng/components/common/shared";
 import {ButtonModule} from "primeng/components/button/button";
 import {MultiSelectModule} from "primeng/components/multiselect/multiselect";
-import {CalendarModule} from "primeng/components/calendar/calendar";
 import {FileUploadModule} from "primeng/components/fileupload/fileupload";
 import {DataGridModule} from "primeng/components/datagrid/datagrid";
-import {ToggleButtonModule} from "primeng/components/togglebutton/togglebutton";
-import {PanelModule} from "primeng/components/panel/panel";
-import {DialogModule} from "primeng/components/dialog/dialog";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {FormsHelperModule} from "../../../components/forms/forms-helpers.module";
 import {RolesListComponent} from "./roles/roles-list/roles-list.component";
@@ -18,7 +14,7 @@ import {ManageRoleComponent} from "./roles/manage-role/manage-role.component";
 import {UsersListComponent} from "./users/users-list/users-list.component";
 import {ManageUserComponent} from "./users/manage-user/manage-user.component";
 import {SecurityIndexComponent} from "./security-index";
-import {RouterModule} from "@angular/router";
+import {SecurityRoutingModule} from "./security-routing.module";
 
 @NgModule({
   imports: [
@@ -33,7 +29,7 @@ import {RouterModule} from "@angular/router";
     ReactiveFormsModule,
     FormsHelperModule,
     FormsModule,
-    RouterModule
+    SecurityRoutingModule
   ],
   declarations: [RolesListComponent,
     ManageRoleComponent, UsersListComponent, ManageUserComponent,

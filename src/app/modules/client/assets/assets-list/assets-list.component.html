@@ -12,7 +12,7 @@
         <div *ngIf="tableView">
           <p-dataTable [value]="assets" [lazy]="true" [responsive]="true" [rows]="10"
                        [paginator]="true" emptyMessage="No se encontraron registros" [pageLinks]="3"
-                       [rowsPerPageOptions]="[10,20,50]"
+                       [rowsPerPageOptions]="[10,20,50]" expandableRows="true"
                        (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords">
             <p-header>
               <div class="row">
@@ -26,12 +26,15 @@
                 </div>
                 <div class="col-xs-12 col-md-4">
                   <div class=" text-left">
-                    <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"></p-multiSelect>
+
+                    <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"
+                                   (onChange)="columnsChange($event)"></p-multiSelect>
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-3">
                   <div>
-                    <input (keyup)="searchGlobally()" type="text" class="form-control" [(ngModel)]="globalSearch" placeholder="Buscar...">
+                    <input (keyup)="searchGlobally()" type="text" class="form-control" [(ngModel)]="globalSearch"
+                           placeholder="Buscar...">
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-2">
@@ -42,12 +45,10 @@
                 </div>
               </div>
             </p-header>
+            <p-column expander="true" styleClass="col-icon"></p-column>
             <p-column *ngFor="let col of columns" [field]="col.data" [header]="col.name"
                       [sortable]="col.sort"></p-column>
-            <p-column styleClass="col-button">
-              <ng-template pTemplate="header">
-                Acciones
-              </ng-template>
+            <p-column styleClass="col-button" [header]="'Acciones'">
               <ng-template let-asset="rowData" pTemplate="body">
                 <button type="button" pButton (click)="showDetail(asset)" class="ui-button-info"
                         icon="fa-search"></button>
@@ -57,6 +58,57 @@
                         icon="fa-trash"></button>
               </ng-template>
             </p-column>
+            <ng-template let-asset pTemplate="rowexpansion">
+              <div class="row">
+                <div class="col-xs-12 col-md-3 text-center" style="text-align:center">
+                  <img style="max-width: 100%;"
+                       [src]="asset.coverImage ?asset.coverImage.thumbnail:'assets/img/missing/assets/missing.jpg'">
+                </div>
+                <div class="col-xs-12 col-md-9" style="	font-size: 16px;">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6">
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                      <div class="row">
+                        <div class="col-xs-12 col-md-4"><b>Marca:</b></div>
+                        <div class="col-xs-12 col-md-8">{{asset.brand.name}}</div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                      <div class="row">
+                        <div class="col-xs-12 col-md-4"><b>Modelo:</b></div>
+                        <div class="col-xs-12 col-md-8">{{asset.brandModel ?asset.brandModel.name:'No Posee'}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                      <div class="row">
+                        <div class="col-xs-12 col-md-4"><b>Categoría:</b></div>
+                        <div class="col-xs-12 col-md-8">{{asset.category.name}}</div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                      <div class="row">
+                        <div class="col-xs-12 col-md-4"><b>Subcategoría:</b></div>
+                        <div class="col-xs-12 col-md-8">{{asset.subcategory ?asset.subcategory.name:'No Posee'}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                      <div class="row">
+                        <div class="col-xs-12 col-md-4"><b>Lugar de Trabajo:</b></div>
+                        <div class="col-xs-12 col-md-8">{{asset.workplace.name}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
           </p-dataTable>
         </div>
         <div *ngIf="!tableView">
@@ -94,18 +146,13 @@
             </p-header>
             <ng-template let-asset pTemplate="item">
               <div style="padding:3px" class="ui-g-12 ui-md-3">
-                <p-panel [header]="asset.code" [style]="{'text-align':'center'}">
-                  <img [src]="asset.image?asset.image:defaultImage" class="text-center img-responsive">
+                <p-panel [header]="asset.sku" [style]="{'text-align':'center'}">
+                  <img [src]="asset.coverImage?asset.coverImage.normal:defaultImage" class="text-center img-responsive"
+                       style="height: 112px">
                   <div class="asset-detail">
-                    <div class="asset-detail-name">
-                      <b>{{asset.name}}</b>
-                    </div>
                     <div class="text-left">
-                      <div>
-                        <b>Rut/Pasaporte:</b> {{asset.rut_passport}}
-                      </div>
-                      <div>
-                        <b>Cargo:</b> {{asset.position}}
+                      <div *ngFor="let col of columns">
+                        <b>{{col.name | titlecase}}:</b> {{getData(asset,col.data)}}
                       </div>
                     </div>
                   </div>

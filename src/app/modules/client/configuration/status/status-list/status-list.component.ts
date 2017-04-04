@@ -34,8 +34,8 @@ export class StatusListComponent implements OnInit {
 
   ngOnInit() {
     this.columnOptions = [];
-    this.columns = this.statusesColumns;
     for (let i = 0; i < this.statusesColumns.length; i++) {
+      this.columns.push(this.statusesColumns[i]);
       this.columnOptions.push({label: this.statusesColumns[i].name, value: this.statusesColumns[i]});
     }
   }
@@ -43,6 +43,18 @@ export class StatusListComponent implements OnInit {
   searchGlobally() {
     this.lastLoadEvent.globalFilter = this.globalSearch;
     this.reloadTable(this.lastLoadEvent);
+  }
+
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.statusesColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.statusesColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.statusesColumns[i]);
+      }
+    }
   }
 
   reloadTable(event: LazyLoadEvent) {

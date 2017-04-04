@@ -31,8 +31,8 @@ export class CategoriesListComponent implements OnInit {
 
   ngOnInit() {
     this.columnOptions = [];
-    this.columns = this.categoriesColumns;
     for (let i = 0; i < this.categoriesColumns.length; i++) {
+      this.columns.push(this.categoriesColumns[i]);
       this.columnOptions.push({label: this.categoriesColumns[i].name, value: this.categoriesColumns[i]});
     }
   }
@@ -50,7 +50,17 @@ export class CategoriesListComponent implements OnInit {
       this.totalRecords = response.recordsFiltered;
     })
   }
-
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.categoriesColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.categoriesColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.categoriesColumns[i]);
+      }
+    }
+  }
   create() {
     this.router.navigate(['/client/configuration/categories/create']);
 

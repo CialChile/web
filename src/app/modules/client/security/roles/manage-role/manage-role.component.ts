@@ -4,7 +4,6 @@ import {ApiService} from "../../../../../services/api.service";
 import {ToastsManager} from "ng2-toastr";
 import {Router, ActivatedRoute} from "@angular/router";
 
-
 @Component({
   selector: 'app-manage-role',
   templateUrl: './manage-role.component.html',

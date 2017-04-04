@@ -1,7 +1,7 @@
 <div class="container body">
   <div class="main_container">
     <side-bar [menu]="menu"></side-bar>
-    <topnav-bar></topnav-bar>
+    <topnav-bar [userMenu]="topBarMenu"></topnav-bar>
     <div class="right_col" role="main" style="min-height: 1000px">
       <router-outlet></router-outlet>
     </div>

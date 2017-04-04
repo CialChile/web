@@ -22,6 +22,9 @@ import {FormsHelperModule} from "../../../components/forms/forms-helpers.module"
 import {AutoCompleteModule} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/primeng';
 import {TextMaskModule} from "angular2-text-mask";
+import { AssetDetailsComponent } from './asset-details/asset-details.component';
+import {LightboxModule} from "primeng/components/lightbox/lightbox";
+import {AssetsRoutingModule} from "./assets-routing.module";
 
 @NgModule({
   imports: [
@@ -45,9 +48,11 @@ import {TextMaskModule} from "angular2-text-mask";
     ng2Dropdown.forRoot(),
     AutoCompleteModule,
     DropdownModule,
-    TextMaskModule
+    TextMaskModule,
+    LightboxModule,
+    AssetsRoutingModule
   ],
-  declarations: [AssetsIndexComponent, AssetsListComponent, ManageAssetsComponent]
+  declarations: [AssetsIndexComponent, AssetsListComponent, ManageAssetsComponent, AssetDetailsComponent]
 })
 export class AssetsModule {
 }

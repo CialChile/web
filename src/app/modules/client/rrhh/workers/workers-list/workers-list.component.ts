@@ -5,7 +5,7 @@ import {ApiService} from "../../../../../services/api.service";
 import {ToastsManager} from "ng2-toastr";
 import {SelectItem, LazyLoadEvent} from "primeng/components/common/api";
 import {DataTableColumn} from "../../../../../types/table/data-table-column.type";
-
+import {WORKERSCOLUMNS} from './workersColumns';
 @Component({
   selector: 'app-workers-list',
   templateUrl: 'workers-list.component.html',
@@ -20,29 +20,8 @@ export class WorkersListComponent implements OnInit {
   private tableView: boolean = true;
   columnOptions: SelectItem[];
   private lastLoadEvent: LazyLoadEvent;
-  private columns: DataTableColumn[] = [
-    {
-      name: 'Nombre',
-      data: 'first_name',
-      sort: true,
-      filter: true,
-    }, {
-      name: 'Apellido',
-      data: 'last_name',
-      sort: true,
-      filter: true
-    }, {
-      name: 'Rut/Pasaporte',
-      data: 'rut_passport',
-      sort: true,
-      filter: true
-    }, {
-      name: 'Cargo',
-      data: 'position',
-      sort: true,
-      filter: true
-    }
-  ];
+  private workersColumns = WORKERSCOLUMNS;
+  private columns: DataTableColumn[] = [];
   breadcrumbs = [
     {
       title: 'Home',
@@ -67,8 +46,11 @@ export class WorkersListComponent implements OnInit {
 
   ngOnInit() {
     this.columnOptions = [];
-    for (let i = 0; i < this.columns.length; i++) {
-      this.columnOptions.push({label: this.columns[i].name, value: this.columns[i]});
+    for (let i = 0; i < this.workersColumns.length; i++) {
+      if (i < 4) {
+        this.columns.push(this.workersColumns[i]);
+      }
+      this.columnOptions.push({label: this.workersColumns[i].name, value: this.workersColumns[i]});
     }
 
   }
@@ -87,8 +69,20 @@ export class WorkersListComponent implements OnInit {
     })
   }
 
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.workersColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.workersColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.workersColumns[i]);
+      }
+    }
+  }
+
   showDetail(worker: any) {
-    this.router.navigate(['/client/rrhh/workers/'+worker.id+'/info']);
+    this.router.navigate(['/client/rrhh/workers/' + worker.id + '/info']);
 
   }
 

@@ -16,10 +16,10 @@ import {ManageWorkerComponent} from "./workers/manage-worker/manage-worker.compo
 import {RrhhIndexComponent} from "./rrhh-index";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {FormsHelperModule} from "../../../components/forms/forms-helpers.module";
-import {RouterModule} from "@angular/router";
 import {WorkerDetailsComponent} from './workers/worker-details/worker-details.component';
 import {TabViewModule} from 'primeng/primeng';
 import {DropdownModule} from "ng2-bootstrap";
+import {RrhhRoutingModule} from "./rrhh-routing.module";
 
 @NgModule({
   imports: [
@@ -38,10 +38,9 @@ import {DropdownModule} from "ng2-bootstrap";
     ReactiveFormsModule,
     FormsHelperModule,
     FormsModule,
-    RouterModule,
     TabViewModule,
     DropdownModule.forRoot(),
-
+    RrhhRoutingModule
   ],
   declarations: [WorkersListComponent, ManageWorkerComponent, RrhhIndexComponent, WorkerDetailsComponent]
 })

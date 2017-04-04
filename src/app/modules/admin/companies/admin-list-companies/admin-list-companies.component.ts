@@ -18,7 +18,8 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
   private pageLength: number = 10;
   columnOptions: SelectItem[];
   private lastLoadEvent: LazyLoadEvent;
-  private columns: DataTableColumn[] = [
+  private columns: DataTableColumn[] = [];
+  private companiesColumns: DataTableColumn[] = [
     {
       name: 'Nombre',
       data: 'name',
@@ -34,8 +35,14 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
       data: 'fiscal_identification',
       sort: true,
       filter: true
+    }, {
+      name: 'Nº de usuarios',
+      data: 'users_number',
+      sort: true,
+      filter: true
     }
   ];
+  private stacked: boolean = false;
 
   constructor(private datatableService: DatatableService, private apiService: ApiService,
               private router: Router, private toastr: ToastsManager) {
@@ -44,19 +51,35 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.columnOptions = [];
-    for (let i = 0; i < this.columns.length; i++) {
-      this.columnOptions.push({label: this.columns[i].name, value: this.columns[i]});
+    for (let i = 0; i < this.companiesColumns.length; i++) {
+      if (i < 4) {
+        this.columns.push(this.companiesColumns[i]);
+      }
+      this.columnOptions.push({label: this.companiesColumns[i].name, value: this.companiesColumns[i]});
     }
 
   }
 
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
-    this.datatableService.getData(event, this.columns, 'admin/companies/datatable', '', this.globalSearch)
+    this.datatableService.getData(event, this.columns, 'admin/companies/datatable', 'responsible', this.globalSearch)
       .toPromise().then((response) => {
       this.companies = response.data;
       this.totalRecords = response.recordsFiltered;
     })
+  }
+
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.companiesColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.companiesColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.companiesColumns[i]);
+      }
+    }
+    this.stacked = this.columns.length > 4;
   }
 
   create() {

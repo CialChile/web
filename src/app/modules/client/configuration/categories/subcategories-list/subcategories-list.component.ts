@@ -31,8 +31,8 @@ export class SubcategoriesListComponent implements OnInit {
 
   ngOnInit() {
     this.columnOptions = [];
-    this.columns = this.subcategoriesColumns;
     for (let i = 0; i < this.subcategoriesColumns.length; i++) {
+      this.columns.push(this.subcategoriesColumns[i]);
       this.columnOptions.push({label: this.subcategoriesColumns[i].name, value: this.subcategoriesColumns[i]});
     }
   }
@@ -50,6 +50,18 @@ export class SubcategoriesListComponent implements OnInit {
       this.subcategories = response.data;
       this.totalRecords = response.recordsFiltered;
     })
+  }
+
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.subcategoriesColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.subcategoriesColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.subcategoriesColumns[i]);
+      }
+    }
   }
 
   create() {

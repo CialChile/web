@@ -18,7 +18,8 @@ export class UsersListComponent implements OnInit {
   private users: any;
   columnOptions: SelectItem[];
   private lastLoadEvent: LazyLoadEvent;
-  private columns: DataTableColumn[] = [
+  private columns: DataTableColumn[] = [];
+  private userColumns: DataTableColumn[] = [
     {
       name: 'Nombre',
       data: 'first_name',
@@ -60,14 +61,17 @@ export class UsersListComponent implements OnInit {
   ];
 
   constructor(private datatableService: DatatableService, private apiService: ApiService,
-               private router: Router, private toastr: ToastsManager,) {
+              private router: Router, private toastr: ToastsManager,) {
 
   }
 
   ngOnInit() {
     this.columnOptions = [];
-    for (let i = 0; i < this.columns.length; i++) {
-      this.columnOptions.push({label: this.columns[i].name, value: this.columns[i]});
+    for (let i = 0; i < this.userColumns.length; i++) {
+      if (i < 4) {
+        this.columns.push(this.userColumns[i]);
+      }
+      this.columnOptions.push({label: this.userColumns[i].name, value: this.userColumns[i]});
     }
   }
 
@@ -83,6 +87,18 @@ export class UsersListComponent implements OnInit {
       this.users = response.data;
       this.totalRecords = response.recordsFiltered;
     })
+  }
+
+  columnsChange(event) {
+    this.columns = [];
+    for (let i = 0; i < this.userColumns.length; i++) {
+      const columnSelected = event.value.filter((selectedColumn) => {
+        return selectedColumn.data == this.userColumns[i].data;
+      });
+      if (columnSelected.length) {
+        this.columns.push(this.userColumns[i]);
+      }
+    }
   }
 
   create() {

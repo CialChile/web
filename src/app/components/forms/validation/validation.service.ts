@@ -1,9 +1,10 @@
+import {Self} from "@angular/core";
 export class ValidationService {
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
     let config = {
       'required': 'Este campo es requerido',
       'invalidCreditCard': 'Is invalid credit card number',
-      'invalidRut': 'El formato del Rut es invalido',
+      'invalidRut': 'El Rut es invalido',
       'invalidEmailAddress': 'El formato del Correo Electrónico Invalido',
       'invalidPassword': 'Contraseña invalida. Debe ser de por lo menos 6 caracteres y contener un numero',
       'validateEqual': 'Las contraseñas deben coincidir',
@@ -23,11 +24,43 @@ export class ValidationService {
   }
 
   static rutValidator(control) {
-    if (control.value.match(/^(\d{1}|\d{2})\.(\d{3}\.\d{3}-)([a-zA-Z]{1}$|\d{1}$)/)) {
+    if (control.value) {
+      let cleanRut = control.value.match(/[0-9Kk]+/g).join('');
+      let cDv = cleanRut.charAt(cleanRut.length - 1).toUpperCase();
+      let nRut = parseInt(cleanRut.substr(0, cleanRut.length - 1));
+      if (isNaN(nRut)) {
+        return {
+          'invalidRut': true
+        }
+      }
+      if (ValidationService.computeRut(nRut).toString().toUpperCase() !== cDv) {
+        return {
+          'invalidRut': true
+        }
+      }
       return null;
     }
+  };
 
-    return {'invalidRut': true};
+  static computeRut(cleanRut) {
+    let suma = 0;
+    let mul = 2;
+    if (typeof(cleanRut) !== 'number') {
+      return;
+    }
+    cleanRut = cleanRut.toString();
+    for (let i = cleanRut.length - 1; i >= 0; i--) {
+      suma = suma + cleanRut.charAt(i) * mul;
+      mul = ( mul + 1 ) % 8 || 2;
+    }
+    switch (suma % 11) {
+      case 1  :
+        return 'k';
+      case 0  :
+        return 0;
+      default  :
+        return 11 - (suma % 11);
+    }
   }
 
   static emailValidator(control) {

@@ -18,8 +18,8 @@ import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {FormsHelperModule} from "../../../components/forms/forms-helpers.module";
 import {WorkerDetailsComponent} from './workers/worker-details/worker-details.component';
 import {TabViewModule} from 'primeng/primeng';
-import {DropdownModule} from "ng2-bootstrap";
 import {RrhhRoutingModule} from "./rrhh-routing.module";
+import {LightboxModule} from "primeng/components/lightbox/lightbox";
 
 @NgModule({
   imports: [
@@ -39,8 +39,9 @@ import {RrhhRoutingModule} from "./rrhh-routing.module";
     FormsHelperModule,
     FormsModule,
     TabViewModule,
-    DropdownModule.forRoot(),
-    RrhhRoutingModule
+    RrhhRoutingModule,
+    LightboxModule,
+
   ],
   declarations: [WorkersListComponent, ManageWorkerComponent, RrhhIndexComponent, WorkerDetailsComponent]
 })

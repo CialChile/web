@@ -90,7 +90,7 @@ function subObjectToFormData(property: string, object, formData: FormData): Form
       if (isJsObject(object[childKey])) {
         formData = subObjectToFormData(childKey, object[childKey], formData);
       } else {
-        formData.append(childKey, object[childKey])
+        formData.append(property + '[' + childKey + ']', object[childKey])
       }
     }
   );

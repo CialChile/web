@@ -90,8 +90,8 @@ export class ManageWorkerComponent implements OnInit {
           this.initForm(worker.data);
           this.loading = false;
           this.image = {
-            objectURL: worker.data.image,
-            notDefault: !!worker.data.image,
+            objectURL: worker.data.image.source,
+            notDefault: worker.data.image.notDefault,
             deleted: false
           };
         }, (error) => {

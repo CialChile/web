@@ -5,7 +5,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var ManageRoleComponent = (function () {
     function ManageRoleComponent(formBuilder, apiService, toastr, router, route) {
@@ -16,6 +17,7 @@ var ManageRoleComponent = (function () {
         this.router = router;
         this.route = route;
         this.saving = false;
+        this.loading = false;
         this.title = 'Nuevo Rol';
         this.breadcrumbs = [
             {
@@ -73,15 +75,29 @@ var ManageRoleComponent = (function () {
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].title = 'Editar';
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].link = '/client/security/roles/' + params['id'];
                 _this.roleId = params['id'];
-                _this.apiService.one('client/role', params['id'], 'permissions').subscribe(function (role) {
-                    _this.apiService.all('client/permission').subscribe(function (response) {
+                _this.loading = true;
+                _this.apiService.one('client/roles', params['id'], 'permissions').subscribe(function (role) {
+                    _this.apiService.all('client/permissions').subscribe(function (response) {
                         _this.configurePermissions(response);
+                        role.data.permissions = response.map(function (value, index) {
+                            for (var i = 0; i < role.data.permissions.length; i++) {
+                                if (role.data.permissions[i].slug === value.abilitiesList.slug) {
+                                    return role.data.permissions[i];
+                                }
+                            }
+                            return value.abilitiesList;
+                        });
+                        _this.loading = false;
                         _this.initForm(role.data);
+                    }, function (error) {
+                        _this.loading = false;
                     });
+                }, function (error) {
+                    _this.loading = false;
                 });
             }
             else {
-                _this.apiService.all('client/permission').subscribe(function (response) {
+                _this.apiService.all('client/permissions').subscribe(function (response) {
                     _this.configurePermissions(response);
                 });
             }
@@ -148,7 +164,7 @@ var ManageRoleComponent = (function () {
         var data = this.roleForm.value;
         this.saving = true;
         if (this.roleId) {
-            this.apiService.update('client/role', this.roleId, data).subscribe(function (response) {
+            this.apiService.update('client/roles', this.roleId, data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Rol actualizado con exito');
                 _this.router.navigate(['/client/security/roles']);
@@ -158,7 +174,7 @@ var ManageRoleComponent = (function () {
             });
         }
         else {
-            this.apiService.create('client/role', data).subscribe(function (response) {
+            this.apiService.create('client/roles', data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Rol creado con exito');
                 _this.router.navigate(['/client/security/roles']);
@@ -190,13 +206,13 @@ var ManageRoleComponent = (function () {
         var permissionsFormArray = this.formBuilder.array(permissionsFGs);
         this.roleForm.setControl('permissions', permissionsFormArray);
     };
-    ManageRoleComponent = __decorate([
-        core_1.Component({
-            selector: 'app-manage-role',
-            templateUrl: './manage-role.component.html',
-            styleUrls: ['./manage-role.component.scss']
-        })
-    ], ManageRoleComponent);
     return ManageRoleComponent;
 }());
+ManageRoleComponent = __decorate([
+    core_1.Component({
+        selector: 'app-manage-role',
+        templateUrl: './manage-role.component.html',
+        styleUrls: ['./manage-role.component.scss']
+    })
+], ManageRoleComponent);
 exports.ManageRoleComponent = ManageRoleComponent;

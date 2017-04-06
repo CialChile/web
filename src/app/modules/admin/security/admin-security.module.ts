@@ -13,6 +13,8 @@ import {RouterModule} from "@angular/router";
 import {AdminManageUserComponent} from "./users/manage-user/admin-manage-user.component";
 import {AdminUsersListComponent} from "./users/users-list/admin-users-list.component";
 import {AdminSecurityIndexComponent} from "./admin-security-index";
+import {AdminRolesListComponent} from "./roles/roles-list/admin-roles-list.component";
+import {AdminManageRoleComponent} from "./roles/manage-role/admin-manage-role.component";
 
 @NgModule({
   imports: [
@@ -30,7 +32,7 @@ import {AdminSecurityIndexComponent} from "./admin-security-index";
     RouterModule
   ],
   declarations: [
-    AdminManageUserComponent, AdminUsersListComponent,AdminSecurityIndexComponent],
+    AdminManageUserComponent, AdminUsersListComponent,AdminSecurityIndexComponent, AdminRolesListComponent,AdminManageRoleComponent],
 })
 export class AdminSecurityModule {
 }

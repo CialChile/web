@@ -53,6 +53,19 @@
                   </div>
                 </div>
               </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!userForm.controls['role'].valid  && userForm.controls['role'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Rol</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <select class="form-control" formControlName="role">
+                      <option value="">Seleccione un rol</option>
+                      <option *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>
+                    </select>
+                    <control-messages [control]="userForm.controls['role']"></control-messages>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="row">
               <div class="col-xs-12 col-md-6">

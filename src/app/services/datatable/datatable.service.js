@@ -5,10 +5,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
-var environment_1 = require('../../../environments/environment');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var environment_1 = require("../../../environments/environment");
+var http_1 = require("@angular/http");
+var objectToParams_1 = require("../../utilities/url/objectToParams");
 var DatatableService = (function () {
-    function DatatableService() {
+    function DatatableService(apiService) {
+        this.apiService = apiService;
         this.baseUrl = environment_1.environment.baseUrl;
         this.language = {
             "sProcessing": "Procesando...",
@@ -57,9 +61,42 @@ var DatatableService = (function () {
                 "<'row'<'col-xs-12 col-sm-5'i><'col-xs-12 col-sm-7'p>>",
         };
     };
-    DatatableService = __decorate([
-        core_1.Injectable()
-    ], DatatableService);
+    DatatableService.prototype.getData = function (event, columns, url, include, search) {
+        var order;
+        var columnFilter;
+        if (event.sortField) {
+            columnFilter = columns.filter(function (column) {
+                return column.data == event.sortField;
+            });
+            if (columnFilter && event.sortOrder != 0) {
+                order = [{
+                        column: columns.indexOf(columnFilter[0]),
+                        dir: event.sortOrder > 0 ? 'asc' : event.sortOrder < 0 ? 'desc' : ''
+                    }];
+            }
+        }
+        var input = new http_1.URLSearchParams(objectToParams_1.objectToParams({
+            draw: "1",
+            columns: columns.map(function (column) {
+                return {
+                    data: column.data,
+                    name: column.data,
+                    searchable: column.filter,
+                    orderable: column.sort,
+                    search: { value: "", regex: false }
+                };
+            }),
+            order: order,
+            start: event.first,
+            length: event.rows,
+            search: { value: search ? search : '', regex: "false" },
+        }));
+        url = include ? url + '?include=' + include : url;
+        return this.apiService.all(url, null, { search: input });
+    };
     return DatatableService;
 }());
+DatatableService = __decorate([
+    core_1.Injectable()
+], DatatableService);
 exports.DatatableService = DatatableService;

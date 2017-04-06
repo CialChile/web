@@ -23,6 +23,11 @@ export class AssetsListComponent implements OnInit {
   columnOptions: SelectItem[];
   private lastLoadEvent: LazyLoadEvent;
   private columns: DataTableColumn[] = [];
+  private assetDefaultCoverImage = {
+    source: 'assets/img/missing/assets/missing.jpg',
+    thumbnail: 'assets/img/missing/assets/missing.jpg',
+    title: 'Imagen por defecto'
+  };
 
   constructor(private datatableService: DatatableService, private apiService: ApiService,
               private router: Router, private toastr: ToastsManager) {
@@ -82,6 +87,7 @@ export class AssetsListComponent implements OnInit {
     this.router.navigate(['/client/assets/' + asset.id + '/info']);
 
   }
+
 
   create() {
     this.router.navigate(['/client/assets/create']);

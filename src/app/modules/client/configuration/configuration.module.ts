@@ -27,6 +27,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { StatusListComponent } from './status/status-list/status-list.component';
 import { ManageStatusComponent } from './status/manage-status/manage-status.component';
 import {ConfigurationRoutingModule} from "./configuration-routing.module";
+import {GMapModule} from 'primeng/primeng';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import {ConfigurationRoutingModule} from "./configuration-routing.module";
     DropdownModule,
     PanelModule,
     TextMaskModule,
-    ConfigurationRoutingModule
+    ConfigurationRoutingModule,
+    GMapModule
   ],
   declarations: [ConfigurationIndexComponent, BrandsListComponent, ManageBrandsComponent,
     ManageBrandModelsComponent, BrandModelsListComponent, ManageCategoriesComponent,

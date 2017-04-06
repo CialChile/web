@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/share'
 import {environment} from '../../environments/environment'
-import {Response, Headers, RequestOptions, Http} from "@angular/http";
+import {Response, Headers, RequestOptions, Http, ResponseContentType} from "@angular/http";
 import {Router} from "@angular/router";
 import {ToastsManager} from "ng2-toastr";
 
@@ -114,5 +114,16 @@ export class ApiService {
       .catch(this.handleError);
   }
 
+
+  public downloadDocument(assetId: number, documentId: number, mimeType: string) {
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    headers.append('Accept', mimeType);
+    let options = new RequestOptions({headers: headers, responseType: ResponseContentType.Blob});
+
+    let url = this.actionUrl + 'client/assets/' + assetId + '/documents/' + documentId;
+    return this.authHttp.get(url, options)
+      .catch(this.handleError);
+  }
 
 }

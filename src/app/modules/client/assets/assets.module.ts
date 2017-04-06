@@ -15,7 +15,6 @@ import {ToggleButtonModule} from "primeng/components/togglebutton/togglebutton";
 import {PanelModule} from "primeng/components/panel/panel";
 import {DialogModule} from "primeng/components/dialog/dialog";
 import {RouterModule} from "@angular/router";
-import {DropdownModule as ng2Dropdown} from "ng2-bootstrap";
 import {TabViewModule} from "primeng/components/tabview/tabview";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FormsHelperModule} from "../../../components/forms/forms-helpers.module";
@@ -25,6 +24,7 @@ import {TextMaskModule} from "angular2-text-mask";
 import { AssetDetailsComponent } from './asset-details/asset-details.component';
 import {LightboxModule} from "primeng/components/lightbox/lightbox";
 import {AssetsRoutingModule} from "./assets-routing.module";
+import {GMapModule} from "primeng/components/gmap/gmap";
 
 @NgModule({
   imports: [
@@ -45,12 +45,12 @@ import {AssetsRoutingModule} from "./assets-routing.module";
     FormsModule,
     RouterModule,
     TabViewModule,
-    ng2Dropdown.forRoot(),
     AutoCompleteModule,
     DropdownModule,
     TextMaskModule,
     LightboxModule,
-    AssetsRoutingModule
+    AssetsRoutingModule,
+    GMapModule
   ],
   declarations: [AssetsIndexComponent, AssetsListComponent, ManageAssetsComponent, AssetDetailsComponent]
 })

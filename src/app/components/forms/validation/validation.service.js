@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ValidationService = (function () {
     function ValidationService() {
     }
@@ -6,7 +7,7 @@ var ValidationService = (function () {
         var config = {
             'required': 'Este campo es requerido',
             'invalidCreditCard': 'Is invalid credit card number',
-            'invalidRut': 'El formato del Rut es invalido',
+            'invalidRut': 'El Rut es invalido',
             'invalidEmailAddress': 'El formato del Correo Electrónico Invalido',
             'invalidPassword': 'Contraseña invalida. Debe ser de por lo menos 6 caracteres y contener un numero',
             'validateEqual': 'Las contraseñas deben coincidir',
@@ -24,10 +25,43 @@ var ValidationService = (function () {
         }
     };
     ValidationService.rutValidator = function (control) {
-        if (control.value.match(/^(\d{1}|\d{2})\.(\d{3}\.\d{3}-)([a-zA-Z]{1}$|\d{1}$)/)) {
+        if (control.value) {
+            var cleanRut = control.value.match(/[0-9Kk]+/g).join('');
+            var cDv = cleanRut.charAt(cleanRut.length - 1).toUpperCase();
+            var nRut = parseInt(cleanRut.substr(0, cleanRut.length - 1));
+            if (isNaN(nRut)) {
+                return {
+                    'invalidRut': true
+                };
+            }
+            if (ValidationService.computeRut(nRut).toString().toUpperCase() !== cDv) {
+                return {
+                    'invalidRut': true
+                };
+            }
             return null;
         }
-        return { 'invalidRut': true };
+    };
+    ;
+    ValidationService.computeRut = function (cleanRut) {
+        var suma = 0;
+        var mul = 2;
+        if (typeof (cleanRut) !== 'number') {
+            return;
+        }
+        cleanRut = cleanRut.toString();
+        for (var i = cleanRut.length - 1; i >= 0; i--) {
+            suma = suma + cleanRut.charAt(i) * mul;
+            mul = (mul + 1) % 8 || 2;
+        }
+        switch (suma % 11) {
+            case 1:
+                return 'k';
+            case 0:
+                return 0;
+            default:
+                return 11 - (suma % 11);
+        }
     };
     ValidationService.emailValidator = function (control) {
         // RFC 2822 compliant regex

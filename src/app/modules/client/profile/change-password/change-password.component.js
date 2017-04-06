@@ -5,7 +5,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var validation_service_1 = require("../../../../components/forms/validation/validation.service");
 var ChangePasswordComponent = (function () {
@@ -51,13 +52,13 @@ var ChangePasswordComponent = (function () {
             _this.saving = false;
         });
     };
-    ChangePasswordComponent = __decorate([
-        core_1.Component({
-            selector: 'client-change-password',
-            templateUrl: './change-password.component.html',
-            styleUrls: ['./change-password.component.scss']
-        })
-    ], ChangePasswordComponent);
     return ChangePasswordComponent;
 }());
+ChangePasswordComponent = __decorate([
+    core_1.Component({
+        selector: 'client-change-password',
+        templateUrl: './change-password.component.html',
+        styleUrls: ['./change-password.component.scss']
+    })
+], ChangePasswordComponent);
 exports.ChangePasswordComponent = ChangePasswordComponent;

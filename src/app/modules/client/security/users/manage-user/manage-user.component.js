@@ -5,7 +5,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var validation_service_1 = require("../../../../../components/forms/validation/validation.service");
 var ManageUserComponent = (function () {
@@ -16,6 +17,7 @@ var ManageUserComponent = (function () {
         this.router = router;
         this.route = route;
         this.saving = false;
+        this.loading = false;
         this.title = 'Nuevo Usuario';
         this.breadcrumbs = [
             {
@@ -49,7 +51,7 @@ var ManageUserComponent = (function () {
     }
     ManageUserComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.apiService.all('client/role').subscribe(function (roles) {
+        this.apiService.all('client/roles').subscribe(function (roles) {
             _this.roles = roles.data;
         });
         this.route.params.subscribe(function (params) {
@@ -58,9 +60,13 @@ var ManageUserComponent = (function () {
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].title = 'Editar';
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].link = '/client/security/users/' + params['id'];
                 _this.userId = params['id'];
-                _this.apiService.one('client/secure-user', params['id'], 'role').subscribe(function (user) {
+                _this.loading = true;
+                _this.apiService.one('client/secure-users', params['id'], 'role').subscribe(function (user) {
                     user.data.role = user.data.role.id;
+                    _this.loading = false;
                     _this.initForm(user.data);
+                }, function (error) {
+                    _this.loading = false;
                 });
             }
         });
@@ -73,7 +79,7 @@ var ManageUserComponent = (function () {
         var data = this.userForm.value;
         this.saving = true;
         if (this.userId) {
-            this.apiService.update('client/secure-user', this.userId, data).subscribe(function (response) {
+            this.apiService.update('client/secure-users', this.userId, data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Usuario actualizado con exito');
                 _this.router.navigate(['/client/security/users']);
@@ -83,7 +89,7 @@ var ManageUserComponent = (function () {
             });
         }
         else {
-            this.apiService.create('client/secure-user', data).subscribe(function (response) {
+            this.apiService.create('client/secure-users', data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Usuario creado con exito');
                 _this.router.navigate(['/client/security/users']);
@@ -96,13 +102,13 @@ var ManageUserComponent = (function () {
     ManageUserComponent.prototype.cancel = function () {
         this.router.navigate(['/client/security/users']);
     };
-    ManageUserComponent = __decorate([
-        core_1.Component({
-            selector: 'app-manage-user',
-            templateUrl: './manage-user.component.html',
-            styleUrls: ['./manage-user.component.scss']
-        })
-    ], ManageUserComponent);
     return ManageUserComponent;
 }());
+ManageUserComponent = __decorate([
+    core_1.Component({
+        selector: 'app-manage-user',
+        templateUrl: './manage-user.component.html',
+        styleUrls: ['./manage-user.component.scss']
+    })
+], ManageUserComponent);
 exports.ManageUserComponent = ManageUserComponent;

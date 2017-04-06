@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {ApiService} from "../../../../../services/api.service";
 import {ToastsManager} from "ng2-toastr";
@@ -38,15 +38,32 @@ export class ManageWorkplacesComponent implements OnInit {
       active: true
     }
   ];
+  private mapOptions: google.maps.MapOptions;
+  private mapOverlays: google.maps.Marker[];
+  private infoWindow: google.maps.InfoWindow;
+  private selectedPosition: google.maps.LatLng;
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,
               public toastr: ToastsManager, private router: Router, private route: ActivatedRoute) {
     this.workplaceForm = this.formBuilder.group({
       name: ['', [Validators.required]],
     });
+    this.workplaceForm.controls['name'].valueChanges.subscribe((value) => {
+      if (value) {
+        this.initOverlays(value);
+      }
+    });
   }
 
   ngOnInit() {
+    this.selectedPosition = new google.maps.LatLng(-33.48643545099988, -70.68603515625)
+    this.mapOptions = {
+      center: this.selectedPosition,
+      zoom: 8
+    };
+    this.initOverlays('Lugar de trabajo');
+
+    this.infoWindow = new google.maps.InfoWindow();
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.title = 'Editar Lugar de Trabajo';
@@ -56,7 +73,13 @@ export class ManageWorkplacesComponent implements OnInit {
         this.loading = true;
         this.apiService.one('client/assets/config/workplaces', params['id'], '').subscribe((workplace) => {
           this.loading = false;
-          this.initForm(workplace.data)
+          this.initForm(workplace.data);
+          this.selectedPosition = new google.maps.LatLng(workplace.data.latitude, workplace.data.longitude)
+          this.mapOptions = {
+            center: this.selectedPosition,
+            zoom: 8
+          };
+          this.initOverlays(workplace.data.name);
         }, (error) => {
           this.loading = false;
         })
@@ -68,8 +91,41 @@ export class ManageWorkplacesComponent implements OnInit {
     this.workplaceForm.reset(workplace)
   }
 
+  initOverlays(name: string) {
+    this.mapOverlays = [
+      new google.maps.Marker({position: this.selectedPosition, title: name}),
+    ];
+  }
+
+  handleMapOverlayClick(event) {
+    let isMarker = event.overlay.getTitle != undefined;
+    if (isMarker) {
+      let title = event.overlay.getTitle();
+      this.infoWindow.setContent('' + title + '');
+      this.infoWindow.open(event.map, event.overlay);
+      event.map.setCenter(event.overlay.getPosition());
+    }
+  }
+
+  handleMapClick(event) {
+    this.selectedPosition = event.latLng;
+    this.addMarker(event.latLng);
+  }
+
+  addMarker(selectedPosition) {
+    this.mapOverlays = [];
+    this.mapOverlays.push(new google.maps.Marker({
+      position: {
+        lat: selectedPosition.lat(),
+        lng: selectedPosition.lng()
+      }, title: this.workplaceForm.controls['name'].value, draggable: false
+    }));
+  }
+
   onSubmit() {
     let data = this.workplaceForm.value;
+    data.latitude = this.selectedPosition.lat();
+    data.longitude = this.selectedPosition.lng();
     this.saving = true;
     if (this.workplaceId) {
       this.apiService.update('client/assets/config/workplaces', this.workplaceId, data).subscribe((response) => {

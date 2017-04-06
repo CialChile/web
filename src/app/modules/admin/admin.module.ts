@@ -21,11 +21,13 @@ import {ConfirmationService} from "primeng/components/common/api";
 import {TextMaskModule} from "angular2-text-mask";
 import {AdminProfileModule} from "./profile/admin-profile.module";
 import {AdminSecurityModule} from "./security/admin-security.module";
+import {LightboxModule} from "primeng/components/lightbox/lightbox";
+import {TemplatesModule} from "./templates/templates.module";
+import {AdminConfigurationModule} from "./configuration/admin-configuration.module";
 
 @NgModule({
   imports: [
     CommonModule,
-    AdminRoutingModule,
     MenuModule,
     UserCanModule,
     FormsHelperModule,
@@ -39,7 +41,12 @@ import {AdminSecurityModule} from "./security/admin-security.module";
     InputSwitchModule,
     TextMaskModule,
     AdminProfileModule,
-    AdminSecurityModule
+    AdminSecurityModule,
+    LightboxModule,
+    TemplatesModule,
+    AdminConfigurationModule,
+    AdminRoutingModule,
+
   ],
   declarations: [
     AdminIndexComponent,
@@ -49,7 +56,7 @@ import {AdminSecurityModule} from "./security/admin-security.module";
     AdminCreateCompaniesComponent,
     AdminEditCompaniesComponent
   ],
-  providers:[ConfirmationService]
+  providers: [ConfirmationService]
 })
 export class AdminModule {
 }

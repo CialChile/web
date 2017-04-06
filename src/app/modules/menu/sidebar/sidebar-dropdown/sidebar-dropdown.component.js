@@ -5,8 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
-var SidebarDropdownComponent = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var SidebarDropdownComponent = SidebarDropdownComponent_1 = (function () {
     function SidebarDropdownComponent(eventService) {
         this.eventService = eventService;
         this.eventService.on('menu-toggle', function () {
@@ -17,7 +18,7 @@ var SidebarDropdownComponent = (function () {
             }
             for (var _b = 0, _c = document.getElementById('sidebar-menu').querySelectorAll('li > ul'); _b < _c.length; _b++) {
                 var menu = _c[_b];
-                SidebarDropdownComponent.slideUp(menu);
+                SidebarDropdownComponent_1.slideUp(menu);
             }
         });
     }
@@ -31,7 +32,7 @@ var SidebarDropdownComponent = (function () {
         }
         if (target.parentElement.classList.contains('active') && document.body.classList.contains('nav-md')) {
             var dropdown = target.parentElement.querySelector('ul');
-            SidebarDropdownComponent.slideUp(dropdown);
+            SidebarDropdownComponent_1.slideUp(dropdown);
             target.parentElement.classList.remove('active');
             target.parentElement.classList.remove('active-sm');
         }
@@ -44,12 +45,12 @@ var SidebarDropdownComponent = (function () {
                 }
                 for (var _b = 0, _c = document.getElementById('sidebar-menu').querySelectorAll('li > ul'); _b < _c.length; _b++) {
                     var menu = _c[_b];
-                    SidebarDropdownComponent.slideUp(menu);
+                    SidebarDropdownComponent_1.slideUp(menu);
                 }
             }
             target.parentElement.classList.add('active');
             var dropdown = target.parentElement.querySelector('ul');
-            SidebarDropdownComponent.slideDown(dropdown);
+            SidebarDropdownComponent_1.slideDown(dropdown);
         }
     };
     SidebarDropdownComponent.slideDown = function (elem) {
@@ -63,19 +64,20 @@ var SidebarDropdownComponent = (function () {
     SidebarDropdownComponent.prototype.linkClicked = function (event) {
         if (document.body.classList.contains('nav-sm')) {
             var targetUl = event.srcElement.parentElement.parentElement;
-            SidebarDropdownComponent.slideUp(targetUl);
+            SidebarDropdownComponent_1.slideUp(targetUl);
         }
     };
-    __decorate([
-        core_1.Input()
-    ], SidebarDropdownComponent.prototype, "item", void 0);
-    SidebarDropdownComponent = __decorate([
-        core_1.Component({
-            selector: 'app-sidebar-dropdown',
-            templateUrl: './sidebar-dropdown.component.html',
-            styleUrls: ['./sidebar-dropdown.component.scss'],
-        })
-    ], SidebarDropdownComponent);
     return SidebarDropdownComponent;
 }());
+__decorate([
+    core_1.Input()
+], SidebarDropdownComponent.prototype, "item", void 0);
+SidebarDropdownComponent = SidebarDropdownComponent_1 = __decorate([
+    core_1.Component({
+        selector: 'app-sidebar-dropdown',
+        templateUrl: './sidebar-dropdown.component.html',
+        styleUrls: ['./sidebar-dropdown.component.scss'],
+    })
+], SidebarDropdownComponent);
 exports.SidebarDropdownComponent = SidebarDropdownComponent;
+var SidebarDropdownComponent_1;

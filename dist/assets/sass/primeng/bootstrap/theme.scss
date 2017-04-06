@@ -400,7 +400,7 @@ body .ui-multiselect .ui-multiselect-item.ui-state-highlight {
     color: #ffffff;
 }
 body .ui-multiselect .ui-multiselect-item.ui-state-highlight .ui-chkbox {
-    border: 1px solid #108ffd;
+    border: 1px solid darken($tp-red,10%);
 }
 body .ui-multiselect .ui-multiselect-item > td {
     padding: 0.375em 0.75em;

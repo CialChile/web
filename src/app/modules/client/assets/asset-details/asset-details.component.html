@@ -7,11 +7,13 @@
           <div class="profile_img">
             <div id="crop-avatar" class="text-center">
               <!-- Current avatar -->
-              <p-lightbox [images]="[asset.coverImage]" styleClass="cover-image"></p-lightbox>
+              <p-lightbox [images]="[asset.coverImage]"
+                          styleClass="cover-image"></p-lightbox>
             </div>
+
           </div>
           <div class="text-center">
-            <h3 class="green">{{asset.name}}</h3>
+            <h3 class="red">{{asset.name}}</h3>
           </div>
 
           <div class="row">
@@ -82,8 +84,11 @@
       </div>
     </div>
     <div class="x_panel">
+      <div class="x_title">
+        <h2>Trabajador Responsable</h2>
+        <div class="clearfix"></div>
+      </div>
       <div class="x_content">
-        <h4>Trabajador Responsable</h4>
         <div class=" profile_left">
           <div class="profile_img">
             <div class="text-center">
@@ -93,7 +98,7 @@
                    title="Change the avatar">
             </div>
           </div>
-          <h4>{{asset.worker.full_name}}</h4>
+          <h4 class="red">{{asset.worker.full_name}}</h4>
 
           <div class="user_data">
             <div class="user_data-item">
@@ -151,19 +156,70 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="x_panel">
+          <div class="x_title">
+            <h2>Imagenes</h2>
+            <div class="clearfix"></div>
+          </div>
           <div class="x_content">
-            <p-tabView>
-              <p-tabPanel header="Actividades">
-                <h3>Por implementar</h3>
-              </p-tabPanel>
-            </p-tabView>
+            <div *ngIf="!asset.images.length">
+              <p>No hay imagenes asociadas a este activo</p>
+            </div>
+            <p-lightbox [images]="asset.images"></p-lightbox>
           </div>
         </div>
         <div class="x_panel">
+          <div class="x_title">
+            <h2>Documentos</h2>
+            <div class="clearfix"></div>
+          </div>
           <div class="x_content">
-            <h4>Imagenes</h4>
-
-            <p-lightbox [images]="asset.images"></p-lightbox>
+            <div *ngIf="!asset.documents.length">
+              <p>No hay documentos asociados a este activo</p>
+            </div>
+            <p-dataTable *ngIf="asset.documents.length" [value]="asset.documents" emptyMessage="No hay documentos asociados a este activo">
+              <p-column styleClass="col-button col-icon" [header]="">
+                <ng-template let-document="rowData" pTemplate="body">
+                  <i class="fa fa-file-word-o"
+                     *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'"></i>
+                  <i class="fa fa-file-pdf-o" *ngIf="document.mime_type == 'application/pdf'"></i>
+                  <i class="fa fa-file-excel-o"
+                     *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"></i>
+                </ng-template>
+              </p-column>
+              <p-column field="name" header="Nombre"></p-column>
+              <p-column header="Tipo">
+                <ng-template let-document="rowData" pTemplate="body">
+                  <span
+                    *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
+                    MsWord
+                  </span>
+                  <span *ngIf="document.mime_type == 'application/pdf'">Pdf</span>
+                  <span
+                    *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">
+                    MsExcel
+                  </span>
+                </ng-template>
+              </p-column>
+              <p-column field="size" header="Tamaño"></p-column>
+              <p-column styleClass="col-button" [header]="'Acciones'">
+                <ng-template let-document="rowData" pTemplate="body">
+                  <button type="button" pButton (click)="showDocument(document)" class="ui-button-info"
+                          icon="fa-search"></button>
+                </ng-template>
+              </p-column>
+            </p-dataTable>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Ubicación
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <p-gmap [options]="mapOptions" [overlays]="mapOverlays"
+                    (onOverlayClick)="handleMapOverlayClick($event)"
+                    [style]="{'width':'100%','height':'320px'}"></p-gmap>
           </div>
         </div>
       </div>

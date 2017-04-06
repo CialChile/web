@@ -21,7 +21,6 @@
   </div>
   <form *ngIf="!loading" role="form" class="form-horizontal form-label-left" [formGroup]="companyForm"
         (submit)="onSubmit(companyForm,$event)">
-
     <div class="row">
       <div class="col-xs-12">
         <div class="x_panel">
@@ -32,7 +31,7 @@
           </div>
           <div class="x_content">
             <div class="row">
-              <div class="col-xs-12 col-md-6">
+              <div class="col-xs-12 col-md-8">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['name'].valid  && companyForm.controls['name'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
@@ -42,8 +41,6 @@
                     <control-messages [control]="companyForm.controls['name']"></control-messages>
                   </div>
                 </div>
-              </div>
-              <div class="col-xs-12 col-md-6">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['commercial_name'].valid  && companyForm.controls['commercial_name'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre Comercial</label>
@@ -54,10 +51,6 @@
                     <control-messages [control]="companyForm.controls['commercial_name']"></control-messages>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-md-6">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['fiscal_identification'].valid  && companyForm.controls['fiscal_identification'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Identificación Fiscal (RUT)</label>
@@ -68,8 +61,6 @@
                     <control-messages [control]="companyForm.controls['fiscal_identification']"></control-messages>
                   </div>
                 </div>
-              </div>
-              <div class="col-xs-12 col-md-6">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['email'].valid  && companyForm.controls['email'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Correo Electrónico</label>
@@ -80,45 +71,45 @@
                     <control-messages [control]="companyForm.controls['email']"></control-messages>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-md-6">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['telephone'].valid  && companyForm.controls['telephone'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Teléfono</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="telephone" class="form-control"
-                           placeholder="Teléfono"
+                           placeholder="Teléfono" [textMask]="{mask:telephoneMask}"
                            id="telephone"/>
                     <control-messages [control]="companyForm.controls['telephone']"></control-messages>
                   </div>
                 </div>
-              </div>
-              <div class="col-xs-12 col-md-6">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['fax'].valid  && companyForm.controls['fax'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Fax</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="fax" class="form-control"
-                           placeholder="Fax"
+                           placeholder="Fax" [textMask]="{mask:telephoneMask}"
                            id="fax"/>
                     <control-messages [control]="companyForm.controls['fax']"></control-messages>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-md-6">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['field_id'].valid  && companyForm.controls['field_id'].touched}">
-                  <label for="field_id" class="control-label col-md-3 col-sm-3 col-xs-12">Campo</label>
+                  <label for="field_id" class="control-label col-md-3 col-sm-3 col-xs-12">Industria</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <select formControlName="field_id" class="form-control" id="field_id">
-                      <option value="">Seleccione un campo</option>
+                      <option value="">Seleccione una industria</option>
                       <option [value]="field.id" *ngFor="let field of fields">{{field.name}}</option>
                     </select>
                     <control-messages [control]="companyForm.controls['field_id']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-4">
+                <div class="row">
+                  <div class="col-xs-12 col-md-8 col-md-offset-2">
+                    <etrack-image-upload [file]="image"
+                                         buttonMessage="Elija un logo"
+                                         defaultImageUrl="assets/img/missing/assets/missing.jpg"
+                                         (fileUpdated)="imageChange($event)"></etrack-image-upload>
                   </div>
                 </div>
               </div>
@@ -237,7 +228,7 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content" formGroupName="responsible">
-            <div class="row" >
+            <div class="row">
               <div class="col-xs-12 col-md-6">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['responsible'].controls['first_name'].valid  && companyForm.controls['responsible'].controls['first_name'].touched}">
@@ -257,20 +248,22 @@
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="last_name" class="form-control" placeholder="Apellido"
                            id="last_name"/>
-                    <control-messages [control]="companyForm.controls['responsible'].controls['last_name']"></control-messages>
+                    <control-messages
+                      [control]="companyForm.controls['responsible'].controls['last_name']"></control-messages>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-12 col-md-6" >
+              <div class="col-xs-12 col-md-6">
                 <div class="form-group"
                      [ngClass]="{'has-error':!companyForm.controls['responsible'].controls['email'].valid  && companyForm.controls['responsible'].controls['email'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="email" class="form-control" placeholder="Email"
                            id="responsible_email"/>
-                    <control-messages [control]="companyForm.controls['responsible'].controls['email']"></control-messages>
+                    <control-messages
+                      [control]="companyForm.controls['responsible'].controls['email']"></control-messages>
                   </div>
                 </div>
               </div>
@@ -295,7 +288,8 @@
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="position" class="form-control" placeholder="Cargo"
                            id="position"/>
-                    <control-messages [control]="companyForm.controls['responsible'].controls['position']"></control-messages>
+                    <control-messages
+                      [control]="companyForm.controls['responsible'].controls['position']"></control-messages>
                   </div>
                 </div>
               </div>

@@ -126,7 +126,7 @@
                 <div class="row">
                   <div class="col-xs-12 col-md-8 col-md-offset-2">
                     <etrack-image-upload [file]="image"
-                                         defaultImageUrl="http://etrack.dev/images/missing/assets/missing.jpg"
+                                         defaultImageUrl="assets/img/missing/assets/missing.jpg"
                                          (fileUpdated)="imageChange($event)"></etrack-image-upload>
                   </div>
                 </div>
@@ -276,7 +276,7 @@
                 <p-fileUpload name="images[]" [url]="imageUploadUrl" multiple="multiple"
                               accept="image/*" chooseLabel="Añadir Imagen" uploadLabel="Subir Imagenes"
                               cancelLabel="Cancelar" (onBeforeSend)="configImageUpload($event)"
-                              (onUpload)="fileUploaded($event)" [auto]="true" [disabled]="disableUpload">
+                              (onUpload)="imageUploaded($event)" [auto]="true" [disabled]="disableUpload">
                   <ng-template pTemplate="toolbar">
                     <div>Puedes Subir hasta 5 imagenes</div>
                   </ng-template>
@@ -291,6 +291,79 @@
                 </p-fileUpload>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="x_panel" *ngIf="assetId">
+          <div class="x_title">
+            <h2>Documentos
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12">
+                <p-fileUpload name="documents[]" [url]="documentUploadUrl" multiple="multiple"
+                              accept=".docx,.xls,.xlsx,.pdf"
+                              chooseLabel="Añadir Documento" uploadLabel="Subir Documentos"
+                              cancelLabel="Cancelar" (onBeforeSend)="configDocumentUpload($event)"
+                              (onUpload)="documentUploaded($event)" (onError)="documentErrorUpload($event)"
+                              [auto]="true">
+                  <ng-template pTemplate="content">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <p-dataTable [value]="assetDocuments" emptyMessage="No hay documentos asociados a este activo">
+                          <p-column styleClass="col-button col-icon" [header]="">
+                            <ng-template let-document="rowData" pTemplate="body">
+                              <i class="fa fa-file-word-o"
+                                 *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'"></i>
+                              <i class="fa fa-file-pdf-o" *ngIf="document.mime_type == 'application/pdf'"></i>
+                              <i class="fa fa-file-excel-o"
+                                 *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"></i>
+                            </ng-template>
+                          </p-column>
+                          <p-column field="name" header="Nombre"></p-column>
+                          <p-column header="Tipo">
+                            <ng-template let-document="rowData" pTemplate="body">
+                              <span
+                                *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
+                                MsWord
+                              </span>
+                              <span *ngIf="document.mime_type == 'application/pdf'">Pdf</span>
+                              <span
+                                *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">
+                                MsExcel
+                              </span>
+                            </ng-template>
+                          </p-column>
+                          <p-column field="size" header="Tamaño"></p-column>
+                          <p-column styleClass="col-button" [header]="'Acciones'">
+                            <ng-template let-document="rowData" pTemplate="body">
+                              <button type="button" pButton (click)="showDocument(document)" class="ui-button-info"
+                                      icon="fa-search"></button>
+                              <button type="button" pButton (click)="removeDocument(document)" class="ui-button-danger"
+                                      icon="fa-trash"></button>
+                            </ng-template>
+                          </p-column>
+                        </p-dataTable>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-fileUpload>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Ubicación
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <p-gmap [options]="mapOptions" [overlays]="mapOverlays"
+                    (onOverlayClick)="handleMapOverlayClick($event)"
+                    (onMapClick)="handleMapClick($event)"
+                    [style]="{'width':'100%','height':'320px'}"></p-gmap>
           </div>
         </div>
       </div>

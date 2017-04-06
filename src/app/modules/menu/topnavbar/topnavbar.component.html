@@ -8,12 +8,12 @@
       </div>
       <ul class="nav navbar-nav navbar-right">
         <li class="" dropdown>
-          <a class="user-profile" href id="single-button" dropdownToggle>
+          <a class="user-profile" href id="single-button" dropdownToggle (click)="false">
             <img [src]="profilePicture" alt="">
             <span class="hidden-xs hidden-sm" *ngIf="user">{{user.first_name}} {{user.last_name}}</span>
             <span class=" fa fa-angle-down"></span>
           </a>
-          <ul dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="single-button">
+          <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="single-button">
             <ng-container *ngFor="let item of userMenu">
 
               <li routerLinkActive="active-route" app-topbar-dropdown-item [item]="item"></li>
@@ -28,11 +28,11 @@
         </li>
 
         <li role="presentation" dropdown>
-          <a href id="notificaciones" dropdownToggle>
+          <a href id="notificaciones" dropdownToggle (click)="false">
             <i class="fa fa-envelope-o"></i>
             <span class="badge bg-green">1</span>
           </a>
-          <ul dropdownMenu class="dropdown-menu list-unstyled msg_list" role="menu"
+          <ul *dropdownMenu class="dropdown-menu list-unstyled msg_list" role="menu"
               aria-labelledby="notificaciones">
             <li>
               <a>

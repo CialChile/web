@@ -1,19 +1,9 @@
 "use strict";
-var auth_guard_service_1 = require('../auth/guards/auth-guard.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var auth_guard_service_1 = require("../auth/guards/auth-guard.service");
 var index_component_1 = require("./index/index.component");
 var client_guard_1 = require("../auth/guards/client.guard");
 var dashboard_component_1 = require("./dashboard/dashboard.component");
-var my_profile_component_1 = require("./profile/my-profile/my-profile.component");
-var change_password_component_1 = require("./profile/change-password/change-password.component");
-var workers_list_component_1 = require("./rrhh/workers/workers-list/workers-list.component");
-var security_index_1 = require("./security/security-index");
-var roles_list_component_1 = require("./security/roles/roles-list/roles-list.component");
-var users_list_component_1 = require("./security/users/users-list/users-list.component");
-var manage_role_component_1 = require("./security/roles/manage-role/manage-role.component");
-var manage_user_component_1 = require("./security/users/manage-user/manage-user.component");
-var permission_guard_1 = require("../auth/guards/permission.guard");
-var rrhh_index_1 = require("./rrhh/rrhh-index");
-var manage_worker_component_1 = require("./rrhh/workers/manage-worker/manage-worker.component");
 exports.routes = [
     {
         path: 'client',
@@ -24,100 +14,6 @@ exports.routes = [
             {
                 path: 'dashboard',
                 component: dashboard_component_1.DashboardComponent
-            },
-            {
-                path: 'my-profile',
-                component: my_profile_component_1.MyProfileComponent,
-            },
-            {
-                path: 'my-profile/change-password',
-                component: change_password_component_1.ChangePasswordComponent
-            },
-            {
-                path: 'rrhh',
-                component: rrhh_index_1.RrhhIndexComponent,
-                canActivateChild: [auth_guard_service_1.AuthGuard, client_guard_1.ClientGuard, permission_guard_1.PermissionGuard],
-                children: [
-                    {
-                        path: 'workers',
-                        component: workers_list_component_1.WorkersListComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-rrhh-workers.list'
-                        }
-                    },
-                    {
-                        path: 'workers/create',
-                        component: manage_worker_component_1.ManageWorkerComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-rrhh-workers.store'
-                        }
-                    },
-                    {
-                        path: 'workers/:id',
-                        component: manage_worker_component_1.ManageWorkerComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-rrhh-workers.show'
-                        }
-                    },
-                ]
-            },
-            {
-                path: 'security',
-                component: security_index_1.SecurityIndexComponent,
-                canActivateChild: [auth_guard_service_1.AuthGuard, client_guard_1.ClientGuard, permission_guard_1.PermissionGuard],
-                children: [
-                    {
-                        path: 'roles',
-                        component: roles_list_component_1.RolesListComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-security-roles.list'
-                        }
-                    },
-                    {
-                        path: 'roles/create',
-                        component: manage_role_component_1.ManageRoleComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-security-roles.store'
-                        }
-                    },
-                    {
-                        path: 'roles/:id',
-                        component: manage_role_component_1.ManageRoleComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-security-roles.show'
-                        }
-                    },
-                    {
-                        path: 'users',
-                        component: users_list_component_1.UsersListComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-security-users.list'
-                        }
-                    },
-                    {
-                        path: 'users/create',
-                        component: manage_user_component_1.ManageUserComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-security-users.store'
-                        }
-                    },
-                    {
-                        path: 'users/:id',
-                        component: manage_user_component_1.ManageUserComponent,
-                        data: {
-                            redirectTo: 'client/dashboard',
-                            permission: 'client-security-users.show'
-                        }
-                    }
-                ]
             }
         ]
     }

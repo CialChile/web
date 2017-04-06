@@ -5,8 +5,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
-var directives_1 = require("@angular/core/src/metadata/directives");
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var EtrackUserCanDirective = (function () {
     function EtrackUserCanDirective(_templateRef, _viewContainer) {
         this._templateRef = _templateRef;
@@ -69,17 +69,17 @@ var EtrackUserCanDirective = (function () {
             element.rootNodes[0].removeAttribute('disabled');
         }
     };
-    __decorate([
-        directives_1.Input('userCan')
-    ], EtrackUserCanDirective.prototype, "userCan", null);
-    __decorate([
-        directives_1.Input()
-    ], EtrackUserCanDirective.prototype, "userCanDeniedStrategy", null);
-    EtrackUserCanDirective = __decorate([
-        core_1.Directive({
-            selector: '[userCan]'
-        })
-    ], EtrackUserCanDirective);
     return EtrackUserCanDirective;
 }());
+__decorate([
+    core_1.Input('userCan')
+], EtrackUserCanDirective.prototype, "userCan", null);
+__decorate([
+    core_1.Input()
+], EtrackUserCanDirective.prototype, "userCanDeniedStrategy", null);
+EtrackUserCanDirective = __decorate([
+    core_1.Directive({
+        selector: '[userCan]'
+    })
+], EtrackUserCanDirective);
 exports.EtrackUserCanDirective = EtrackUserCanDirective;

@@ -5,18 +5,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
-var angular_datatables_directive_1 = require("../../../../../directives/datatable/angular-datatables.directive");
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var UsersListComponent = (function () {
-    function UsersListComponent(datatableService, apiService, eventsService, router, toastr) {
+    function UsersListComponent(datatableService, apiService, router, toastr) {
         this.datatableService = datatableService;
         this.apiService = apiService;
-        this.eventsService = eventsService;
         this.router = router;
         this.toastr = toastr;
-        this.dtOptions = {};
-        this.selectedUser = null;
-        this.selectedUserId = null;
+        this.pageLength = 10;
+        this.columns = [];
+        this.userColumns = [
+            {
+                name: 'Nombre',
+                data: 'first_name',
+                sort: true,
+                filter: true,
+            }, {
+                name: 'Apellido',
+                data: 'last_name',
+                sort: true,
+                filter: true
+            }, {
+                name: 'Correo Electrónico',
+                data: 'email',
+                sort: true,
+                filter: true
+            }, {
+                name: 'Rol',
+                data: 'role.name',
+                sort: false,
+                filter: false
+            }
+        ];
         this.breadcrumbs = [
             {
                 title: 'Home',
@@ -34,86 +55,67 @@ var UsersListComponent = (function () {
                 active: true
             }
         ];
-        this.eventsService.on('menu-toggle', function () {
-            console.log('hole');
-        });
     }
     UsersListComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        var columns = [{
-                title: 'Nombre',
-                data: 'first_name'
-            }, {
-                title: 'Apellido',
-                data: 'last_name'
-            }, {
-                title: 'Correo Electrónico',
-                data: 'email'
-            }, {
-                title: 'Rol',
-                data: 'role.name',
-                searchable: false,
-                sortable: false
-            }];
-        this.dtOptions = this.datatableService.init('client/secure-user/datatable', columns, 'role');
-        this.dtOptions.rowCallback = function (nRow, aData) {
-            var self = _this;
-            if (aData.id == self.selectedUserId) {
-                $(nRow).children().addClass('row-selected');
+        this.columnOptions = [];
+        for (var i = 0; i < this.userColumns.length; i++) {
+            if (i < 4) {
+                this.columns.push(this.userColumns[i]);
             }
-            $('td', nRow).unbind('click');
-            $('td', nRow).bind('click', function () {
-                var id = aData.id;
-                if (id === self.selectedUserId) {
-                    self.selectedUserId = null;
-                }
-                else {
-                    self.selectedUserId = id;
-                }
-                if ($('td', nRow).hasClass('row-selected')) {
-                    $('td', nRow).removeClass('row-selected');
-                    self.selectedUser = null;
-                }
-                else {
-                    $('td.row-selected').removeClass('row-selected');
-                    $('td', nRow).addClass('row-selected');
-                    self.rowClicked(aData);
-                }
-            });
-        };
+            this.columnOptions.push({ label: this.userColumns[i].name, value: this.userColumns[i] });
+        }
     };
-    UsersListComponent.prototype.rowClicked = function (data) {
-        this.selectedUser = data;
+    UsersListComponent.prototype.searchGlobally = function () {
+        this.lastLoadEvent.globalFilter = this.globalSearch;
+        this.reloadTable(this.lastLoadEvent);
+    };
+    UsersListComponent.prototype.reloadTable = function (event) {
+        var _this = this;
+        this.lastLoadEvent = event;
+        this.datatableService.getData(event, this.columns, 'client/secure-users/datatable', 'role', this.globalSearch)
+            .toPromise().then(function (response) {
+            _this.users = response.data;
+            _this.totalRecords = response.recordsFiltered;
+        });
+    };
+    UsersListComponent.prototype.columnsChange = function (event) {
+        var _this = this;
+        this.columns = [];
+        var _loop_1 = function (i) {
+            var columnSelected = event.value.filter(function (selectedColumn) {
+                return selectedColumn.data == _this.userColumns[i].data;
+            });
+            if (columnSelected.length) {
+                this_1.columns.push(this_1.userColumns[i]);
+            }
+        };
+        var this_1 = this;
+        for (var i = 0; i < this.userColumns.length; i++) {
+            _loop_1(i);
+        }
     };
     UsersListComponent.prototype.create = function () {
         this.router.navigate(['/client/security/users/create']);
     };
-    UsersListComponent.prototype.edit = function () {
-        this.router.navigate(['/client/security/users/' + this.selectedUser.id]);
+    UsersListComponent.prototype.edit = function (user) {
+        this.router.navigate(['/client/security/users/' + user.id]);
     };
-    UsersListComponent.prototype.remove = function () {
+    UsersListComponent.prototype.remove = function (user) {
         var _this = this;
-        this.apiService.destroy('client/secure-user', this.selectedUser.id).subscribe(function (response) {
+        this.apiService.destroy('client/secure-users', user.id).subscribe(function (response) {
             _this.toastr.success('Usuario Eliminado con Exito');
-            _this.selectedUser = null;
-            _this.datatableEl.dtInstance.then(function (dtInstance) {
-                dtInstance.ajax.reload();
-            });
+            _this.reloadTable(_this.lastLoadEvent);
         });
     };
     UsersListComponent.prototype.ngOnDestroy = function () {
-        this.eventsService.off('menu-toggle');
     };
-    __decorate([
-        core_1.ViewChild(angular_datatables_directive_1.DataTableDirective)
-    ], UsersListComponent.prototype, "datatableEl", void 0);
-    UsersListComponent = __decorate([
-        core_1.Component({
-            selector: 'app-users-list',
-            templateUrl: './users-list.component.html',
-            styleUrls: ['./users-list.component.scss']
-        })
-    ], UsersListComponent);
     return UsersListComponent;
 }());
+UsersListComponent = __decorate([
+    core_1.Component({
+        selector: 'app-users-list',
+        templateUrl: './users-list.component.html',
+        styleUrls: ['./users-list.component.scss']
+    })
+], UsersListComponent);
 exports.UsersListComponent = UsersListComponent;

@@ -5,19 +5,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var client_routes_1 = require("./client-routes");
 var ClientRoutingModule = (function () {
     function ClientRoutingModule() {
     }
-    ClientRoutingModule = __decorate([
-        core_1.NgModule({
-            imports: [router_1.RouterModule.forChild(client_routes_1.routes)],
-            exports: [router_1.RouterModule],
-            providers: []
-        })
-    ], ClientRoutingModule);
     return ClientRoutingModule;
 }());
+ClientRoutingModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.RouterModule.forChild(client_routes_1.routes)],
+        exports: [router_1.RouterModule],
+        providers: []
+    })
+], ClientRoutingModule);
 exports.ClientRoutingModule = ClientRoutingModule;

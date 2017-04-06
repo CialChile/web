@@ -13,6 +13,8 @@ import {AdminSecurityIndexComponent} from "./security/admin-security-index";
 import {ClientGuard} from "../auth/guards/client.guard";
 import {AdminUsersListComponent} from "./security/users/users-list/admin-users-list.component";
 import {AdminManageUserComponent} from "./security/users/manage-user/admin-manage-user.component";
+import {AdminRolesListComponent} from "./security/roles/roles-list/admin-roles-list.component";
+import {AdminManageRoleComponent} from "./security/roles/manage-role/admin-manage-role.component";
 
 export const routes: Routes = [
   {
@@ -67,6 +69,18 @@ export const routes: Routes = [
           {
             path: 'users/:id',
             component: AdminManageUserComponent,
+          },
+          {
+            path: 'roles',
+            component: AdminRolesListComponent,
+          },
+          {
+            path: 'roles/create',
+            component: AdminManageRoleComponent,
+          },
+          {
+            path: 'roles/:id',
+            component: AdminManageRoleComponent,
           },
         ]
       },

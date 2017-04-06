@@ -5,12 +5,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
-var angular2_jwt_1 = require('angular2-jwt');
-var Observable_1 = require('rxjs/Observable');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var angular2_jwt_1 = require("angular2-jwt");
+var Observable_1 = require("rxjs/Observable");
 var http_1 = require("@angular/http");
-require('rxjs/add/observable/throw');
-require('rxjs/add/operator/do');
+require("rxjs/add/observable/throw");
+require("rxjs/add/operator/do");
 var environment_1 = require("../../../../environments/environment");
 var AuthService = (function () {
     function AuthService(http, authHttp, userService) {
@@ -57,9 +58,9 @@ var AuthService = (function () {
         console.error(errMsg);
         return Observable_1.Observable.throw(errMsg);
     };
-    AuthService = __decorate([
-        core_1.Injectable()
-    ], AuthService);
     return AuthService;
 }());
+AuthService = __decorate([
+    core_1.Injectable()
+], AuthService);
 exports.AuthService = AuthService;

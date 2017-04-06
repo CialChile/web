@@ -4,8 +4,9 @@ import {ValidationService} from "../../../../components/forms/validation/validat
 import {ToastsManager} from "ng2-toastr";
 import {Router, ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../../../services/api.service";
-import {ModalDirective} from "ng2-bootstrap";
 import {ConfirmationService} from "primeng/components/common/api";
+import {ModalDirective} from "ngx-bootstrap";
+import {objectToFormData} from "../../../../utilities/form/objectToFormData";
 
 @Component({
   selector: 'admin-edit-companies',
@@ -21,7 +22,13 @@ export class AdminEditCompaniesComponent implements OnInit {
   protected fields: any[];
   private loading: boolean = true;
   private validityMask: any[] = [/[1-9]/, /\d/];
-
+  private telephoneMask = ['+', /[1-9]/, /[0-9]?/, /[0-9]?/, '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+  private rutMask = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d|[kK]/]
+  private image = {
+    objectURL: '',
+    notDefault: false,
+    deleted: false
+  };
   @ViewChild('prompt') public promptModal: ModalDirective;
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService, private confirmationService: ConfirmationService,
@@ -38,7 +45,7 @@ export class AdminEditCompaniesComponent implements OnInit {
       address: ['', [Validators.required]],
       email: ['', Validators.compose([Validators.required, ValidationService.emailValidator])],
       telephone: ['', [Validators.required]],
-      fax: ['', [Validators.required]],
+      fax: [''],
       users_number: ['', [Validators.required]],
       responsible: this.formBuilder.group({
         first_name: ['', [Validators.required]],
@@ -61,6 +68,11 @@ export class AdminEditCompaniesComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.apiService.one('admin/companies', params['id'], 'responsible').subscribe((company) => {
         this.loading = false;
+        this.image = {
+          objectURL: company.data.image.normal,
+          notDefault: company.data.image.notDefault,
+          deleted: false
+        };
         this.initForm(company.data)
       })
     });
@@ -69,6 +81,9 @@ export class AdminEditCompaniesComponent implements OnInit {
   initForm(company) {
     this.company = company;
     this.companyForm.reset(company)
+  }
+  imageChange(image) {
+    this.image = image;
   }
 
   onSubmit(form, $event: any) {
@@ -89,9 +104,15 @@ export class AdminEditCompaniesComponent implements OnInit {
   }
 
   save() {
-    let data = this.companyForm.value;
-    this.promptModal.hide();
-    this.apiService.update('admin/companies', this.company.id, data).subscribe((response) => {
+    let formData = objectToFormData(this.companyForm.getRawValue());
+    if (this.image instanceof File) {
+      formData.append('image', this.image);
+    } else if (this.image.deleted) {
+      formData.append('removeImage', true);
+    }
+    if (this.promptModal)
+      this.promptModal.hide();
+    this.apiService.formDataUpdate('admin/companies', this.company.id, formData).subscribe((response) => {
         this.saving = false;
         this.toastr.success('Empresa actualizada con exito');
         this.router.navigate(['/admin/companies']);

@@ -5,7 +5,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require('@angular/core');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var PermissionGuard = (function () {
     function PermissionGuard(router, toastr) {
         this.router = router;
@@ -36,9 +37,9 @@ var PermissionGuard = (function () {
     PermissionGuard.prototype.canActivateChild = function (route, state) {
         return this.canActivate(route, state);
     };
-    PermissionGuard = __decorate([
-        core_1.Injectable()
-    ], PermissionGuard);
     return PermissionGuard;
 }());
+PermissionGuard = __decorate([
+    core_1.Injectable()
+], PermissionGuard);
 exports.PermissionGuard = PermissionGuard;

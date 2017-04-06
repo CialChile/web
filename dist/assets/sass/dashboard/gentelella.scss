@@ -418,7 +418,7 @@ body .container.body .right_col {
 
 body {
   color: #73879C;
-  background: $tp-dark;
+  background: white;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -431,6 +431,7 @@ body {
 }
 
 .main_container {
+  background: $tp-dark;
 }
 
 .no-padding {

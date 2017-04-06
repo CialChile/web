@@ -40,6 +40,7 @@ export class ManageAssetsComponent implements OnInit {
   ];
   private es = DATEPICKERSPANISH;
   private imageUploadUrl: string = environment.baseUrl;
+  private documentUploadUrl: string = environment.baseUrl;
   private image: any = {
     objectURL: '',
     notDefault: false,
@@ -58,6 +59,11 @@ export class ManageAssetsComponent implements OnInit {
   private workers: any;
   private defaultWorkerImage: string = 'assets/img/missing.png';
   private assetImages: any[] = [];
+  private assetDocuments: any[] = [];
+  private mapOptions: google.maps.MapOptions;
+  private mapOverlays: google.maps.Marker[];
+  private infoWindow: google.maps.InfoWindow;
+  private selectedPosition: google.maps.LatLng;
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,
               public toastr: ToastsManager, private router: Router, private route: ActivatedRoute) {
@@ -78,6 +84,12 @@ export class ManageAssetsComponent implements OnInit {
       worker: ['', Validators.required],
       sub_category_id: [''],
       custom_fields: this.formBuilder.array([])
+    });
+
+    this.assetForm.controls['name'].valueChanges.subscribe((value) => {
+      if (value) {
+        this.initOverlays(value);
+      }
     });
 
     this.assetForm.controls['brand_id'].valueChanges.subscribe((value) => {
@@ -131,6 +143,14 @@ export class ManageAssetsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedPosition = new google.maps.LatLng(-33.48643545099988, -70.68603515625)
+    this.mapOptions = {
+      center: this.selectedPosition,
+      zoom: 8
+    };
+    this.initOverlays('Activo');
+    this.infoWindow = new google.maps.InfoWindow();
+
     this.apiService.all('client/assets/config/brands').subscribe(brands => this.brands = brands.data.map((brand) => {
       return {label: brand.name, value: brand.id}
     }));
@@ -160,12 +180,20 @@ export class ManageAssetsComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/assets/' + params['id'];
         this.assetId = params['id'];
         this.imageUploadUrl += 'client/assets/' + params['id'] + '/images';
+        this.documentUploadUrl += 'client/assets/' + params['id'] + '/documents';
         this.loading = true;
-        this.apiService.one('client/assets', params['id'], 'worker,category,images,coverImage').subscribe((asset) => {
+        this.apiService.one('client/assets', params['id'], 'worker,category,images,coverImage,documents').subscribe((asset) => {
           this.assetImages = asset.data.images;
+          this.assetDocuments = asset.data.documents;
           if (this.assetImages.length >= 5) {
             this.disableUpload = true;
           }
+          this.selectedPosition = new google.maps.LatLng(asset.data.latitude, asset.data.longitude);
+          this.mapOptions = {
+            center: this.selectedPosition,
+            zoom: 8
+          };
+          this.initOverlays(asset.data.name);
           this.initForm(asset.data);
           this.subscribeToCategoriesChanges();
           this.loading = false;
@@ -226,12 +254,29 @@ export class ManageAssetsComponent implements OnInit {
     }
   }
 
-  fileUploaded(event) {
+  configDocumentUpload(event) {
+    event.xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    event.xhr.setRequestHeader('Accept', 'application/json, text/plain, */*');
+  }
+
+  imageUploaded(event) {
     const images = JSON.parse(event.xhr.responseText);
     this.assetImages = images.data;
     if (this.assetImages.length >= 5) {
       this.disableUpload = true;
     }
+  }
+
+  documentUploaded(event) {
+    const documents = JSON.parse(event.xhr.responseText);
+    this.assetDocuments = documents.data;
+  }
+
+  documentErrorUpload(event) {
+    const errors = JSON.parse(event.xhr.responseText);
+    Object.keys(errors.errors).forEach((property) => {
+      this.toastr.error(errors.errors[property], 'Error');
+    })
   }
 
   removeImage(imageId) {
@@ -245,6 +290,60 @@ export class ManageAssetsComponent implements OnInit {
       }
       this.toastr.success('Imagen eliminada con exito');
     })
+  }
+
+  showDocument(document) {
+    let reader = new FileReader();
+
+    this.apiService.downloadDocument(this.assetId, document.id, document.mime_type)
+      .subscribe(data => {
+        let blob: Blob = data.blob();
+        reader.readAsDataURL(blob)
+      });
+
+    reader.onloadend = function (e) {
+      window.open(reader.result);
+    }
+  }
+
+  removeDocument(doc) {
+    this.apiService.destroy('client/assets/' + this.assetId + '/documents', doc.id).toPromise().then((response) => {
+      this.assetDocuments = this.assetDocuments.filter((document) => {
+        return document.id != doc.id;
+      });
+      this.toastr.success('Documento eliminado con exito');
+    })
+  }
+
+  initOverlays(name: string) {
+    this.mapOverlays = [
+      new google.maps.Marker({position: this.selectedPosition, title: name}),
+    ];
+  }
+
+  handleMapOverlayClick(event) {
+    let isMarker = event.overlay.getTitle != undefined;
+    if (isMarker) {
+      let title = event.overlay.getTitle();
+      this.infoWindow.setContent('' + title + '');
+      this.infoWindow.open(event.map, event.overlay);
+      event.map.setCenter(event.overlay.getPosition());
+    }
+  }
+
+  handleMapClick(event) {
+    this.selectedPosition = event.latLng;
+    this.addMarker(event.latLng);
+  }
+
+  addMarker(selectedPosition) {
+    this.mapOverlays = [];
+    this.mapOverlays.push(new google.maps.Marker({
+      position: {
+        lat: selectedPosition.lat(),
+        lng: selectedPosition.lng()
+      }, title: this.assetForm.controls['name'].value, draggable: false
+    }));
   }
 
   onSubmit(form, $event: any) {
@@ -265,6 +364,7 @@ export class ManageAssetsComponent implements OnInit {
 
     if (!validationError) {
       data.worker_id = data.worker.id;
+      data.location = this.selectedPosition.lat() + ',' + this.selectedPosition.lng();
       delete data.worker;
       let formData = objectToFormData(data);
       if (this.image instanceof File) {

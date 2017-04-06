@@ -38,6 +38,7 @@ export class AdminManageUserComponent implements OnInit {
       active: true
     }
   ];
+  private roles: any;
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,
               public toastr: ToastsManager, private router: Router, private route: ActivatedRoute) {
@@ -48,11 +49,15 @@ export class AdminManageUserComponent implements OnInit {
         value: '',
         disabled: false
       }, [Validators.compose([Validators.required, ValidationService.emailValidator])]],
+      role: ['', [Validators.required]],
       active: [true],
     });
   }
 
   ngOnInit() {
+    this.apiService.all('admin/roles').subscribe((roles) => {
+      this.roles = roles.data
+    });
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.title = 'Editar Usuario';
@@ -61,8 +66,9 @@ export class AdminManageUserComponent implements OnInit {
         this.userId = params['id'];
         this.loading = true;
         this.userForm.controls.email.disable();
-        this.apiService.one('admin/users', params['id']).subscribe((user) => {
+        this.apiService.one('admin/users', params['id'],'role').subscribe((user) => {
           this.loading = false;
+          user.data.role = user.data.role.id;
           this.initForm(user.data)
         }, (error) => {
           this.loading = false;

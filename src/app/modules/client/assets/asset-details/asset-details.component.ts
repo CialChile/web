@@ -14,7 +14,10 @@ export class AssetDetailsComponent implements OnInit {
   private defaultImage: string = 'assets/img/missing/assets/missing.jpg';
   private defaultWorkerImage: string = 'assets/img/missing/worker/missing.png';
   private asset: any;
-
+  private mapOptions: google.maps.MapOptions;
+  private mapOverlays: google.maps.Marker[];
+  private infoWindow: google.maps.InfoWindow;
+  private selectedPosition: google.maps.LatLng;
   private breadcrumbs = [
     {
       title: 'Home',
@@ -43,11 +46,25 @@ export class AssetDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.infoWindow = new google.maps.InfoWindow();
     this.route.params.subscribe((params) => {
       this.assetId = params['id'];
       this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/assets/' + params['id'] + '/info';
-      this.apiService.one('client/assets', params['id'], 'category,brand,brandModel,subcategory,workplace,worker,status,images,coverImage').subscribe((asset) => {
+      this.apiService.one('client/assets', params['id'], 'category,brand,brandModel,subcategory,workplace,worker,status,images,coverImage,documents').subscribe((asset) => {
+        if (!asset.data.coverImage) {
+          asset.data.coverImage = {
+            source: 'assets/img/missing/assets/missing.jpg',
+            thumbnail: 'assets/img/missing/assets/missing.jpg',
+            title: asset.data.name
+          }
+        }
         this.asset = asset.data;
+        this.selectedPosition = new google.maps.LatLng(asset.data.latitude, asset.data.longitude);
+        this.mapOptions = {
+          center: this.selectedPosition,
+          zoom: 8
+        };
+        this.initOverlays(asset.data.name);
       })
     });
   }
@@ -55,6 +72,36 @@ export class AssetDetailsComponent implements OnInit {
   edit() {
     this.router.navigate(['/client/assets/' + this.assetId]);
 
+  }
+
+  showDocument(document) {
+    let reader = new FileReader();
+
+    this.apiService.downloadDocument(this.assetId, document.id, document.mime_type)
+      .subscribe(data => {
+        let blob: Blob = data.blob();
+        reader.readAsDataURL(blob)
+      });
+
+    reader.onloadend = function (e) {
+      window.open(reader.result);
+    }
+  }
+
+  initOverlays(name: string) {
+    this.mapOverlays = [
+      new google.maps.Marker({position: this.selectedPosition, title: name}),
+    ];
+  }
+
+  handleMapOverlayClick(event) {
+    let isMarker = event.overlay.getTitle != undefined;
+    if (isMarker) {
+      let title = event.overlay.getTitle();
+      this.infoWindow.setContent('' + title + '');
+      this.infoWindow.open(event.map, event.overlay);
+      event.map.setCenter(event.overlay.getPosition());
+    }
   }
 
   remove() {

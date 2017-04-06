@@ -34,8 +34,8 @@
     "ng-loading-bar": "^0.0.7",
     "ng2-input-mask": "^0.0.7",
     "ng2-toastr": "1.6.0",
-    "ngx-bootstrap": "^1.6.2",
-    "primeng": "4.0.0-rc.2",
+    "ngx-bootstrap": "1.6.5",
+    "primeng": "4.0.0-rc.1",
     "rxjs": "^5.1.0",
     "typescript": "latest",
     "zone.js": "^0.8.4"

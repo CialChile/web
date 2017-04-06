@@ -46,7 +46,6 @@ import {AdminConfigurationModule} from "./configuration/admin-configuration.modu
     TemplatesModule,
     AdminConfigurationModule,
     AdminRoutingModule,
-
   ],
   declarations: [
     AdminIndexComponent,

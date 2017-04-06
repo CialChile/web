@@ -5,6 +5,6 @@
 // The file contents for the current environment will overwrite these during build.
 export var environment = {
     production: false,
-    baseUrl: 'http://etrack.dev/api/'
+    baseUrl: 'http://etrackapi.dncomputing.com/api/'
 };
 //# sourceMappingURL=/Users/pedrogorrin/Documents/Trabajo/etrack/web/src/environments/environment.js.map

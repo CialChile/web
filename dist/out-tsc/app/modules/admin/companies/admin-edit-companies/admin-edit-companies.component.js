@@ -7,14 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { ValidationService } from "../../../../components/forms/validation/validation.service";
 import { ToastsManager } from "ng2-toastr";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ApiService } from "../../../../services/api.service";
 import { ConfirmationService } from "primeng/components/common/api";
-import { ModalDirective } from "ngx-bootstrap";
 import { objectToFormData } from "../../../../utilities/form/objectToFormData";
 var AdminEditCompaniesComponent = (function () {
     function AdminEditCompaniesComponent(formBuilder, apiService, confirmationService, toastr, router, route) {
@@ -112,8 +111,6 @@ var AdminEditCompaniesComponent = (function () {
         else if (this.image.deleted) {
             formData.append('removeImage', true);
         }
-        if (this.promptModal)
-            this.promptModal.hide();
         this.apiService.formDataUpdate('admin/companies', this.company.id, formData).subscribe(function (response) {
             _this.saving = false;
             _this.toastr.success('Empresa actualizada con exito');
@@ -125,17 +122,12 @@ var AdminEditCompaniesComponent = (function () {
     };
     AdminEditCompaniesComponent.prototype.cancelPrompt = function () {
         this.saving = false;
-        this.promptModal.hide();
     };
     AdminEditCompaniesComponent.prototype.goBack = function () {
         this.router.navigate(['/admin/companies']);
     };
     return AdminEditCompaniesComponent;
 }());
-__decorate([
-    ViewChild('prompt'),
-    __metadata("design:type", ModalDirective)
-], AdminEditCompaniesComponent.prototype, "promptModal", void 0);
 AdminEditCompaniesComponent = __decorate([
     Component({
         selector: 'admin-edit-companies',

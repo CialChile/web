@@ -5,7 +5,6 @@ import {ToastsManager} from "ng2-toastr";
 import {Router, ActivatedRoute} from "@angular/router";
 import {ApiService} from "../../../../services/api.service";
 import {ConfirmationService} from "primeng/components/common/api";
-import {ModalDirective} from "ngx-bootstrap";
 import {objectToFormData} from "../../../../utilities/form/objectToFormData";
 
 @Component({
@@ -29,7 +28,6 @@ export class AdminEditCompaniesComponent implements OnInit {
     notDefault: false,
     deleted: false
   };
-  @ViewChild('prompt') public promptModal: ModalDirective;
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService, private confirmationService: ConfirmationService,
               public toastr: ToastsManager, private router: Router, private route: ActivatedRoute) {
@@ -110,8 +108,7 @@ export class AdminEditCompaniesComponent implements OnInit {
     } else if (this.image.deleted) {
       formData.append('removeImage', true);
     }
-    if (this.promptModal)
-      this.promptModal.hide();
+
     this.apiService.formDataUpdate('admin/companies', this.company.id, formData).subscribe((response) => {
         this.saving = false;
         this.toastr.success('Empresa actualizada con exito');
@@ -125,7 +122,6 @@ export class AdminEditCompaniesComponent implements OnInit {
 
   cancelPrompt() {
     this.saving = false;
-    this.promptModal.hide();
   }
 
   goBack() {

@@ -3114,9 +3114,9 @@ ng2-toastr@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/ng2-toastr/-/ng2-toastr-1.6.0.tgz#016cbf5145a8a033ff573fe08474aa5bdb182c19"
 
-ngx-bootstrap:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-1.6.2.tgz#928b9e91ac37e82420edf371af45886a4cb3d3f8"
+ngx-bootstrap@1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-1.6.5.tgz#cb5b2d1af5828a24fe049e0942a4899cdfea4e9c"
   dependencies:
     moment "2.18.1"
 
@@ -3803,9 +3803,9 @@ pretty-error@^2.0.2:
     renderkid "^2.0.1"
     utila "~0.4"
 
-primeng@4.0.0-rc.2:
-  version "4.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/primeng/-/primeng-4.0.0-rc.2.tgz#8dd26a77f0a325a7a3e3610028944b6d5ed1129e"
+primeng@4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/primeng/-/primeng-4.0.0-rc.1.tgz#603146a9adb4d4e3dd6346f8c1b11b3172387f8f"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"

@@ -1,1 +1,0 @@
-{"version":3,"file":"categoriesColumns.js","sourceRoot":"","sources":["categoriesColumns.ts"],"names":[],"mappings":"AACA,MAAM,CAAC,IAAM,iBAAiB,GAAsB;IAClD;QACE,IAAI,EAAE,QAAQ;QACd,IAAI,EAAE,MAAM;QACZ,IAAI,EAAE,IAAI;QACV,MAAM,EAAE,IAAI;KACb;IACD;QACE,IAAI,EAAE,WAAW;QACjB,IAAI,EAAE,YAAY;QAClB,IAAI,EAAE,IAAI;QACV,MAAM,EAAE,IAAI;KACb;CACF,CAAC"}

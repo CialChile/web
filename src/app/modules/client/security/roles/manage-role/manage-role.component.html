@@ -1,0 +1,110 @@
+<app-page-title back="/client/security/roles" [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+
+<form role="form" class="form-horizontal form-label-left" [formGroup]="roleForm" (submit)="onSubmit()">
+
+  <ng-template #loadingIndicator>
+    <div class="text-center">
+      <img width="70px" src="assets/img/gears2.svg" alt="">
+      <h4>Cargando Rol...</h4>
+    </div>
+  </ng-template>
+  <div *ngIf="!loading; else loadingIndicator">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Información General
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!roleForm.controls['name'].valid  && roleForm.controls['name'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="name" class="form-control" placeholder="Nombre del rol"
+                           id="name"/>
+                    <control-messages [control]="roleForm.controls['name']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!roleForm.controls['description'].valid  && roleForm.controls['description'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Descripción</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <textarea formControlName="description" class="form-control"
+                              placeholder="Descripción"
+                              id="description"></textarea>
+                    <control-messages [control]="roleForm.controls['description']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Permisos
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>Nombre de Permiso</th>
+                    <th class="text-center"><input type="checkbox" formControlName="listAll">Listar
+                    </th>
+                    <th class="text-center"><input type="checkbox" formControlName="storeAll">Crear
+                    </th>
+                    <th class="text-center"><input type="checkbox" formControlName="updateAll">Actualizar
+                    </th>
+                    <th class="text-center"><input type="checkbox" formControlName="showAll">Ver
+                    </th>
+                    <th class="text-center"><input type="checkbox" formControlName="destroyAll">Eliminar
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody formArrayName="permissions">
+                  <tr *ngFor="let permission of permissions.controls; let i=index" [formGroupName]="i">
+                    <td><b>{{permission.controls['name'].value}}</b></td>
+                    <td class="text-center"><input type="checkbox" formControlName="list"></td>
+                    <td class="text-center"><input type="checkbox" formControlName="store"></td>
+                    <td class="text-center"><input type="checkbox" formControlName="update"></td>
+                    <td class="text-center"><input type="checkbox" formControlName="show"></td>
+                    <td class="text-center"><input type="checkbox" formControlName="destroy"></td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="toolbar text-center">
+          <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+            <i class="fa fa-trash"></i>
+            Cancelar
+          </button>
+          <button class="btn btn-success btn-lg" type="submit" [disabled]="!roleForm.valid || saving">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

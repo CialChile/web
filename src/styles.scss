@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'assets/sass/variables';
+@import 'assets/sass/menu/sidebar';
+@import 'assets/sass/primeng/primeng';
+@import 'assets/sass/bootstrap/bootstrap';
+@import 'assets/sass/libs/ng2-toastr/ng2-toastr';
+@import 'assets/sass/dashboard/gentelella';
+@import 'assets/sass/toolbar/toolbar';
+@import 'assets/sass/tables/table';
+
+html, body {
+  height: 100%;
+}
+
+.loading {
+  height: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-container {
+  max-width: 50%;
+}
+
+.link-disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.row-selected {
+  background: rgba(38, 185, 154, .16);
+}
+
+@media (min-width: 992px) {
+  .control-label.multiline {
+    padding-top: 0;
+  }
+}
+
+

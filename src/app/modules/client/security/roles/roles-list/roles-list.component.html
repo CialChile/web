@@ -1,0 +1,53 @@
+<app-page-title [title]="'Roles'" [breadcrumbs]="breadcrumbs"></app-page-title>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Roles
+          <small>Listado</small>
+        </h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <p-dataTable [value]="roles" [lazy]="true" [responsive]="true" [rows]="pageLength"
+                     [paginator]="true" emptyMessage="No se encontraron registros"  [pageLinks]="3"
+                     (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,50]">
+          <p-header>
+            <div class="row">
+              <div class="col-xs-12 col-md-4 text-left">
+                <div>
+                  <button class="btn btn-success" type="button" (click)="create()">
+                    <i class="fa fa-plus"></i>
+                    Nuevo rol
+                  </button>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-4">
+                <div class=" text-left">
+                  <p-multiSelect [options]="columnOptions" [(ngModel)]="columns" (onChange)="columnsChange($event)"></p-multiSelect>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-4">
+                <div>
+                  <input (keyup)="searchGlobally()" type="text" class="form-control" [(ngModel)]="globalSearch" placeholder="Buscar...">
+                </div>
+              </div>
+            </div>
+          </p-header>
+          <p-column *ngFor="let col of columns" [field]="col.data" [header]="col.name" [sortable]="true"></p-column>
+          <p-column styleClass="col-button">
+            <ng-template pTemplate="header">
+              Acciones
+            </ng-template>
+            <ng-template let-role="rowData" pTemplate="body">
+              <button type="button" pButton (click)="edit(role)" class="ui-button-warning" icon="fa-pencil"></button>
+              <button type="button" pButton (click)="remove(role)" class="ui-button-danger" icon="fa-trash"></button>
+            </ng-template>
+          </p-column>
+        </p-dataTable>
+      </div>
+    </div>
+  </div>
+</div>
+

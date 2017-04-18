@@ -1,0 +1,173 @@
+<app-page-title back="/client/certifications/config/institutes" [title]="title"
+                [breadcrumbs]="breadcrumbs"></app-page-title>
+<form role="form" class="form-horizontal form-label-left" [formGroup]="instituteForm" (submit)="onSubmit()">
+  <ng-template #loadingIndicator>
+    <div class="text-center">
+      <img width="70px" src="assets/img/gears2.svg" alt="">
+      <h4>Cargando Instituto...</h4>
+    </div>
+  </ng-template>
+  <div *ngIf="!loading; else loadingIndicator">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Información General
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['name'].valid  && instituteForm.controls['name'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="name" class="form-control" placeholder="Nombre del Instituto"
+                           id="name"/>
+                    <control-messages [control]="instituteForm.controls['name']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['rut'].valid  && instituteForm.controls['rut'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Identificación Fiscal (RUT)</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="rut" class="form-control"
+                           placeholder="Identificación Fiscal (RUT)" [textMask]="{mask:rutMask}"
+                           id="rut"/>
+                    <control-messages [control]="instituteForm.controls['rut']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Dirección
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['country'].valid  && instituteForm.controls['country'].touched}">
+                  <label for="country" class="control-label col-md-3 col-sm-3 col-xs-12">País</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <select formControlName="country" class="form-control" id="country">
+                      <option value="">Seleccione un país</option>
+                      <option [value]="country" *ngFor="let country of countries">{{country}}</option>
+                    </select>
+                    <control-messages [control]="instituteForm.controls['country']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['state'].valid  && instituteForm.controls['state'].touched}">
+                  <label for="state" class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Estado o Provincía
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <select formControlName="state" class="form-control" id="state">
+                      <option value="">Seleccione un estado</option>
+                      <option [value]="state" *ngFor="let state of states">{{state}}</option>
+                    </select>
+                    <control-messages [control]="instituteForm.controls['state']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['city'].valid  && instituteForm.controls['city'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Ciudad</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="city" class="form-control"
+                           placeholder="Ciudad"
+                           id="city"/>
+                    <control-messages [control]="instituteForm.controls['city']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['address'].valid  && instituteForm.controls['address'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Dirección</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <textarea formControlName="address" class="form-control"
+                              placeholder="Dirección"
+                              rows="4"
+                              id="address"></textarea>
+                    <control-messages [control]="instituteForm.controls['address']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Información de Contacto
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['contact'].valid  && instituteForm.controls['contact'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Persona de Contacto</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="contact" class="form-control" placeholder="Nombre de la Persona de Contacto"
+                           id="contact"/>
+                    <control-messages [control]="instituteForm.controls['contact']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['telephone_contact'].valid  && instituteForm.controls['telephone_contact'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Teléfono de Contacto</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="telephone_contact" class="form-control"
+                           placeholder="Télefono de Contacto" [textMask]="{mask:telephoneMask}"
+                           id="telephone_contact"/>
+                    <control-messages [control]="instituteForm.controls['telephone_contact']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!instituteForm.controls['email_contact'].valid  && instituteForm.controls['email_contact'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Correo Electrónico de Contacto
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="email_contact" class="form-control"
+                           placeholder="Correo Electrónico de Contacto"
+                           id="email_contact"/>
+                    <control-messages [control]="instituteForm.controls['email_contact']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="toolbar text-center">
+          <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+            <i class="fa fa-trash"></i>
+            Cancelar
+          </button>
+          <button class="btn btn-success btn-lg" type="submit" [disabled]="!instituteForm.valid || saving">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

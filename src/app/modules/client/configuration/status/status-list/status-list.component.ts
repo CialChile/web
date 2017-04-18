@@ -25,7 +25,8 @@ export class StatusListComponent implements OnInit {
   public columns: DataTableColumn[] = [];
   public STATUS_TYPES = [
     {value: 0, label: 'Activo'},
-    {value: 1, label: 'Documento'}
+    {value: 1, label: 'Documento'},
+    {value: 2, label: 'Certificación'},
   ];
 
   public breadcrumbs = [

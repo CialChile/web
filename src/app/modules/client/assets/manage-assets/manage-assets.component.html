@@ -27,8 +27,7 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Código de Identificación</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="sku" [textMask]="{mask: skuMask}" class="form-control"
-                           placeholder="Código de Identificación"
-                           id="sku"/>
+                           placeholder="Código de Identificación" id="sku"/>
                     <control-messages [control]="assetForm.controls['sku']"></control-messages>
                   </div>
                 </div>
@@ -36,9 +35,7 @@
                      [ngClass]="{'has-error':!assetForm.controls['name'].valid  && assetForm.controls['name'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
-                    <input formControlName="name" class="form-control"
-                           placeholder="Nombre del activo"
-                           id="name"/>
+                    <input formControlName="name" class="form-control" placeholder="Nombre del activo" id="name"/>
                     <control-messages [control]="assetForm.controls['name']"></control-messages>
                   </div>
                 </div>
@@ -46,8 +43,7 @@
                      [ngClass]="{'has-error':!assetForm.controls['serial'].valid  && assetForm.controls['serial'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Nº de Serial</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
-                    <input formControlName="serial" class="form-control" placeholder="Número de Serial"
-                           id="serial"/>
+                    <input formControlName="serial" class="form-control" placeholder="Número de Serial" id="serial"/>
                     <control-messages [control]="assetForm.controls['serial']"></control-messages>
                   </div>
                 </div>
@@ -56,9 +52,7 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Vida útil estimada en años</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="validity_time" [textMask]="{mask: validityMask,guide:false}"
-                           class="form-control"
-                           placeholder="Vida útil estimada en Años"
-                           id="validity_time"/>
+                           class="form-control" placeholder="Vida útil estimada en Años" id="validity_time"/>
                     <control-messages [control]="assetForm.controls['validity_time']"></control-messages>
                   </div>
                 </div>
@@ -68,8 +62,8 @@
                   </label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <p-calendar formControlName="integration_date" dateFormat="dd/mm/yy" [locale]="es"
-                                inputStyleClass="form-control" [yearNavigator]="true"
-                                [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+                                inputStyleClass="form-control" [yearNavigator]="true" [monthNavigator]="true"
+                                yearRange="1930:2050"></p-calendar>
 
                     <control-messages [control]="assetForm.controls['integration_date']"></control-messages>
                   </div>
@@ -80,8 +74,8 @@
                   </label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <p-calendar formControlName="end_service_life_date" dateFormat="dd/mm/yy" [locale]="es"
-                                inputStyleClass="form-control" [yearNavigator]="true"
-                                [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+                                inputStyleClass="form-control" [yearNavigator]="true" [monthNavigator]="true"
+                                yearRange="1930:2050"></p-calendar>
 
                     <control-messages [control]="assetForm.controls['end_service_life_date']"></control-messages>
                   </div>
@@ -93,8 +87,8 @@
                   </label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <p-calendar formControlName="warranty_date" dateFormat="dd/mm/yy" [locale]="es"
-                                inputStyleClass="form-control" [yearNavigator]="true"
-                                [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+                                inputStyleClass="form-control" [yearNavigator]="true" [monthNavigator]="true"
+                                yearRange="1930:2050"></p-calendar>
 
                     <control-messages [control]="assetForm.controls['warranty_date']"></control-messages>
                   </div>
@@ -104,8 +98,8 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Fecha de desincorporación</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <p-calendar formControlName="disincorporation_date" dateFormat="dd/mm/yy" [locale]="es"
-                                inputStyleClass="form-control" [yearNavigator]="true"
-                                [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+                                inputStyleClass="form-control" [yearNavigator]="true" [monthNavigator]="true"
+                                yearRange="1930:2050"></p-calendar>
 
                     <control-messages [control]="assetForm.controls['disincorporation_date']"></control-messages>
                   </div>
@@ -125,8 +119,7 @@
               <div class="col-xs-12 col-md-4">
                 <div class="row">
                   <div class="col-xs-12 col-md-8 col-md-offset-2">
-                    <etrack-image-upload [file]="image"
-                                         defaultImageUrl="assets/img/missing/assets/missing.jpg"
+                    <etrack-image-upload [file]="image" defaultImageUrl="assets/img/missing/assets/missing.jpg"
                                          (fileUpdated)="imageChange($event)"></etrack-image-upload>
                   </div>
                 </div>
@@ -147,8 +140,8 @@
                      [ngClass]="{'has-error':!assetForm.controls['worker'].valid  && assetForm.controls['worker'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Trabajador</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
-                    <p-autoComplete formControlName="worker" [suggestions]="workers" [size]="10"
-                                    [minLength]="1" (onDropdownClick)="searchWorker($event)"
+                    <p-autoComplete formControlName="worker" [suggestions]="workers" [size]="10" [minLength]="1"
+                                    (onDropdownClick)="searchWorker($event)"
                                     placeholder="Buscar Trabajador por nombre..."
                                     (completeMethod)="searchWorker($event)" [dropdown]="true" field="full_name">
                       <ng-template let-worker pTemplate="item">
@@ -262,96 +255,6 @@
               </div>
             </div>
           </div>
-
-        </div>
-        <div class="x_panel" *ngIf="assetId">
-          <div class="x_title">
-            <h2>Imagenes
-            </h2>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="row">
-              <div class="col-xs-12">
-                <p-fileUpload name="images[]" [url]="imageUploadUrl" multiple="multiple"
-                              accept="image/*" chooseLabel="Añadir Imagen" uploadLabel="Subir Imagenes"
-                              cancelLabel="Cancelar" (onBeforeSend)="configImageUpload($event)"
-                              (onUpload)="imageUploaded($event)" [auto]="true" [disabled]="disableUpload">
-                  <ng-template pTemplate="toolbar">
-                    <div>Puedes Subir hasta 5 imagenes</div>
-                  </ng-template>
-                  <ng-template pTemplate="content">
-                    <div class="row">
-                      <div class="col-xs-6 col-md-3" *ngFor="let image of assetImages">
-                        <app-image-display [canDelete]="true" [image]="image"
-                                           (onDeleteFile)="removeImage($event)"></app-image-display>
-                      </div>
-                    </div>
-                  </ng-template>
-                </p-fileUpload>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="x_panel" *ngIf="assetId">
-          <div class="x_title">
-            <h2>Documentos
-            </h2>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <div class="row">
-              <div class="col-xs-12">
-                <p-fileUpload name="documents[]" [url]="documentUploadUrl" multiple="multiple"
-                              accept=".docx,.xls,.xlsx,.pdf"
-                              chooseLabel="Añadir Documento" uploadLabel="Subir Documentos"
-                              cancelLabel="Cancelar" (onBeforeSend)="configDocumentUpload($event)"
-                              (onUpload)="documentUploaded($event)" (onError)="documentErrorUpload($event)"
-                              [auto]="true">
-                  <ng-template pTemplate="content">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <p-dataTable [value]="assetDocuments" emptyMessage="No hay documentos asociados a este activo">
-                          <p-column styleClass="col-button col-icon" [header]="">
-                            <ng-template let-document="rowData" pTemplate="body">
-                              <i class="fa fa-file-word-o"
-                                 *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'"></i>
-                              <i class="fa fa-file-pdf-o" *ngIf="document.mime_type == 'application/pdf'"></i>
-                              <i class="fa fa-file-excel-o"
-                                 *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"></i>
-                            </ng-template>
-                          </p-column>
-                          <p-column field="name" header="Nombre"></p-column>
-                          <p-column header="Tipo">
-                            <ng-template let-document="rowData" pTemplate="body">
-                              <span
-                                *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
-                                MsWord
-                              </span>
-                              <span *ngIf="document.mime_type == 'application/pdf'">Pdf</span>
-                              <span
-                                *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">
-                                MsExcel
-                              </span>
-                            </ng-template>
-                          </p-column>
-                          <p-column field="size" header="Tamaño"></p-column>
-                          <p-column styleClass="col-button" [header]="'Acciones'">
-                            <ng-template let-document="rowData" pTemplate="body">
-                              <button type="button" pButton (click)="showDocument(document)" class="ui-button-info"
-                                      icon="fa-search"></button>
-                              <button type="button" pButton (click)="removeDocument(document)" class="ui-button-danger"
-                                      icon="fa-trash"></button>
-                            </ng-template>
-                          </p-column>
-                        </p-dataTable>
-                      </div>
-                    </div>
-                  </ng-template>
-                </p-fileUpload>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="x_panel">
           <div class="x_title">
@@ -360,26 +263,157 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <p-gmap [options]="mapOptions" [overlays]="mapOverlays"
-                    (onOverlayClick)="handleMapOverlayClick($event)"
-                    (onMapClick)="handleMapClick($event)"
-                    [style]="{'width':'100%','height':'320px'}"></p-gmap>
+            <p-gmap [options]="mapOptions" [overlays]="mapOverlays" (onOverlayClick)="handleMapOverlayClick($event)"
+                    (onMapClick)="handleMapClick($event)" [style]="{'width':'100%','height':'320px'}"></p-gmap>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12">
-        <div class="toolbar text-center">
-          <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
-            <i class="fa fa-trash"></i>
-            Cancelar
-          </button>
-          <button class="btn btn-success btn-lg" type="submit" [disabled]="!assetForm.valid || saving">
-            <i class="fa fa-save"></i>
-            Guardar
-          </button>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="toolbar text-center">
+              <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+                <i class="fa fa-trash"></i>
+                Cancelar
+              </button>
+              <button class="btn btn-success btn-lg" type="submit" [disabled]="!assetForm.valid || saving">
+                <i class="fa fa-save"></i>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="assetId">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Imagenes
+              </h2>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div class="row">
+                <div class="col-xs-12">
+                  <p-fileUpload name="images[]" [url]="imageUploadUrl" multiple="multiple" accept="image/*"
+                                chooseLabel="Añadir Imagen" uploadLabel="Subir Imagenes" cancelLabel="Cancelar"
+                                (onBeforeSend)="configImageUpload($event)" (onUpload)="imageUploaded($event)"
+                                [auto]="true"
+                                [disabled]="disableUpload">
+                    <ng-template pTemplate="toolbar">
+                      <div>Puedes Subir hasta 5 imagenes</div>
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                      <div class="row">
+                        <div class="col-xs-6 col-md-3" *ngFor="let image of assetImages">
+                          <app-image-display [canDelete]="true" [image]="image"
+                                             (onDeleteFile)="removeImage($event)"></app-image-display>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-fileUpload>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Documentos
+              </h2>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div class="row">
+                <div class="col-xs-12">
+                  <p-fileUpload name="documents[]" [url]="documentUploadUrl" multiple="multiple"
+                                accept=".docx,.xls,.xlsx,.pdf" chooseLabel="Añadir Documento"
+                                uploadLabel="Subir Documentos" cancelLabel="Cancelar"
+                                (onBeforeSend)="configDocumentUpload($event)" (onUpload)="documentUploaded($event)"
+                                (onError)="documentErrorUpload($event)" [auto]="true">
+                    <ng-template pTemplate="content">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <p-dataTable [value]="assetDocuments"
+                                       emptyMessage="No hay documentos asociados a este activo">
+                            <p-column styleClass="col-button col-icon" [header]="">
+                              <ng-template let-document="rowData" pTemplate="body">
+                                <i class="fa fa-file-word-o"
+                                   *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'"></i>
+                                <i class="fa fa-file-pdf-o" *ngIf="document.mime_type == 'application/pdf'"></i>
+                                <i class="fa fa-file-excel-o"
+                                   *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"></i>
+                              </ng-template>
+                            </p-column>
+                            <p-column field="name" header="Nombre"></p-column>
+                            <p-column header="Tipo">
+                              <ng-template let-document="rowData" pTemplate="body">
+                                <span
+                                  *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
+                                  MsWord
+                                </span>
+                                <span *ngIf="document.mime_type == 'application/pdf'">Pdf</span>
+                                <span
+                                  *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">
+                                  MsExcel
+                                </span>
+                              </ng-template>
+                            </p-column>
+                            <p-column field="size" header="Tamaño"></p-column>
+                            <p-column styleClass="col-button" [header]="'Acciones'">
+                              <ng-template let-document="rowData" pTemplate="body">
+                                <button type="button" pButton (click)="showDocument(document)" class="ui-button-info"
+                                        icon="fa-search"></button>
+                                <button type="button" pButton (click)="removeDocument(document)"
+                                        class="ui-button-danger" icon="fa-trash"></button>
+                              </ng-template>
+                            </p-column>
+                          </p-dataTable>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-fileUpload>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Certificaciones
+              </h2>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <p-dataTable [value]="certifications" [responsive]="true" [rows]="10" [paginator]="true"
+                           emptyMessage="No se encontraron registros" [pageLinks]="3" [rowsPerPageOptions]="[10,20,50]"
+                           [totalRecords]="totalRecords">
+                <p-header>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-3 text-left">
+                      <div>
+                        <button class="btn btn-danger" type="button" (click)="addCertification()">
+                          <i class="fa fa-plus"></i>
+                          Añadir Certificación
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </p-header>
+                <p-column [header]="'Nombre'" field="name">
+                </p-column>
+                <p-column [header]="'Fecha de Certificación'" field="start_date">
+                </p-column>
+                <p-column [header]="'Valida Hasta'" field="end_date">
+                </p-column>
+                <p-column styleClass="col-button" [header]="'Acciones'">
+                  <ng-template let-certification="rowData" pTemplate="body">
+                    <button type="button" pButton (click)="editCertification(certification)" class="ui-button-warning"
+                            icon="fa-pencil"></button>
+                    <button type="button" pButton (click)="removeCertification(certification)" class="ui-button-danger"
+                            icon="fa-trash"></button>
+                  </ng-template>
+                </p-column>
+              </p-dataTable>
+
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </form>
-

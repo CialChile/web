@@ -6,7 +6,7 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 
 export const routes: Routes = [
   {
-    path: 'client',
+    path: '',
     component: IndexComponent,
     canActivate: [AuthGuard, ClientGuard],
     canActivateChild: [AuthGuard, ClientGuard],

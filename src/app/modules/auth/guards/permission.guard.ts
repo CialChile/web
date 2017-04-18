@@ -11,6 +11,9 @@ export class PermissionGuard implements CanActivate,CanActivateChild {
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const routePermission = next.data['permission'];
+    if (!routePermission) {
+      return true;
+    }
     let permissions: Array<string> = JSON.parse(localStorage.getItem('permissions'));
     if (!permissions) {
       permissions = [];

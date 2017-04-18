@@ -1,0 +1,139 @@
+<app-page-title back="/client/certifications/list" [title]="'Información de la certificación'"
+                [breadcrumbs]="breadcrumbs"></app-page-title>
+<div class="row" *ngIf="certification">
+  <div class="col-md-3 col-sm-4 col-xs-12">
+    <div class="x_panel">
+      <div class="x_content">
+        <div class=" profile_left project_detail">
+          <div class="text-center">
+            <h3 class="red">{{certification.name}}</h3>
+          </div>
+          <div class="text-justify">
+            {{certification.description}}
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Sku</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p> {{certification.sku}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Instituto</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p class="title-value">{{certification.institute.name}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Aplica A</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p> {{certification.typeName}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Status</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p>{{certification.status.name}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="title">Tiempo de Valides</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p> {{certification.validity_time_formatted}}</p>
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+              <button class="btn btn-warning" (click)="edit()">
+                <i class="fa fa-pencil"></i>
+                Editar
+              </button>
+            </div>
+            <div class="btn-group" role="group">
+              <button class="btn btn-danger" (click)="remove()">
+                <i class="fa fa-trash"></i>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9 col-sm-8 col-xs-12">
+    <div class="row" *ngIf="certification.type == '2' || certification.type == '0' ">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Activos Con esta Certificación</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div *ngIf="!certification.assets.length">
+              <h4>No hay activos asociados a esta certificación</h4>
+            </div>
+
+            <p-dataTable *ngIf="certification.assets.length" [value]="certification.assets"
+                         emptyMessage="No hay activos asociadas a esta certificación">
+              <p-column [header]="'Código'" field="sku">
+              </p-column>
+              <p-column [header]="'Nombre'" field="name">
+              </p-column>
+              <p-column [header]="'Serial'" field="serial">
+              </p-column>
+              <p-column styleClass="col-button" [header]="'Acciones'">
+                <ng-template let-asset="rowData" pTemplate="body">
+                  <button type="button" pButton (click)="showAsset(asset)" class="ui-button-info"
+                          icon="fa-search"></button>
+                </ng-template>
+              </p-column>
+            </p-dataTable>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="certification.type == '2' || certification.type == '1' ">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Trabajadores Con esta Certificación</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div *ngIf="!certification.workers.length">
+              <h4>No hay trabajadores asociados a esta certificación</h4>
+            </div>
+            <p-dataTable *ngIf="certification.workers.length" [value]="certification.workers"
+                         emptyMessage="No hay trabajadores asociados a esta certificación">
+              <p-column [header]="'Nombre'" field="first_name">
+              </p-column>
+              <p-column [header]="'Apellido'" field="last_name">
+              </p-column>
+              <p-column [header]="'Cargo'" field="position">
+              </p-column>
+              <p-column styleClass="col-button" [header]="'Acciones'">
+                <ng-template let-worker="rowData" pTemplate="body">
+                  <button type="button" pButton (click)="showWorker(worker)" class="ui-button-info"
+                          icon="fa-search"></button>
+                </ng-template>
+              </p-column>
+            </p-dataTable>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

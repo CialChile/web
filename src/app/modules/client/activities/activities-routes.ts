@@ -7,6 +7,8 @@ import {PermissionGuard} from "../../auth/guards/permission.guard";
 import {ActivitiesListComponent} from "./activities-list/activities-list.component";
 import {ManageActivityComponent} from "./manage-activity/manage-activity.component";
 import {ActivityDetailsComponent} from "./activity-details/activity-details.component";
+import {TemplatesListComponent} from "./templates/templates-list/templates-list.component";
+import {ManageTemplateComponent} from "./templates/manage-template/manage-template.component";
 export const routes: Routes = [
   {
     path: 'client',
@@ -24,7 +26,7 @@ export const routes: Routes = [
             component: ActivitiesListComponent,
             data: {
               redirectTo: 'client/dashboard',
-              permission: 'client-activities.list'
+              permission: 'client-activities-activities.list'
             }
           },
           {
@@ -32,7 +34,15 @@ export const routes: Routes = [
             component: ManageActivityComponent,
             data: {
               redirectTo: 'client/dashboard',
-              permission: 'client-activities.store'
+              permission: 'client-activities-activities.store'
+            }
+          },
+          {
+            path: 'templates',
+            component: TemplatesListComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-activities-templates.list'
             }
           },
           {
@@ -40,7 +50,7 @@ export const routes: Routes = [
             component: ManageActivityComponent,
             data: {
               redirectTo: 'client/dashboard',
-              permission: 'client-activities.update'
+              permission: 'client-activities-activities.update'
             }
           },
           {
@@ -48,7 +58,15 @@ export const routes: Routes = [
             component: ActivityDetailsComponent,
             data: {
               redirectTo: 'client/dashboard',
-              permission: 'client-activities.show'
+              permission: 'client-activities-activities.show'
+            }
+          },
+          {
+            path: 'templates/:id',
+            component: ManageTemplateComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-activities-templates.show'
             }
           },
         ]

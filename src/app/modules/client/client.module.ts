@@ -11,6 +11,7 @@ import {ProfileModule} from "./profile/profile.module";
 import {SecurityModule} from "./security/security.module";
 import {AssetsModule} from "./assets/assets.module";
 import {ConfigurationModule} from "./configuration/configuration.module";
+import {CertificationsModule} from "./certifications/certifications.module";
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import {ConfigurationModule} from "./configuration/configuration.module";
     SecurityModule,
     AssetsModule,
     LayoutsModule,
-    ConfigurationModule
+    ConfigurationModule,
+    CertificationsModule
   ],
   declarations: [DashboardComponent, IndexComponent],
 })

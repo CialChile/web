@@ -1,0 +1,143 @@
+<app-page-title [back]="backUrl" [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+
+<form role="form" class="form-horizontal form-label-left form-assets" [formGroup]="assetCertificationForm"
+      (submit)="onSubmit(assetCertificationForm,$event)">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Certificación
+          </h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="ui-fluid">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!assetCertificationForm.controls['certification'].valid  && assetCertificationForm.controls['certification'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Certificación</label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-autoComplete formControlName="certification" [suggestions]="certifications" [size]="10"
+                                  [minLength]="1" (onDropdownClick)="searchCertification($event)"
+                                  placeholder="Buscar Certificación por nombre..."
+                                  (completeMethod)="searchCertification($event)" [dropdown]="true" field="name">
+                    <ng-template let-certification pTemplate="item">
+                      <h4 class="media-heading">{{certification.name}}</h4>
+                    </ng-template>
+                  </p-autoComplete>
+                  <control-messages [control]="assetCertificationForm.controls['certification']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Configurar Certificacíon
+          </h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!assetCertificationForm.controls['start_date'].valid  && assetCertificationForm.controls['start_date'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de Certificación</label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-calendar formControlName="start_date" dateFormat="dd/mm/yy" [locale]="es"
+                              inputStyleClass="form-control" [yearNavigator]="true"
+                              [monthNavigator]="true" yearRange="1930:2050"></p-calendar>
+                  <control-messages [control]="assetCertificationForm.controls['start_date']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="x_panel" *ngIf="assetCertificationId">
+        <div class="x_title">
+          <h2>Documentos
+          </h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-xs-12">
+              <p-fileUpload name="documents[]" [url]="documentUploadUrl" multiple="multiple"
+                            accept=".docx,.xls,.xlsx,.pdf,image/*"
+                            chooseLabel="Añadir Documento" uploadLabel="Subir Documentos"
+                            cancelLabel="Cancelar" (onBeforeSend)="configDocumentUpload($event)"
+                            (onUpload)="documentUploaded($event)" (onError)="documentErrorUpload($event)"
+                            [auto]="true">
+                <ng-template pTemplate="content">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <p-dataTable [value]="assetCertificationDocuments"
+                                   emptyMessage="No hay documentos asociados a esta certificación">
+                        <p-column styleClass="col-button col-icon" [header]="">
+                          <ng-template let-document="rowData" pTemplate="body">
+                            <i class="fa fa-file-word-o"
+                               *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'"></i>
+                            <i class="fa fa-file-pdf-o" *ngIf="document.mime_type == 'application/pdf'"></i>
+                            <i class="fa fa-file-excel-o"
+                               *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"></i>
+                            <i class="fa fa-file-image-o"
+                               *ngIf="document.mime_type.indexOf('image') >= 0"></i>
+                          </ng-template>
+                        </p-column>
+                        <p-column field="name" header="Nombre"></p-column>
+                        <p-column header="Tipo">
+                          <ng-template let-document="rowData" pTemplate="body">
+                            <span
+                              *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
+                              MsWord
+                            </span>
+                            <span *ngIf="document.mime_type == 'application/pdf'">Pdf</span>
+                            <span
+                              *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">
+                              MsExcel
+                            </span>
+                            <span
+                              *ngIf="document.mime_type.indexOf('image') >= 0">
+                              Imagen
+                            </span>
+                          </ng-template>
+                        </p-column>
+                        <p-column field="size" header="Tamaño"></p-column>
+                        <p-column styleClass="col-button" [header]="'Acciones'">
+                          <ng-template let-document="rowData" pTemplate="body">
+                            <button type="button" pButton (click)="showDocument(document)" class="ui-button-info"
+                                    icon="fa-search"></button>
+                            <button type="button" pButton (click)="removeDocument(document)" class="ui-button-danger"
+                                    icon="fa-trash"></button>
+                          </ng-template>
+                        </p-column>
+                      </p-dataTable>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-fileUpload>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="toolbar text-center">
+            <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+              <i class="fa fa-trash"></i>
+              Cancelar
+            </button>
+            <button class="btn btn-success btn-lg" type="submit" [disabled]="!assetCertificationForm.valid || saving">
+              <i class="fa fa-save"></i>
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+

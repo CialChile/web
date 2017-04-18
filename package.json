@@ -29,11 +29,12 @@
     "bootstrap-sass": "^3.3.7",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
+    "moment": "^2.18.1",
     "ng-loading-bar": "^0.0.7",
     "ng2-input-mask": "^0.0.7",
     "ng2-toastr": "1.6.0",
     "ngx-bootstrap": "1.6.5",
-    "primeng": "4.0.0-rc.2",
+    "primeng": "4.0.0-rc.3",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },

@@ -93,9 +93,8 @@
           <div class="profile_img">
             <div class="text-center">
               <!-- Current avatar -->
-              <img class="worker-avatar-view" [src]="asset.worker.image?asset.worker.image:defaultWorkerImage"
-                   alt="Avatar"
-                   title="Change the avatar">
+              <p-lightbox [images]="[asset.worker.image]"
+                          styleClass="cover-image"></p-lightbox>
             </div>
           </div>
           <h4 class="red">{{asset.worker.full_name}}</h4>
@@ -176,7 +175,8 @@
             <div *ngIf="!asset.documents.length">
               <p>No hay documentos asociados a este activo</p>
             </div>
-            <p-dataTable *ngIf="asset.documents.length" [value]="asset.documents" emptyMessage="No hay documentos asociados a este activo">
+            <p-dataTable *ngIf="asset.documents.length" [value]="asset.documents"
+                         emptyMessage="No hay documentos asociados a este activo">
               <p-column styleClass="col-button col-icon" [header]="">
                 <ng-template let-document="rowData" pTemplate="body">
                   <i class="fa fa-file-word-o"
@@ -207,6 +207,46 @@
                           icon="fa-search"></button>
                 </ng-template>
               </p-column>
+            </p-dataTable>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Certificaciones</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div *ngIf="!asset.certifications.length">
+              <p>No hay certificaciones asociadas a este activo</p>
+            </div>
+            <p-dataTable *ngIf="asset.certifications.length" expandableRows="true" [value]="asset.certifications"
+                         emptyMessage="No hay certificaciones asociadas a este activo">
+              <p-column expander="true" styleClass="col-icon"></p-column>
+
+              <p-column [header]="'Nombre'" field="name">
+              </p-column>
+              <p-column [header]="'Fecha de Certificación'" field="start_date">
+              </p-column>
+              <p-column [header]="'Valida Hasta'" field="end_date">
+              </p-column>
+              <ng-template let-certification pTemplate="rowexpansion">
+                <h4>Documentos</h4>
+                <p *ngIf="!certification.documents.length">Este certificado no tiene documentos asociados</p>
+                <ul class="list-unstyled" *ngIf="certification.documents.length">
+                  <li *ngFor="let document of certification.documents">
+                    <a href="" (click)="showCertificationDocument($event,document,certification.certification_id)">
+                      <i class="fa fa-file-word-o"
+                         *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'"></i>
+                      <i class="fa fa-file-pdf-o" *ngIf="document.mime_type == 'application/pdf'"></i>
+                      <i class="fa fa-file-excel-o"
+                         *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"></i>
+                      <i class="fa fa-file-image-o"
+                         *ngIf="document.mime_type.indexOf('image') >= 0"></i>
+                      {{document.name}}
+                    </a>
+                  </li>
+                </ul>
+              </ng-template>
             </p-dataTable>
           </div>
         </div>

@@ -9,7 +9,6 @@ import {ToastsManager} from "ng2-toastr";
   styleUrls: ['./asset-details.component.scss']
 })
 export class AssetDetailsComponent implements OnInit {
-
   public assetId: number;
   public defaultImage: string = 'assets/img/missing/assets/missing.jpg';
   public defaultWorkerImage: string = 'assets/img/missing/worker/missing.png';
@@ -21,11 +20,6 @@ export class AssetDetailsComponent implements OnInit {
   public breadcrumbs = [
     {
       title: 'Home',
-      link: '/client/dashboard',
-      active: false
-    },
-    {
-      title: 'RRHH',
       link: '/client/dashboard',
       active: false
     },
@@ -50,7 +44,7 @@ export class AssetDetailsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.assetId = params['id'];
       this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/assets/' + params['id'] + '/info';
-      this.apiService.one('client/assets', params['id'], 'category,brand,brandModel,subcategory,workplace,worker,status,images,coverImage,documents').subscribe((asset) => {
+      this.apiService.one('client/assets', params['id'], 'category,brand,brandModel,subcategory,workplace,worker,status,images,coverImage,documents,certifications.documents').subscribe((asset) => {
         if (!asset.data.coverImage) {
           asset.data.coverImage = {
             source: 'assets/img/missing/assets/missing.jpg',
@@ -77,7 +71,7 @@ export class AssetDetailsComponent implements OnInit {
   showDocument(document) {
     let reader = new FileReader();
 
-    this.apiService.downloadDocument(this.assetId, document.id, document.mime_type)
+    this.apiService.downloadDocument('client/assets/' + this.assetId + '/documents/' + document.id, document.mime_type)
       .subscribe(data => {
         let blob: Blob = data.blob();
         reader.readAsDataURL(blob)
@@ -112,5 +106,20 @@ export class AssetDetailsComponent implements OnInit {
       (error) => {
         this.toastr.error(error);
       })
+  }
+
+  showCertificationDocument(event, document, certificationId) {
+    event.preventDefault();
+    let reader = new FileReader();
+
+    this.apiService.downloadDocument('client/assets/' + this.assetId + '/certifications/' + certificationId + '/documents/' + document.id, document.mime_type)
+      .subscribe(data => {
+        let blob: Blob = data.blob();
+        reader.readAsDataURL(blob)
+      });
+
+    reader.onloadend = function (e) {
+      window.open(reader.result);
+    }
   }
 }

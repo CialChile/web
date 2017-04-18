@@ -18,7 +18,8 @@ import {AdminManageRoleComponent} from "./security/roles/manage-role/admin-manag
 
 export const routes: Routes = [
   {
-    path: 'admin',
+    path: '',
+    pathMatch: 'full',
     component: AdminIndexComponent,
     canActivate: [AuthGuard, AdminGuard],
     canActivateChild: [AuthGuard, AdminGuard],

@@ -49,6 +49,7 @@ export class ManageWorkerComponent implements OnInit {
     notDefault: false,
     deleted: false
   };
+  certifications: any[] = [];
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,
               public toastr: ToastsManager, private router: Router, private route: ActivatedRoute) {
@@ -86,9 +87,10 @@ export class ManageWorkerComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/rrhh/workers/' + params['id'];
         this.workerId = params['id'];
         this.loading = true;
-        this.apiService.one('client/workers', params['id']).subscribe((worker) => {
+        this.apiService.one('client/workers', params['id'],'certifications').subscribe((worker) => {
           this.initForm(worker.data);
           this.loading = false;
+          this.certifications = worker.data.certifications;
           this.image = {
             objectURL: worker.data.image.source,
             notDefault: worker.data.image.notDefault,
@@ -138,6 +140,27 @@ export class ManageWorkerComponent implements OnInit {
 
   imageChange(image) {
     this.image = image;
+  }
+
+  addCertification() {
+    this.router.navigate(['/client/rrhh/workers/' + this.workerId + '/certifications'])
+  }
+
+  removeCertification(certification) {
+    this.apiService.destroy('client/workers/' + this.workerId + '/certifications', certification.certification_id).subscribe((response) => {
+        this.toastr.success('Certificado Eliminado con Exito');
+        this.certifications = this.certifications.filter((cert) => {
+          return cert.certification_id != certification.certification_id;
+        });
+      },
+      (error) => {
+        this.toastr.error(error);
+      })
+  }
+
+  editCertification(certification) {
+    console.log(certification.certification_id);
+    this.router.navigate(['/client/rrhh/workers/' + this.workerId + '/certifications/' + certification.certification_id])
   }
 
   cancel() {

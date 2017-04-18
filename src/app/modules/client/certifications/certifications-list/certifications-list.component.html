@@ -1,0 +1,65 @@
+<app-page-title [title]="'Certificaciones'" [breadcrumbs]="breadcrumbs"></app-page-title>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Certificaciones
+          <small>Listado</small>
+        </h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div>
+          <p-dataTable [value]="certifications" [lazy]="true" [responsive]="true" [rows]="10"
+                       [paginator]="true" emptyMessage="No se encontraron registros" [pageLinks]="3"
+                       [rowsPerPageOptions]="[10,20,50]"
+                       (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords">
+            <p-header>
+              <div class="row">
+                <div class="col-xs-12 col-md-3 text-left">
+                  <div>
+                    <button class="btn btn-success" type="button" (click)="create()">
+                      <i class="fa fa-plus"></i>
+                      Nueva Certificación
+                    </button>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class=" text-left">
+
+                    <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"
+                                   (onChange)="columnsChange($event)"></p-multiSelect>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <div>
+                    <input (keyup)="searchGlobally()" type="text" class="form-control" [(ngModel)]="globalSearch"
+                           placeholder="Buscar...">
+                  </div>
+                </div>
+              </div>
+            </p-header>
+            <p-column *ngFor="let col of columns" [field]="col.data" [header]="col.name"
+                      [sortable]="col.sort"></p-column>
+            <p-column [header]="'Aplica A'">
+              <ng-template let-certification="rowData" pTemplate="body">
+                {{certification.typeName}}
+              </ng-template>
+            </p-column>
+            <p-column styleClass="col-button" [header]="'Acciones'">
+              <ng-template let-asset="rowData" pTemplate="body">
+                <button type="button" pButton (click)="showDetail(asset)" class="ui-button-info"
+                        icon="fa-search"></button>
+                <button type="button" pButton (click)="edit(asset)" class="ui-button-warning"
+                        icon="fa-pencil"></button>
+                <button type="button" pButton (click)="remove(asset)" class="ui-button-danger"
+                        icon="fa-trash"></button>
+              </ng-template>
+            </p-column>
+          </p-dataTable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -21,10 +21,11 @@ import {FormsHelperModule} from "../../../components/forms/forms-helpers.module"
 import {AutoCompleteModule} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/primeng';
 import {TextMaskModule} from "angular2-text-mask";
-import { AssetDetailsComponent } from './asset-details/asset-details.component';
+import {AssetDetailsComponent} from './asset-details/asset-details.component';
 import {LightboxModule} from "primeng/components/lightbox/lightbox";
 import {AssetsRoutingModule} from "./assets-routing.module";
 import {GMapModule} from "primeng/components/gmap/gmap";
+import {ManageAssetCertificationComponent} from "./manage-assets/manage-asset-certification/manage-asset-certification.component";
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import {GMapModule} from "primeng/components/gmap/gmap";
     AssetsRoutingModule,
     GMapModule
   ],
-  declarations: [AssetsIndexComponent, AssetsListComponent, ManageAssetsComponent, AssetDetailsComponent]
+  declarations: [AssetsIndexComponent, AssetsListComponent,
+    ManageAssetsComponent, AssetDetailsComponent, ManageAssetCertificationComponent]
 })
 export class AssetsModule {
 }

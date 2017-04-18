@@ -20,6 +20,8 @@ import {WorkerDetailsComponent} from './workers/worker-details/worker-details.co
 import {TabViewModule} from 'primeng/primeng';
 import {RrhhRoutingModule} from "./rrhh-routing.module";
 import {LightboxModule} from "primeng/components/lightbox/lightbox";
+import { ManageWorkerCertificationsComponent } from './workers/manage-worker/manage-worker-certifications/manage-worker-certifications.component';
+import {AutoCompleteModule} from "primeng/components/autocomplete/autocomplete";
 
 @NgModule({
   imports: [
@@ -41,9 +43,10 @@ import {LightboxModule} from "primeng/components/lightbox/lightbox";
     TabViewModule,
     RrhhRoutingModule,
     LightboxModule,
+    AutoCompleteModule
 
   ],
-  declarations: [WorkersListComponent, ManageWorkerComponent, RrhhIndexComponent, WorkerDetailsComponent]
+  declarations: [WorkersListComponent, ManageWorkerComponent, RrhhIndexComponent, WorkerDetailsComponent, ManageWorkerCertificationsComponent]
 })
 export class RrhhModule {
 }

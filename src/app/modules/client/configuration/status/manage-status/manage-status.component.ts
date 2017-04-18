@@ -18,7 +18,8 @@ export class ManageStatusComponent implements OnInit {
   public title: string = 'Nuevo Status';
   public STATUS_TYPES = [
     {value: 0, label: 'Activo'},
-    {value: 1, label: 'Documento'}
+    {value: 1, label: 'Documento'},
+    {value: 2, label: 'Certificación'}
   ];
 
   public breadcrumbs = [

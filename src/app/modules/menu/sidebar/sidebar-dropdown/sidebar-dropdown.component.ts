@@ -27,13 +27,13 @@ export class SidebarDropdownComponent implements OnInit {
   }
 
   anchorClicked(event: MouseEvent) {
-    var targetId = event.srcElement.id;
-    var target = event.srcElement;
+    const targetId = event.srcElement.id;
+    let target = event.srcElement;
     if (!targetId && event.srcElement.classList.contains('fa')) {
       target = event.srcElement.parentElement;
     }
     if (target.parentElement.classList.contains('active') && document.body.classList.contains('nav-md')) {
-      var dropdown = target.parentElement.querySelector('ul');
+      const dropdown = target.parentElement.querySelector('ul');
       SidebarDropdownComponent.slideUp(dropdown);
       target.parentElement.classList.remove('active');
       target.parentElement.classList.remove('active-sm');
@@ -48,7 +48,7 @@ export class SidebarDropdownComponent implements OnInit {
         }
       }
       target.parentElement.classList.add('active');
-      var dropdown = target.parentElement.querySelector('ul');
+      const dropdown = target.parentElement.querySelector('ul');
       SidebarDropdownComponent.slideDown(dropdown);
     }
   }
@@ -64,7 +64,7 @@ export class SidebarDropdownComponent implements OnInit {
     // elem.style.opacity = '0';
   }
 
-  linkClicked(event: MouseEvent) {
+  linkClicked(event: MouseEvent): void {
     if (document.body.classList.contains('nav-sm')) {
       let targetUl = event.srcElement.parentElement.parentElement;
       SidebarDropdownComponent.slideUp(targetUl);

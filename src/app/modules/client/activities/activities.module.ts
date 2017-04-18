@@ -6,6 +6,8 @@ import { ActivityDetailsComponent } from './activity-details/activity-details.co
 import {ActivitiesRoutingModule} from "./activities-routing.module";
 import {ActivitiesIndexComponent} from "./activities-index.component";
 import {LayoutsModule} from "../../../components/layouts/layouts.module";
+import { TemplatesListComponent } from './templates/templates-list/templates-list.component';
+import { ManageTemplateComponent } from './templates/manage-template/manage-template.component';
 
 @NgModule({
   imports: [
@@ -13,6 +15,6 @@ import {LayoutsModule} from "../../../components/layouts/layouts.module";
     ActivitiesRoutingModule,
     LayoutsModule
   ],
-  declarations: [ActivitiesListComponent, ManageActivityComponent, ActivityDetailsComponent, ActivitiesIndexComponent]
+  declarations: [ActivitiesListComponent, ManageActivityComponent, ActivityDetailsComponent, ActivitiesIndexComponent, TemplatesListComponent, ManageTemplateComponent]
 })
 export class ActivitiesModule { }

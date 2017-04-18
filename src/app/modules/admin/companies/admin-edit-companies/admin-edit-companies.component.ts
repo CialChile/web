@@ -20,7 +20,7 @@ export class AdminEditCompaniesComponent implements OnInit {
   public states: string[];
   public fields: any[];
   public loading: boolean = true;
-  public validityMask: any[] = [/[1-9]/, /\d/];
+  public validityMask: any[] = [/[1-9]/, /\d/,/\d/];
   public telephoneMask = ['+', /[1-9]/, /[0-9]?/, /[0-9]?/, '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
   public rutMask = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d|[kK]/]
   public image = {

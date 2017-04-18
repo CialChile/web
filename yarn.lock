@@ -3050,7 +3050,7 @@ mkdirp@^0.5.0, mkdirp@^0.5.1, "mkdirp@>=0.5 0", mkdirp@~0.5.0, mkdirp@~0.5.1, mk
   dependencies:
     minimist "0.0.8"
 
-moment@2.18.1:
+moment, moment@2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -3788,9 +3788,9 @@ pretty-error@^2.0.2:
     renderkid "^2.0.1"
     utila "~0.4"
 
-primeng@4.0.0-rc.2:
-  version "4.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/primeng/-/primeng-4.0.0-rc.2.tgz#8dd26a77f0a325a7a3e3610028944b6d5ed1129e"
+primeng@4.0.0-rc.3:
+  version "4.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/primeng/-/primeng-4.0.0-rc.3.tgz#9dd61d3ae8f11fe3db58344811dc5c01215b4cf3"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"

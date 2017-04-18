@@ -7,7 +7,7 @@
         <div class=" profile_left">
           <div class="profile_img">
             <div id="crop-avatar" class="text-center">
-              <p-lightbox [images]="[worker.image]"
+              <p-lightbox [images]="[worker.image]" [style]="{'max-height':'200px'}"
                           styleClass="avatar-view"></p-lightbox>
             </div>
           </div>
@@ -93,19 +93,71 @@
   </div>
   <div class="col-md-8 col-sm-8 col-xs-12">
     <div class="x_panel">
+      <div class="x_title">
+        <h2>Activos</h2>
+        <div class="clearfix"></div>
+      </div>
       <div class="x_content">
-        <p-tabView>
-          <p-tabPanel header="Activos">
-
-            <!-- start user projects -->
-            <h3>Por implementar</h3>
-            <!-- end user projects -->
-          </p-tabPanel>
-          <p-tabPanel header="Actividades">
-            <h3>Por implementar</h3>
-          </p-tabPanel>
-        </p-tabView>
+        <div *ngIf="!worker.assets.length">
+          <h4>No hay activos asociados a este trabajador</h4>
+        </div>
+        <p-dataTable *ngIf="worker.assets.length" [value]="worker.assets"
+                     emptyMessage="No hay activos asociadas a este trabajador">
+          <p-column [header]="'Código'" field="sku">
+          </p-column>
+          <p-column [header]="'Nombre'" field="name">
+          </p-column>
+          <p-column [header]="'Serial'" field="serial">
+          </p-column>
+          <p-column styleClass="col-button" [header]="'Acciones'">
+            <ng-template let-asset="rowData" pTemplate="body">
+              <button type="button" pButton (click)="showAsset(asset)" class="ui-button-info"
+                      icon="fa-search"></button>
+            </ng-template>
+          </p-column>
+        </p-dataTable>
       </div>
     </div>
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Certificaciones</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div *ngIf="!worker.certifications.length">
+          <h4>No hay certificaciones asociadas a este trabajador</h4>
+        </div>
+        <p-dataTable *ngIf="worker.certifications.length" expandableRows="true" [value]="worker.certifications"
+                     emptyMessage="No hay certificaciones asociadas a este activo">
+          <p-column expander="true" styleClass="col-icon"></p-column>
+
+          <p-column [header]="'Nombre'" field="name">
+          </p-column>
+          <p-column [header]="'Fecha de Certificación'" field="start_date">
+          </p-column>
+          <p-column [header]="'Valida Hasta'" field="end_date">
+          </p-column>
+          <ng-template let-certification pTemplate="rowexpansion">
+            <h4>Documentos</h4>
+            <p *ngIf="!certification.documents.length">Este certificado no tiene documentos asociados</p>
+            <ul class="list-unstyled" *ngIf="certification.documents.length">
+              <li *ngFor="let document of certification.documents">
+                <a href="" (click)="showCertificationDocument($event,document,certification.certification_id)">
+                  <i class="fa fa-file-word-o"
+                     *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'"></i>
+                  <i class="fa fa-file-pdf-o" *ngIf="document.mime_type == 'application/pdf'"></i>
+                  <i class="fa fa-file-excel-o"
+                     *ngIf="document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"></i>
+                  <i class="fa fa-file-image-o"
+                     *ngIf="document.mime_type.indexOf('image') >= 0"></i>
+                  {{document.name}}
+                </a>
+              </li>
+            </ul>
+          </ng-template>
+        </p-dataTable>
+      </div>
+    </div>
+
   </div>
 </div>

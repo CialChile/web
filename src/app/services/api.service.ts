@@ -115,13 +115,13 @@ export class ApiService {
   }
 
 
-  public downloadDocument(assetId: number, documentId: number, mimeType: string) {
+  public downloadDocument(downloadUrl: string, mimeType: string) {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     headers.append('Accept', mimeType);
     let options = new RequestOptions({headers: headers, responseType: ResponseContentType.Blob});
 
-    let url = this.actionUrl + 'client/assets/' + assetId + '/documents/' + documentId;
+    let url = this.actionUrl + downloadUrl;
     return this.authHttp.get(url, options)
       .catch(this.handleError);
   }

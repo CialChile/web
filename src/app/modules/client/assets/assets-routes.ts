@@ -7,6 +7,7 @@ import {AssetsListComponent} from "./assets-list/assets-list.component";
 import {ManageAssetsComponent} from "./manage-assets/manage-assets.component";
 import {AssetDetailsComponent} from "./asset-details/asset-details.component";
 import {Routes} from "@angular/router";
+import {ManageAssetCertificationComponent} from "./manage-assets/manage-asset-certification/manage-asset-certification.component";
 export const routes: Routes = [
   {
     path: 'client',
@@ -49,6 +50,22 @@ export const routes: Routes = [
             data: {
               redirectTo: 'client/dashboard',
               permission: 'client-assets.show'
+            }
+          },
+          {
+            path: ':id/certifications',
+            component: ManageAssetCertificationComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-assets.update'
+            }
+          },
+          {
+            path: ':id/certifications/:assetCertificationId',
+            component: ManageAssetCertificationComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-assets.update'
             }
           },
         ]

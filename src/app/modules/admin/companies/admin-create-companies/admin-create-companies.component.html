@@ -54,7 +54,7 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Identificación Fiscal (RUT)</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">
                     <input formControlName="fiscal_identification" class="form-control"
-                           placeholder="Identificación Fiscal (RUT)"
+                           placeholder="Identificación Fiscal (RUT)" [textMask]="{mask:rutMask}"
                            id="fiscal_identification"/>
                     <control-messages [control]="companyForm.controls['fiscal_identification']"></control-messages>
                   </div>

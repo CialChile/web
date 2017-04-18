@@ -64,6 +64,7 @@ export class ManageAssetsComponent implements OnInit {
   public mapOverlays: google.maps.Marker[];
   public infoWindow: google.maps.InfoWindow;
   public selectedPosition: google.maps.LatLng;
+  certifications: any[] = [];
 
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService,
@@ -183,9 +184,10 @@ export class ManageAssetsComponent implements OnInit {
         this.imageUploadUrl += 'client/assets/' + params['id'] + '/images';
         this.documentUploadUrl += 'client/assets/' + params['id'] + '/documents';
         this.loading = true;
-        this.apiService.one('client/assets', params['id'], 'worker,category,images,coverImage,documents').subscribe((asset) => {
+        this.apiService.one('client/assets', params['id'], 'worker,category,images,coverImage,documents,certifications').subscribe((asset) => {
           this.assetImages = asset.data.images;
           this.assetDocuments = asset.data.documents;
+          this.certifications = asset.data.certifications;
           if (this.assetImages.length >= 5) {
             this.disableUpload = true;
           }
@@ -296,7 +298,7 @@ export class ManageAssetsComponent implements OnInit {
   showDocument(document) {
     let reader = new FileReader();
 
-    this.apiService.downloadDocument(this.assetId, document.id, document.mime_type)
+    this.apiService.downloadDocument('client/assets/' + this.assetId + '/documents/' + document.id, document.mime_type)
       .subscribe(data => {
         let blob: Blob = data.blob();
         reader.readAsDataURL(blob)
@@ -400,6 +402,27 @@ export class ManageAssetsComponent implements OnInit {
 
   imageChange(image) {
     this.image = image;
+  }
+
+  addCertification() {
+    this.router.navigate(['/client/assets/' + this.assetId + '/certifications'])
+  }
+
+  removeCertification(certification) {
+    this.apiService.destroy('client/assets/' + this.assetId + '/certifications', certification.certification_id).subscribe((response) => {
+        this.toastr.success('Certificado Eliminado con Exito');
+        this.certifications = this.certifications.filter((cert) => {
+          return cert.certification_id != certification.certification_id;
+        });
+      },
+      (error) => {
+        this.toastr.error(error);
+      })
+  }
+
+  editCertification(certification) {
+    console.log(certification.certification_id);
+    this.router.navigate(['/client/assets/' + this.assetId + '/certifications/' + certification.certification_id])
   }
 
   subscribeToCategoriesChanges() {

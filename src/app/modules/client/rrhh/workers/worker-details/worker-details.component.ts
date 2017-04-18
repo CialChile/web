@@ -44,7 +44,7 @@ export class WorkerDetailsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.workerId = params['id'];
       this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/rrhh/workers/' + params['id'] + '/info';
-      this.apiService.one('client/workers', params['id'], 'assets').subscribe((worker) => {
+      this.apiService.one('client/workers', params['id'], 'assets,certifications.documents').subscribe((worker) => {
         this.worker = worker.data;
       })
     });
@@ -52,6 +52,11 @@ export class WorkerDetailsComponent implements OnInit {
 
   edit() {
     this.router.navigate(['/client/rrhh/workers/' + this.workerId]);
+
+  }
+
+  showAsset(asset) {
+    this.router.navigate(['/client/assets/' + asset.id]);
 
   }
 

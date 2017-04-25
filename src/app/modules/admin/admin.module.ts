@@ -24,6 +24,7 @@ import {AdminSecurityModule} from "./security/admin-security.module";
 import {LightboxModule} from "primeng/components/lightbox/lightbox";
 import {TemplatesModule} from "./templates/templates.module";
 import {AdminConfigurationModule} from "./configuration/admin-configuration.module";
+import {LayoutsModule} from "../../components/layouts/layouts.module";
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import {AdminConfigurationModule} from "./configuration/admin-configuration.modu
     TemplatesModule,
     AdminConfigurationModule,
     AdminRoutingModule,
+    LayoutsModule
   ],
   declarations: [
     AdminIndexComponent,

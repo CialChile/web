@@ -1,0 +1,41 @@
+<div class="x_panel">
+  <div class="x_title">
+    <h2>{{section.title}}
+    </h2>
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content" [formGroup]="templateForm">
+    <div [formArrayName]="section.name">
+      <div *ngFor="let field of generalForm.controls; let i=index" [formGroupName]="i">
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group"
+                 [ngClass]="{'has-error':!field.controls['value'].valid  && field.controls['value'].touched}">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                {{field.controls['label'].value}}
+              </label>
+              <div class="col-xs-12 col-md-9 col-sm-9">
+                <input type="text" class="form-control input-sm" formControlName="value"
+                       *ngIf="field.controls['type'].value == 'text'" placeholder="Valor Por Defecto">
+                <textarea type="text" class="form-control input-sm" formControlName="value"
+                          *ngIf="field.controls['type'].value == 'textarea'"
+                          placeholder="Valor Por Defecto"></textarea>
+                <control-messages [control]="field.controls['value']"></control-messages>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <label for="">
+              <input type="checkbox" formControlName="editable"> ¿Editable?
+            </label>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <label for="">
+              <input type="checkbox" formControlName="required"> ¿Requerido?
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

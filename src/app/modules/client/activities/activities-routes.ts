@@ -62,11 +62,19 @@ export const routes: Routes = [
             }
           },
           {
+            path: 'templates/create',
+            component: ManageTemplateComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-activities-templates.store'
+            }
+          },
+          {
             path: 'templates/:id',
             component: ManageTemplateComponent,
             data: {
               redirectTo: 'client/dashboard',
-              permission: 'client-activities-templates.show'
+              permission: 'client-activities-templates.update'
             }
           },
         ]

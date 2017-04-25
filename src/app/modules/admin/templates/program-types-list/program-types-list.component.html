@@ -1,0 +1,65 @@
+<app-page-title [title]="'Tipos de Programas'"></app-page-title>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Tipos de Programas
+          <small>Listado</small>
+        </h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <p-dataTable [value]="programTypes" [lazy]="true" [responsive]="true" [rows]="pageLength"
+                     [paginator]="true" emptyMessage="No se encontraron registros"
+                     [pageLinks]="3"
+                     (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords"
+                     [rowsPerPageOptions]="[10,20,50]">
+          <p-header>
+            <div class="row">
+              <div class="col-xs-12 col-md-4 text-left">
+                <div>
+                  <button class="btn btn-success" type="button" (click)="create()">
+                    <i class="fa fa-plus"></i>
+                    Nuevo Tipo de Programa
+                  </button>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-4">
+                <div class=" text-left">
+                  <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"
+                                 (onChange)="columnsChange($event)"></p-multiSelect>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-4">
+                <input (keyup)="searchGlobally()" type="text" class="form-control" [(ngModel)]="globalSearch"
+                       placeholder="Buscar...">
+              </div>
+            </div>
+          </p-header>
+          <ng-container *ngFor="let col of columns">
+            <p-column [field]="col.data" [header]="col.name"
+                      [sortable]="col.sort" *ngIf="!col.format"></p-column>
+            <p-column [field]="col.data" [header]="col.name"
+                      [sortable]="col.sort" *ngIf="col.format">
+              <ng-template let-template="rowData" pTemplate="body">
+                {{col.format(template)}}
+              </ng-template>
+            </p-column>
+          </ng-container>
+          <p-column styleClass="col-button" [header]="'Acciones'">
+            <ng-template let-programType="rowData" pTemplate="body">
+              <button type="button" (click)="edit(programType)" class="btn btn-sm btn-warning">
+                <i class="fa fa-pencil"></i>
+
+              </button>
+              <button type="button" (click)="remove(programType)" class="btn btm-sm btn-danger">
+                <i class="fa fa-trash"></i>
+              </button>
+            </ng-template>
+          </p-column>
+        </p-dataTable>
+      </div>
+    </div>
+  </div>
+</div>

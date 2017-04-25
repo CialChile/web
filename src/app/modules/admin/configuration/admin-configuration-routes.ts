@@ -7,7 +7,7 @@ import {AdminConfigurationIndexComponent} from "./admin-configuration-index.comp
 import {IndustriesListComponent} from "./industries/industries-list/industries-list.component";
 export const routes: Routes = [
   {
-    path: 'admin',
+    path: 'console',
     component: AdminIndexComponent,
     canActivate: [AuthGuard, AdminGuard],
     canActivateChild: [AuthGuard, AdminGuard],

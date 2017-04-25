@@ -22,22 +22,22 @@ var AdminManageUserComponent = (function () {
         this.breadcrumbs = [
             {
                 title: 'Home',
-                link: '/admin/dashboard',
+                link: '/admin/console/dashboard',
                 active: false
             },
             {
                 title: 'Securidad',
-                link: '/admin/dashboard',
+                link: '/admin/console/dashboard',
                 active: false
             },
             {
                 title: 'Usuarios',
-                link: '/admin/security/users',
+                link: '/admin/console/security/users',
                 active: false
             },
             {
                 title: 'Crear',
-                link: '/admin/security/users/create',
+                link: '/admin/console/security/users/create',
                 active: true
             }
         ];
@@ -57,7 +57,7 @@ var AdminManageUserComponent = (function () {
             if (params['id']) {
                 _this.title = 'Editar Usuario';
                 _this.breadcrumbs[_this.breadcrumbs.length - 1].title = 'Editar';
-                _this.breadcrumbs[_this.breadcrumbs.length - 1].link = '/admin/security/users/' + params['id'];
+                _this.breadcrumbs[_this.breadcrumbs.length - 1].link = '/admin/console/security/users/' + params['id'];
                 _this.userId = params['id'];
                 _this.loading = true;
                 _this.userForm.controls.email.disable();
@@ -81,7 +81,7 @@ var AdminManageUserComponent = (function () {
             this.apiService.update('admin/users', this.userId, data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Usuario actualizado con exito');
-                _this.router.navigate(['/admin/security/users']);
+                _this.router.navigate(['/admin/console/security/users']);
             }, function (error) {
                 _this.toastr.error(error);
                 _this.saving = false;
@@ -91,7 +91,7 @@ var AdminManageUserComponent = (function () {
             this.apiService.create('admin/users', data).subscribe(function (response) {
                 _this.saving = false;
                 _this.toastr.success('Usuario creado con exito');
-                _this.router.navigate(['/admin/security/users']);
+                _this.router.navigate(['/admin/console/security/users']);
             }, function (error) {
                 _this.toastr.error(error);
                 _this.saving = false;
@@ -99,7 +99,7 @@ var AdminManageUserComponent = (function () {
         }
     };
     AdminManageUserComponent.prototype.cancel = function () {
-        this.router.navigate(['/admin/security/users']);
+        this.router.navigate(['/admin/console/security/users']);
     };
     return AdminManageUserComponent;
 }());

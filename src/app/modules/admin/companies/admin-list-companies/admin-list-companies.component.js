@@ -76,10 +76,10 @@ var AdminListCompaniesComponent = (function () {
         this.stacked = this.columns.length > 4;
     };
     AdminListCompaniesComponent.prototype.create = function () {
-        this.router.navigate(['/admin/companies/create']);
+        this.router.navigate(['/admin/console/companies/create']);
     };
     AdminListCompaniesComponent.prototype.edit = function (company) {
-        this.router.navigate(['/admin/companies/' + company.id]);
+        this.router.navigate(['/admin/console/companies/' + company.id]);
     };
     AdminListCompaniesComponent.prototype.remove = function (company) {
     };

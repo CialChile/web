@@ -48,7 +48,7 @@ export class LoginComponent {
               this.toastr.success('Inicio de sesión exitoso');
               this.user = user;
               if (this.user['isSuperUser']) {
-                this.router.navigate(['/admin/dashboard']);
+                this.router.navigate(['/admin/console/dashboard']);
               } else {
                 this.router.navigate(['/client/dashboard']);
               }

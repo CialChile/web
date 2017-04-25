@@ -144,7 +144,7 @@
                                     (onDropdownClick)="searchWorker($event)"
                                     placeholder="Buscar Trabajador por nombre..."
                                     (completeMethod)="searchWorker($event)" [dropdown]="true" field="full_name">
-                      <ng-template let-worker pTemplate="item">
+                      <ng-template let-item pTemplate="item">
                         <div class="media">
                           <div class="media-left">
                             <a href="#">

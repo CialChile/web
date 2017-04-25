@@ -18,9 +18,26 @@ export class AdminEditCompaniesComponent implements OnInit {
   public saving: boolean = false;
   public countries: string[];
   public states: string[];
+  breadcrumbs = [
+    {
+      title: 'Home',
+      link: '/admin/console/dashboard',
+      active: false
+    },
+    {
+      title: 'Empresas',
+      link: '/admin/console/companies',
+      active: false
+    },
+    {
+      title: 'Editar',
+      link: '/admin/console/companies/create',
+      active: true
+    }
+  ];
   public fields: any[];
   public loading: boolean = true;
-  public validityMask: any[] = [/[1-9]/, /\d/,/\d/];
+  public validityMask: any[] = [/[1-9]/, /\d/, /\d/];
   public telephoneMask = ['+', /[1-9]/, /[0-9]?/, /[0-9]?/, '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
   public rutMask = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d|[kK]/]
   public image = {
@@ -64,6 +81,7 @@ export class AdminEditCompaniesComponent implements OnInit {
     this.apiService.all('countries').subscribe(countries => this.countries = countries.data);
     this.apiService.all('company-fields/list').subscribe(fields => this.fields = fields.data);
     this.route.params.subscribe((params) => {
+      this.breadcrumbs[this.breadcrumbs.length - 1].link = '/admin/console/companies/' + params['id'];
       this.apiService.one('admin/companies', params['id'], 'responsible').subscribe((company) => {
         this.loading = false;
         this.image = {
@@ -80,6 +98,7 @@ export class AdminEditCompaniesComponent implements OnInit {
     this.company = company;
     this.companyForm.reset(company)
   }
+
   imageChange(image) {
     this.image = image;
   }
@@ -112,7 +131,7 @@ export class AdminEditCompaniesComponent implements OnInit {
     this.apiService.formDataUpdate('admin/companies', this.company.id, formData).subscribe((response) => {
         this.saving = false;
         this.toastr.success('Empresa actualizada con exito');
-        this.router.navigate(['/admin/companies']);
+        this.router.navigate(['/admin/console/companies']);
       },
       (error) => {
         this.toastr.error(error);
@@ -125,7 +144,7 @@ export class AdminEditCompaniesComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/admin/companies'])
+    this.router.navigate(['/admin/console/companies'])
   }
 
 }

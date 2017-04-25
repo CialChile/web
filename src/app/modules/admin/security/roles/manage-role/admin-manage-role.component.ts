@@ -20,22 +20,22 @@ export class AdminManageRoleComponent implements OnInit {
   public breadcrumbs = [
     {
       title: 'Home',
-      link: '/admin/dashboard',
+      link: '/admin/console/dashboard',
       active: false
     },
     {
       title: 'Securidad',
-      link: '/admin/dashboard',
+      link: '/admin/console/dashboard',
       active: false
     },
     {
       title: 'Roles',
-      link: '/admin/security/roles',
+      link: '/admin/console/security/roles',
       active: false
     },
     {
       title: 'Crear',
-      link: '/admin/security/roles/create',
+      link: '/admin/console/security/roles/create',
       active: true
     }
   ];
@@ -75,7 +75,7 @@ export class AdminManageRoleComponent implements OnInit {
       if (params['id']) {
         this.title = 'Editar Rol';
         this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
-        this.breadcrumbs[this.breadcrumbs.length - 1].link = '/admin/security/roles/' + params['id'];
+        this.breadcrumbs[this.breadcrumbs.length - 1].link = '/admin/console/security/roles/' + params['id'];
         this.roleId = params['id'];
         this.loading = true;
         this.apiService.one('admin/roles', params['id'], 'permissions').subscribe((role) => {
@@ -168,7 +168,7 @@ export class AdminManageRoleComponent implements OnInit {
       this.apiService.update('admin/roles', this.roleId, data).subscribe((response) => {
           this.saving = false;
           this.toastr.success('Rol actualizado con exito');
-          this.router.navigate(['/admin/security/roles'])
+          this.router.navigate(['/admin/console/security/roles'])
         },
         (error) => {
           this.toastr.error(error);
@@ -178,7 +178,7 @@ export class AdminManageRoleComponent implements OnInit {
       this.apiService.create('admin/roles', data).subscribe((response) => {
           this.saving = false;
           this.toastr.success('Rol creado con exito');
-          this.router.navigate(['/admin/security/roles'])
+          this.router.navigate(['/admin/console/security/roles'])
         },
         (error) => {
           this.toastr.error(error);
@@ -188,7 +188,7 @@ export class AdminManageRoleComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/admin/security/roles'])
+    this.router.navigate(['/admin/console/security/roles'])
   }
 
   checkAll(type, value) {

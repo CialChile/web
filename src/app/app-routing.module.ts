@@ -5,6 +5,7 @@ const routes: Routes = [
     path: '', redirectTo: '/login', pathMatch: 'full',
   },
   {
+
     path: 'client',
     loadChildren: './modules/client/client.module#ClientModule'
   },

@@ -17,6 +17,18 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
   public companies: any;
   public pageLength: number = 10;
   columnOptions: SelectItem[];
+  breadcrumbs = [
+    {
+      title: 'Home',
+      link: '/admin/console/dashboard',
+      active: false
+    },
+    {
+      title: 'Empresas',
+      link: '/admin/console/companies',
+      active: true
+    }
+  ];
   public lastLoadEvent: LazyLoadEvent;
   public columns: DataTableColumn[] = [];
   public companiesColumns: DataTableColumn[] = [
@@ -83,12 +95,12 @@ export class AdminListCompaniesComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    this.router.navigate(['/admin/companies/create']);
+    this.router.navigate(['/admin/console/companies/create']);
 
   }
 
   edit(company) {
-    this.router.navigate(['/admin/companies/' + company.id]);
+    this.router.navigate(['/admin/console/companies/' + company.id]);
 
   }
 

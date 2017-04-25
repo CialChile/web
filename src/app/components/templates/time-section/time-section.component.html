@@ -1,0 +1,190 @@
+<div class="x_panel">
+  <div class="x_title">
+    <h2>{{section.title}}
+    </h2>
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content" [formGroup]="timeFG">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <div class="checkbox">
+            <label class="control-label">
+              <input type="checkbox" formControlName="editable"> ¿La programación puede ser editada en la actividad?
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div formArrayName="program">
+          <p-dataTable [value]="program.controls" [responsive]="true"
+                       emptyMessage="Debe añadir una programación">
+            <p-header>
+              <div class="row">
+                <div class="col-xs-12 col-md-3 text-left">
+                  <div>
+                    <button class="btn btn-success" type="button" (click)="newProgram()">
+                      <i class="fa fa-plus"></i>
+                      Nueva Programación
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </p-header>
+            <p-column>
+              <ng-template pTemplate="header">
+                Tipo de Programación
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                {{program.controls['programType'].value['name']}}
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template pTemplate="header">
+                Frecuencia
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{program.controls['frequency'].value}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template pTemplate="header">
+                Periodicidad
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{program.controls['periodicity'].value}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template pTemplate="header">
+                Hora de Inicio
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{program.controls['initHour'].value}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template pTemplate="header">
+                Hora de Finalización
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{program.controls['finishHour'].value}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column styleClass="col-button" [header]="'Acciones'">
+              <ng-template let-program="rowData" let-index="rowIndex" pTemplate="body">
+                <button type="button" (click)="editProgram(program,index)" class="btn-warning btn btn-sm">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" (click)="removeProgram(index)" class="btn-danger btn btn-sm">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </ng-template>
+            </p-column>
+          </p-dataTable>
+        </div>
+        <templates-time-manage-program (programAdded)="hideProgramForm()" (programCanceled)="hideProgramForm()"
+                                       [visible]="addingProgram || editingProgram"
+                                       [program]="program">
+        </templates-time-manage-program>
+      </div>
+    </div>
+    <br>
+    <div class="row" *ngIf="timeFG.controls['editable'].value">
+      <div class="col-xs-12">
+        <div formArrayName="validations">
+          <p-dataTable [value]="validations.controls" [responsive]="true"
+                       emptyMessage="Debe añadir una validación">
+            <p-header>
+              <div class="row">
+                <div class="col-xs-12 col-md-3 text-left">
+                  <div>
+                    <button class="btn btn-success" type="button" (click)="newValidation()">
+                      <i class="fa fa-plus"></i>
+                      Nueva Validación
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </p-header>
+            <p-column>
+              <ng-template pTemplate="header">
+                Tipo de Programación
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                {{program.controls['programType'].value['name']}}
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template pTemplate="header">
+                Frecuencia
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{program.controls['frequency'].value}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template pTemplate="header">
+                Periodicidad
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{program.controls['periodicity'].value}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template pTemplate="header">
+                Hora de Inicio
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{program.controls['initHour'].value}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template pTemplate="header">
+                Hora de Finalización
+              </ng-template>
+              <ng-template let-program="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{program.controls['finishHour'].value}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column styleClass="col-button" [header]="'Acciones'">
+              <ng-template let-program="rowData" let-index="rowIndex" pTemplate="body">
+                <button type="button" (click)="editProgram(program,index)" class="btn-warning btn btn-sm">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" (click)="removeProgram(index)" class="btn-danger btn btn-sm">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </ng-template>
+            </p-column>
+          </p-dataTable>
+        </div>
+        <templates-time-manage-validation (validationAdded)="hideValidationForm()"
+                                          (validationCanceled)="hideValidationForm()"
+                                          [visible]="addingValidation || editingValidation"
+                                          [validations]="validations">
+        </templates-time-manage-validation>
+
+      </div>
+    </div>
+
+  </div>
+</div>

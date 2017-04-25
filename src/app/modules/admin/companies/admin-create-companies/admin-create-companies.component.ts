@@ -14,6 +14,23 @@ import {objectToFormData} from "../../../../utilities/form/objectToFormData";
 export class AdminCreateCompaniesComponent implements OnInit {
   public companyForm: any;
   public saving: boolean = false;
+  breadcrumbs = [
+    {
+      title: 'Home',
+      link: '/admin/console/dashboard',
+      active: false
+    },
+    {
+      title: 'Empresas',
+      link: '/admin/console/companies',
+      active: false
+    },
+    {
+      title: 'Crear',
+      link: '/admin/console/companies/create',
+      active: true
+    }
+  ];
   public countries: string[];
   public states: string[];
   public fields: any[];
@@ -80,7 +97,7 @@ export class AdminCreateCompaniesComponent implements OnInit {
         this.saving = false;
         this.toastr.success('Empresa creada con exito');
         this.toastr.success('Un correo electrónico ha sido enviado a la dirección de usuario especificado con mas instrucciones para acceder a la cuenta');
-        this.router.navigate(['/admin/companies'])
+        this.router.navigate(['/admin/console/companies'])
       },
       (error) => {
         this.toastr.error(error);
@@ -89,6 +106,6 @@ export class AdminCreateCompaniesComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/admin/companies'])
+    this.router.navigate(['/admin/console/companies'])
   }
 }

@@ -3,3 +3,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.close-btn {
+  font-size: 20px;
+  color: $font-color;
+  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+    color: darken($font-color, 5);
+  }
+}

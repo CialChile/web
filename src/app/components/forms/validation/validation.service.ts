@@ -8,6 +8,7 @@ export class ValidationService {
       'invalidEmailAddress': 'El formato del Correo Electrónico Invalido',
       'invalidPassword': 'Contraseña invalida. Debe ser de por lo menos 6 caracteres y contener un numero',
       'validateEqual': 'Las contraseñas deben coincidir',
+      'invalidNumber': 'Debe ser un numero',
       'minlength': `Minimum length ${validatorValue.requiredLength}`
     };
 
@@ -70,6 +71,19 @@ export class ValidationService {
         return null;
       } else {
         return {'invalidEmailAddress': true};
+      }
+    }
+
+    return null;
+  }
+
+  static numberValidator(control) {
+    // RFC 2822 compliant regex
+    if (control.value) {
+      if (control.value.match(/^[0-9]*$/)) {
+        return null;
+      } else {
+        return {'invalidNumber': true};
       }
     }
 

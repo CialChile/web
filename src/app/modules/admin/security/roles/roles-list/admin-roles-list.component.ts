@@ -94,11 +94,11 @@ export class AdminRolesListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['/admin/security/roles/create']);
+    this.router.navigate(['/admin/console/security/roles/create']);
   }
 
   edit(role) {
-    this.router.navigate(['/admin/security/roles/' + role.id]);
+    this.router.navigate(['/admin/console/security/roles/' + role.id]);
 
   }
 

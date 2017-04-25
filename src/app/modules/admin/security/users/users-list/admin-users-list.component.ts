@@ -40,17 +40,17 @@ export class AdminUsersListComponent implements OnInit {
   breadcrumbs = [
     {
       title: 'Home',
-      link: '/admin/dashboard',
+      link: '/admin/console/dashboard',
       active: false
     },
     {
       title: 'Seguridad',
-      link: '/admin/dashboard',
+      link: '/admin/console/dashboard',
       active: false
     },
     {
       title: 'Usuarios',
-      link: '/admin/security/users',
+      link: '/admin/console/security/users',
       active: true
     }
   ];
@@ -97,11 +97,11 @@ export class AdminUsersListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['/admin/security/users/create']);
+    this.router.navigate(['/admin/console/security/users/create']);
   }
 
   edit(user) {
-    this.router.navigate(['/admin/security/users/' + user.id]);
+    this.router.navigate(['/admin/console/security/users/' + user.id]);
 
   }
 

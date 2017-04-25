@@ -1,0 +1,63 @@
+<app-page-title back="/admin/console/activities/program-types" [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+
+<form role="form" class="form-horizontal form-label-left form-assets" [formGroup]="programTypeForm"
+      (submit)="onSubmit(programTypeForm,$event)">
+
+  <ng-template #loadingIndicator>
+    <div class="text-center">
+      <img width="70px" src="assets/img/gears2.svg" alt="">
+      <h4>Cargando Tipo de Programa...</h4>
+    </div>
+  </ng-template>
+
+  <div *ngIf="!loading; else loadingIndicator">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Información General
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!programTypeForm.controls['name'].valid  && programTypeForm.controls['name'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="name" class="form-control"
+                           placeholder="Nombre del programa" id="sku"/>
+                    <control-messages [control]="programTypeForm.controls['name']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                    <label for="" class="control-label">
+                      <input formControlName="is_inspection" type="checkbox" id="is_inspection"/> ¿Es Inspección o
+                      Mantenimiento?
+                    </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="toolbar text-center">
+            <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+              <i class="fa fa-trash"></i>
+              Cancelar
+            </button>
+            <button class="btn btn-success btn-lg" type="submit" [disabled]="!programTypeForm.valid || saving">
+              <i class="fa fa-save"></i>
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

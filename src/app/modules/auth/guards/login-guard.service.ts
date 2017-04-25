@@ -15,7 +15,7 @@ export class LoginGuard implements CanActivate {
         if (this.auth.loggedIn()) {
             return this.userService.getUser().map((user)=> {
                 if (user['isSuperUser']) {
-                    this.router.navigate(['/admin']);
+                    this.router.navigate(['/admin/console/dashboard']);
                     return false;
                 }
                 this.router.navigate(['/client/dashboard']);

@@ -364,7 +364,7 @@ body .container.body .right_col {
 .bg-white {
   background: #fff !important;
   border: 1px solid #fff !important;
-  color: #73879C;
+  color: $font-color;
 }
 
 .bg-green {
@@ -417,7 +417,7 @@ body .container.body .right_col {
 }
 
 body {
-  color: #73879C;
+  color: $font-color;
   background: white;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
@@ -4313,7 +4313,7 @@ div[data-role="editor-toolbar"] {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-  color: #73879C;
+  color: $font-color;
   padding-top: 5px;
 }
 
@@ -4914,7 +4914,7 @@ ul.notifications {
 /** FullCalendar **/
 .fc-state-default {
   background: #f5f5f5;
-  color: #73879C;
+  color: $font-color;
 }
 
 .fc-state-down,

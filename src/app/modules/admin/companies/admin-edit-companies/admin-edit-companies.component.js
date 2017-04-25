@@ -88,7 +88,7 @@ var AdminEditCompaniesComponent = (function () {
         this.apiService.update('admin/companies', this.company.id, data).subscribe(function (response) {
             _this.saving = false;
             _this.toastr.success('Empresa actualizada con exito');
-            _this.router.navigate(['/admin/companies']);
+            _this.router.navigate(['/admin/console/companies']);
         }, function (error) {
             _this.toastr.error(error);
             _this.saving = false;
@@ -99,7 +99,7 @@ var AdminEditCompaniesComponent = (function () {
         this.promptModal.hide();
     };
     AdminEditCompaniesComponent.prototype.goBack = function () {
-        this.router.navigate(['/admin/companies']);
+        this.router.navigate(['/admin/console/companies']);
     };
     return AdminEditCompaniesComponent;
 }());

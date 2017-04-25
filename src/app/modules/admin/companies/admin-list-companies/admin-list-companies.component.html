@@ -1,100 +1,86 @@
 <router-outlet>
-  <div class="page-title">
-    <div class="title_left">
-      <h3>Empresas</h3>
-    </div>
-
-    <div class="title_right">
-      <div class="col-md-5 col-sm-5 col-xs-12 pull-right">
-        <ol class="breadcrumb">
-          <li>
-            <a href="#">Empresas</a>
-          </li>
-        </ol>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="x_panel">
-          <div class="x_title">
-            <h2>Empresas
-              <small>Listado</small>
-            </h2>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <p-dataTable [value]="companies" [lazy]="true" [responsive]="true" [globalFilter]="gb" [rows]="pageLength"
-                         [paginator]="true" emptyMessage="No se encontraron registros"
-                         [pageLinks]="3"
-                         expandableRows="true"
-                         (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords"
-                         [rowsPerPageOptions]="[10,20,50]">
-              <p-header>
-                <div class="row">
-                  <div class="col-xs-12 col-md-4 text-left">
-                    <div>
-                      <button class="btn btn-success" type="button" (click)="create()">
-                        <i class="fa fa-plus"></i>
-                        Nueva Empresa
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-md-4">
-                    <div class=" text-left">
-                      <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"
-                                     (onChange)="columnsChange($event)"></p-multiSelect>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-md-4">
-                    <div>
-                      <input #gb type="text" class="form-control" [(ngModel)]="globalSearch" placeholder="Buscar..">
-                    </div>
+  <app-page-title title="Empresas" [breadcrumbs]="breadcrumbs"></app-page-title>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Empresas
+            <small>Listado</small>
+          </h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <p-dataTable [value]="companies" [lazy]="true" [responsive]="true" [globalFilter]="gb" [rows]="pageLength"
+                       [paginator]="true" emptyMessage="No se encontraron registros"
+                       [pageLinks]="3"
+                       expandableRows="true"
+                       (onLazyLoad)="reloadTable($event)" [totalRecords]="totalRecords"
+                       [rowsPerPageOptions]="[10,20,50]">
+            <p-header>
+              <div class="row">
+                <div class="col-xs-12 col-md-4 text-left">
+                  <div>
+                    <button class="btn btn-success" type="button" (click)="create()">
+                      <i class="fa fa-plus"></i>
+                      Nueva Empresa
+                    </button>
                   </div>
                 </div>
-              </p-header>
-              <p-column expander="true" styleClass="col-icon"></p-column>
-              <p-column *ngFor="let col of columns" [field]="col.data" [header]="col.name"
-                        [sortable]="col.sort"></p-column>
-              <p-column styleClass="col-button" [header]="'Activo'">
-                <ng-template let-company="rowData" pTemplate="body">
-                  <p-inputSwitch onLabel="Si" offLabel="No" [(ngModel)]="company.active"
-                                 (onChange)="toggleActive($event,company)"></p-inputSwitch>
-                </ng-template>
-              </p-column>
-              <p-column styleClass="col-button" [header]="'Acciones'">
-                <ng-template let-role="rowData" pTemplate="body">
-                  <button type="button" pButton (click)="edit(role)" class="ui-button-warning"
-                          icon="fa-pencil"></button>
-                  <button type="button" pButton (click)="remove(role)" class="ui-button-danger"
-                          icon="fa-trash"></button>
-                </ng-template>
-              </p-column>
-              <ng-template let-company pTemplate="rowexpansion">
-                <div class="row">
-                  <div class="col-xs-12 col-md-3 text-center" style="text-align:center">
-                    <p-lightbox [images]="[company.image]"
-                                styleClass="thumb-image"></p-lightbox>
-                  </div>
-                  <div class="col-xs-12 col-md-9" style="	font-size: 16px;">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <h3>Usuario Responsable</h3>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-12 col-md-3"><b>Nombre:</b></div>
-                      <div class="col-xs-12 col-md-9">{{company.responsible?.full_name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-12 col-md-3"><b>Correo Electrónico:</b></div>
-                      <div class="col-xs-12 col-md-9">{{company.responsible?.email}}</div>
-                    </div>
+                <div class="col-xs-12 col-md-4">
+                  <div class=" text-left">
+                    <p-multiSelect [options]="columnOptions" [(ngModel)]="columns"
+                                   (onChange)="columnsChange($event)"></p-multiSelect>
                   </div>
                 </div>
+                <div class="col-xs-12 col-md-4">
+                  <div>
+                    <input #gb type="text" class="form-control" [(ngModel)]="globalSearch" placeholder="Buscar..">
+                  </div>
+                </div>
+              </div>
+            </p-header>
+            <p-column expander="true" styleClass="col-icon"></p-column>
+            <p-column *ngFor="let col of columns" [field]="col.data" [header]="col.name"
+                      [sortable]="col.sort"></p-column>
+            <p-column styleClass="col-button" [header]="'Activo'">
+              <ng-template let-company="rowData" pTemplate="body">
+                <p-inputSwitch onLabel="Si" offLabel="No" [(ngModel)]="company.active"
+                               (onChange)="toggleActive($event,company)"></p-inputSwitch>
               </ng-template>
-            </p-dataTable>
+            </p-column>
+            <p-column styleClass="col-button" [header]="'Acciones'">
+              <ng-template let-role="rowData" pTemplate="body">
+                <button type="button" pButton (click)="edit(role)" class="ui-button-warning"
+                        icon="fa-pencil"></button>
+                <button type="button" pButton (click)="remove(role)" class="ui-button-danger"
+                        icon="fa-trash"></button>
+              </ng-template>
+            </p-column>
+            <ng-template let-company pTemplate="rowexpansion">
+              <div class="row">
+                <div class="col-xs-12 col-md-3 text-center" style="text-align:center">
+                  <p-lightbox [images]="[company.image]"
+                              styleClass="thumb-image"></p-lightbox>
+                </div>
+                <div class="col-xs-12 col-md-9" style="	font-size: 16px;">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <h3>Usuario Responsable</h3>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-3"><b>Nombre:</b></div>
+                    <div class="col-xs-12 col-md-9">{{company.responsible?.full_name}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-3"><b>Correo Electrónico:</b></div>
+                    <div class="col-xs-12 col-md-9">{{company.responsible?.email}}</div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataTable>
 
-          </div>
         </div>
       </div>
     </div>

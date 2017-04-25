@@ -1,13 +1,14 @@
 .ui-datatable-header {
-  .ui-multiselect {
-    padding-top: 2px !important;
-    padding-bottom: 1px !important;
-    width: 100% !important;
-    .ui-multiselect-label{
-      white-space: nowrap;
-    }
-  }
   .btn {
     height: 34px !important;
+  }
+}
+
+.ui-multiselect {
+  padding-top: 2px !important;
+  padding-bottom: 1px !important;
+  width: 100% !important;
+  .ui-multiselect-label{
+    white-space: nowrap;
   }
 }

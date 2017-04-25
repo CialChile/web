@@ -59,14 +59,14 @@ var AdminCreateCompaniesComponent = (function () {
             _this.saving = false;
             _this.toastr.success('Empresa creada con exito');
             _this.toastr.success('Un correo electrónico ha sido enviado a la dirección de usuario especificado con mas instrucciones para acceder a la cuenta');
-            _this.router.navigate(['/admin/companies']);
+            _this.router.navigate(['/admin/console/companies']);
         }, function (error) {
             _this.toastr.error(error);
             _this.saving = false;
         });
     };
     AdminCreateCompaniesComponent.prototype.cancel = function () {
-        this.router.navigate(['/admin/companies']);
+        this.router.navigate(['/admin/console/companies']);
     };
     return AdminCreateCompaniesComponent;
 }());

@@ -19,22 +19,22 @@ export class AdminManageUserComponent implements OnInit {
   public breadcrumbs = [
     {
       title: 'Home',
-      link: '/admin/dashboard',
+      link: '/admin/console/dashboard',
       active: false
     },
     {
       title: 'Securidad',
-      link: '/admin/dashboard',
+      link: '/admin/console/dashboard',
       active: false
     },
     {
       title: 'Usuarios',
-      link: '/admin/security/users',
+      link: '/admin/console/security/users',
       active: false
     },
     {
       title: 'Crear',
-      link: '/admin/security/users/create',
+      link: '/admin/console/security/users/create',
       active: true
     }
   ];
@@ -62,7 +62,7 @@ export class AdminManageUserComponent implements OnInit {
       if (params['id']) {
         this.title = 'Editar Usuario';
         this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
-        this.breadcrumbs[this.breadcrumbs.length - 1].link = '/admin/security/users/' + params['id'];
+        this.breadcrumbs[this.breadcrumbs.length - 1].link = '/admin/console/security/users/' + params['id'];
         this.userId = params['id'];
         this.loading = true;
         this.userForm.controls.email.disable();
@@ -88,7 +88,7 @@ export class AdminManageUserComponent implements OnInit {
       this.apiService.update('admin/users', this.userId, data).subscribe((response) => {
           this.saving = false;
           this.toastr.success('Usuario actualizado con exito');
-          this.router.navigate(['/admin/security/users'])
+          this.router.navigate(['/admin/console/security/users'])
         },
         (error) => {
           this.toastr.error(error);
@@ -98,7 +98,7 @@ export class AdminManageUserComponent implements OnInit {
       this.apiService.create('admin/users', data).subscribe((response) => {
           this.saving = false;
           this.toastr.success('Usuario creado con exito');
-          this.router.navigate(['/admin/security/users'])
+          this.router.navigate(['/admin/console/security/users'])
         },
         (error) => {
           this.toastr.error(error);
@@ -108,6 +108,6 @@ export class AdminManageUserComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/admin/security/users'])
+    this.router.navigate(['/admin/console/security/users'])
   }
 }

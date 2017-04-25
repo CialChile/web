@@ -1,0 +1,89 @@
+<app-page-title back="/admin/console/activities/templates" [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="templateForm" class="form" (submit)="saveTemplate($event,templateForm)">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Datos de la plantilla
+          </h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!templateForm.controls['name'].valid  && templateForm.controls['name'].touched}">
+                <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Nombre de la Plantilla
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <input name="name" id="name" type="text" class="form-control input-sm"
+                         formControlName="name">
+                  <control-messages [control]="templateForm.controls['name']"></control-messages>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!templateForm.controls['program_type_id'].valid  && templateForm.controls['program_type_id'].touched}">
+                <label for="program_type_id" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Tipo de Programa
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-dropdown [options]="programTypes" formControlName="program_type_id" [filter]="true"
+                              placeholder="Seleccione un tipo de Programa" id="program_type_id"></p-dropdown>
+                  <control-messages [control]="templateForm.controls['program_type_id']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!templateForm.controls['description'].valid  && templateForm.controls['description'].touched}">
+                <label for="description" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Descripción
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <textarea name="description" id="description" class="form-control input-sm"
+                            formControlName="description"></textarea>
+                  <control-messages [control]="templateForm.controls['description']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <templates-general-section [section]="sections[0]" [templateForm]="templateForm.controls['template']">
+      </templates-general-section>
+      <templates-persons-section [section]="sections[1]" [templateForm]="templateForm.controls['template']">
+      </templates-persons-section>
+      <templates-equipment-section [section]="sections[2]"
+                                   [equipmentFG]="templateForm.controls['template'].controls['equipment']">
+      </templates-equipment-section>
+      <templates-procedures-section [section]="sections[4]"
+                                    [proceduresFG]="templateForm.controls['template'].controls['procedures']">
+      </templates-procedures-section>
+      <templates-documents-section [section]="sections[5]"
+                                   [documentsFG]="templateForm.controls['template'].controls['documents']">
+      </templates-documents-section>
+      <templates-closure-section [section]="sections[6]"
+                                 [closureFG]="templateForm.controls['template'].controls['closure']">
+      </templates-closure-section>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="toolbar text-center">
+            <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+              <i class="fa fa-trash"></i>
+              Cancelar
+            </button>
+            <button class="btn btn-success btn-lg" type="submit" [disabled]="!templateForm.valid">
+              <i class="fa fa-save"></i>
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

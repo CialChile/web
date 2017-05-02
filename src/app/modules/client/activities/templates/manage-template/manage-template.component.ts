@@ -138,11 +138,11 @@ export class ManageTemplateComponent implements OnInit {
         if (!this.clone) {
           this.title = 'Editar Plantilla';
           this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Editar';
-          this.breadcrumbs[this.breadcrumbs.length - 1].link = '/admin/console/activities/templates/' + params['id'];
+          this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/activities/templates/' + params['id'];
         } else {
           this.title = 'Clonar Plantilla';
           this.breadcrumbs[this.breadcrumbs.length - 1].title = 'Clonar';
-          this.breadcrumbs[this.breadcrumbs.length - 1].link = '/admin/console/activities/templates/' + params['id'] + ';clone=true';
+          this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/activities/templates/' + params['id'] + ';clone=true';
         }
         this.templateId = params['id'];
         this.loading = true;

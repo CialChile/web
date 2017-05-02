@@ -25,7 +25,8 @@
               <div class="row">
                 <div class="col-xs-12 col-md-3 text-left">
                   <div>
-                    <button class="btn btn-success" type="button" (click)="newProgram()">
+                    <button class="btn btn-success" type="button" (click)="newProgram()"
+                            [disabled]="program.controls.length">
                       <i class="fa fa-plus"></i>
                       Nueva Programación
                     </button>
@@ -47,7 +48,7 @@
               </ng-template>
               <ng-template let-program="rowData" pTemplate="body">
                 <div class="text-center">
-                  {{program.controls['frequency'].value}}
+                  {{program.controls['frequency'].value['label']}}
                 </div>
               </ng-template>
             </p-column>
@@ -67,7 +68,7 @@
               </ng-template>
               <ng-template let-program="rowData" pTemplate="body">
                 <div class="text-center">
-                  {{program.controls['initHour'].value}}
+                  {{parseTime(program.controls['initHour'].value)}}
                 </div>
               </ng-template>
             </p-column>
@@ -77,7 +78,7 @@
               </ng-template>
               <ng-template let-program="rowData" pTemplate="body">
                 <div class="text-center">
-                  {{program.controls['finishHour'].value}}
+                  {{parseTime(program.controls['finishHour'].value)}}
                 </div>
               </ng-template>
             </p-column>
@@ -93,8 +94,11 @@
             </p-column>
           </p-dataTable>
         </div>
-        <templates-time-manage-program (programAdded)="hideProgramForm()" (programCanceled)="hideProgramForm()"
-                                       [visible]="addingProgram || editingProgram"
+        <templates-time-manage-program *ngIf="addingProgram || editingProgram" (programAdded)="hideProgramForm()"
+                                       (programCanceled)="hideProgramForm()"
+                                       [add]="addingProgram"
+                                       [validations]="validations"
+                                       [edit]="editingProgram"
                                        [program]="program">
         </templates-time-manage-program>
       </div>
@@ -119,58 +123,18 @@
             </p-header>
             <p-column>
               <ng-template pTemplate="header">
-                Tipo de Programación
+                Tipo de Validación
               </ng-template>
               <ng-template let-program="rowData" pTemplate="body">
-                {{program.controls['programType'].value['name']}}
-              </ng-template>
-            </p-column>
-            <p-column>
-              <ng-template pTemplate="header">
-                Frecuencia
-              </ng-template>
-              <ng-template let-program="rowData" pTemplate="body">
-                <div class="text-center">
-                  {{program.controls['frequency'].value}}
-                </div>
-              </ng-template>
-            </p-column>
-            <p-column>
-              <ng-template pTemplate="header">
-                Periodicidad
-              </ng-template>
-              <ng-template let-program="rowData" pTemplate="body">
-                <div class="text-center">
-                  {{program.controls['periodicity'].value}}
-                </div>
-              </ng-template>
-            </p-column>
-            <p-column>
-              <ng-template pTemplate="header">
-                Hora de Inicio
-              </ng-template>
-              <ng-template let-program="rowData" pTemplate="body">
-                <div class="text-center">
-                  {{program.controls['initHour'].value}}
-                </div>
-              </ng-template>
-            </p-column>
-            <p-column>
-              <ng-template pTemplate="header">
-                Hora de Finalización
-              </ng-template>
-              <ng-template let-program="rowData" pTemplate="body">
-                <div class="text-center">
-                  {{program.controls['finishHour'].value}}
-                </div>
+                {{program.controls['type'].value['name']}}
               </ng-template>
             </p-column>
             <p-column styleClass="col-button" [header]="'Acciones'">
               <ng-template let-program="rowData" let-index="rowIndex" pTemplate="body">
-                <button type="button" (click)="editProgram(program,index)" class="btn-warning btn btn-sm">
+                <button type="button" (click)="editValidation(program,index)" class="btn-warning btn btn-sm">
                   <i class="fa fa-pencil"></i>
                 </button>
-                <button type="button" (click)="removeProgram(index)" class="btn-danger btn btn-sm">
+                <button type="button" (click)="removeValidation(index)" class="btn-danger btn btn-sm">
                   <i class="fa fa-trash"></i>
                 </button>
               </ng-template>
@@ -179,8 +143,12 @@
         </div>
         <templates-time-manage-validation (validationAdded)="hideValidationForm()"
                                           (validationCanceled)="hideValidationForm()"
-                                          [visible]="addingValidation || editingValidation"
-                                          [validations]="validations">
+                                          *ngIf="addingValidation || editingValidation"
+                                          [add]="addingValidation"
+                                          [edit]="editingValidation"
+                                          [validations]="validations"
+                                          [program]="program"
+                                          [validationFormArrayIndex]="editValidationIndex">
         </templates-time-manage-validation>
 
       </div>

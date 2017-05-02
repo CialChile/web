@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormArray} from "@angular/forms";
+import * as moment from 'moment';
 
 @Component({
   selector: 'templates-time-section',
@@ -12,17 +13,24 @@ export class TimeSectionComponent implements OnInit {
   @Input() timeFG: FormGroup;
   addingProgram: boolean = false;
   editingProgram: boolean = false;
-  programForm: any;
 
   public addingValidation: boolean = false;
   public editingValidation: boolean = false;
-  public validationForm: FormGroup;
+  public editValidationIndex: number;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor() {
 
   }
 
   ngOnInit() {
+    this.timeFG.controls['editable'].valueChanges.subscribe((value) => {
+      if (!value) {
+        const validationsLength = this.validations.controls.length;
+        for (let i = validationsLength - 1; i >= 0; i--) {
+          this.validations.removeAt(i);
+        }
+      }
+    })
   }
 
   get program(): FormArray {
@@ -35,14 +43,27 @@ export class TimeSectionComponent implements OnInit {
 
   editProgram(program, index: number) {
     this.editingProgram = true;
+    this.addingProgram = false;
   }
 
   removeProgram(index: number) {
     this.program.removeAt(index)
   }
 
+  editValidation(validation, index: number) {
+    this.editingValidation = true;
+    this.addingValidation = false;
+    this.editValidationIndex = index;
+  }
+
+  removeValidation(index: number) {
+    this.validations.removeAt(index)
+  }
+
   newProgram() {
     this.addingProgram = true;
+    this.editingProgram = false;
+
   }
 
   newValidation() {
@@ -59,4 +80,7 @@ export class TimeSectionComponent implements OnInit {
     this.addingValidation = false;
   }
 
+  parseTime(value) {
+    return moment(value).format('hh:mm A')
+  }
 }

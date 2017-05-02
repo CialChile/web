@@ -3,6 +3,7 @@ import {TemplatesPersonsHelper} from "./template-persons-helper";
 import {TemplatesEquipmentHelper} from "./template-equipment-helper";
 import {TemplatesDocumentsHelper} from "./template-documents-helper";
 import {TemplatesProceduresHelper} from "./template-procedures-helper";
+import {TemplatesTimeHelper} from "./template-time-helper";
 export class TemplateFormBuilder {
   constructor(private form: FormGroup, private formValues: any) {
   }
@@ -18,6 +19,18 @@ export class TemplateFormBuilder {
       this.equipment.controls['editable'].setValue(this.formValues.equipment.editable);
       this.formValues.equipment.equipmentList.forEach((equipment) => {
         this.equipmentList.push(TemplatesEquipmentHelper.generateEquipment(equipment.name))
+      });
+    }
+
+    if (this.formValues.time) {
+      this.time.controls['editable'].setValue(this.formValues.time.editable);
+
+      this.formValues.time.program.forEach((document) => {
+        this.programList.push(TemplatesTimeHelper.generateProgram())
+      });
+
+      this.formValues.time.validations.forEach((document) => {
+        this.validationsList.push(TemplatesTimeHelper.generateValidation())
       });
     }
 
@@ -78,8 +91,20 @@ export class TemplateFormBuilder {
     return this.documents.get('documentList') as FormArray;
   };
 
+  get programList(): FormArray {
+    return this.time.get('program') as FormArray;
+  };
+
+  get validationsList(): FormArray {
+    return this.time.get('validations') as FormArray;
+  };
+
   get equipment(): FormGroup {
     return this.form.controls['template'].get('equipment') as FormGroup;
+  }
+
+  get time(): FormGroup {
+    return this.form.controls['template'].get('time') as FormGroup;
   }
 
   get procedures(): FormGroup {

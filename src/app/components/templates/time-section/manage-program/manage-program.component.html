@@ -1,4 +1,4 @@
-<div *ngIf="visible">
+<div>
   <div class="row">
     <div class="col-xs-12">
       <div class="row">
@@ -52,78 +52,97 @@
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="programForm.controls['frequency'].value['slug'] == 'weekly'">
-            <div class="col-xs-12">
-              <h4>Seleccione los dias de la semana en los que se pretende ejecutar la actividad</h4>
-              <div class="row">
-                <div class="col-xs-12 col-md-3">
-                  <p-checkbox name="days" value="lunes" label="Lunes" formControlName="days"></p-checkbox>
+          <div *ngIf="programForm.controls['frequency'].value['slug'] == 'weekly'" formGroupName="days">
+            <div class="row">
+              <div class="col-xs-12">
+                <h4>Seleccione los dias de la semana en los que se pretende ejecutar la actividad</h4>
+                <div class="row">
+                  <div class="col-xs-12 col-md-3">
+                    <p-checkbox name="lunes" binary="true" label="Lunes" formControlName="lunes"></p-checkbox>
 
-                </div>
-                <div class="col-xs-12 col-md-3">
-                  <p-checkbox name="days" value="martes" label="Martes" formControlName="days"></p-checkbox>
+                  </div>
+                  <div class="col-xs-12 col-md-3">
+                    <p-checkbox name="martes" binary="true" label="Martes" formControlName="martes"></p-checkbox>
 
-                </div>
-                <div class="col-xs-12 col-md-3">
-                  <p-checkbox name="days" value="miercoles" label="Miércoles" formControlName="days"></p-checkbox>
+                  </div>
+                  <div class="col-xs-12 col-md-3">
+                    <p-checkbox name="miercoles" binary="true" label="Miércoles"
+                                formControlName="miercoles"></p-checkbox>
 
-                </div>
-                <div class="col-xs-12 col-md-3">
-                  <p-checkbox name="days" value="jueves" label="Jueves" formControlName="days"></p-checkbox>
+                  </div>
+                  <div class="col-xs-12 col-md-3">
+                    <p-checkbox name="daysgroup" binary="true" label="Jueves" formControlName="jueves"></p-checkbox>
 
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12 col-md-3">
-                  <p-checkbox name="days" value="viernes" label="Viernes" formControlName="days"></p-checkbox>
+                <div class="row">
+                  <div class="col-xs-12 col-md-3">
+                    <p-checkbox name="daysgroup" binary="true" label="Viernes" formControlName="viernes"></p-checkbox>
 
-                </div>
-                <div class="col-xs-12 col-md-3">
-                  <p-checkbox name="days" value="sabado" label="Sabado" formControlName="days"></p-checkbox>
+                  </div>
+                  <div class="col-xs-12 col-md-3">
+                    <p-checkbox name="daysgroup" binary="true" label="Sabado" formControlName="sabado"></p-checkbox>
 
-                </div>
-                <div class="col-xs-12 col-md-3">
-                  <p-checkbox name="days" value="domingo" label="Domingo" formControlName="days"></p-checkbox>
-                </div>
-                <div class="col-xs-12 col-md-3">
+                  </div>
+                  <div class="col-xs-12 col-md-3">
+                    <p-checkbox name="daysgroup" binary="true" label="Domingo" formControlName="domingo"></p-checkbox>
+                  </div>
+                  <div class="col-xs-12 col-md-3">
 
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row ui-fluid">
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group"
-                   [ngClass]="{'has-error':!programForm.controls['initHour'].valid  && programForm.controls['initHour'].touched}">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                  Hora de Inicio
-                </label>
-                <div class="col-xs-12 col-md-9 col-sm-9">
-                  <p-calendar formControlName="initHour" showTime="showTime" hourFormat="12" [timeOnly]="true"></p-calendar>
-                  <control-messages [control]="programForm.controls['initHour']"></control-messages>
-                </div>
-              </div>
-            </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group"
-                   [ngClass]="{'has-error':!programForm.controls['finishHour'].valid  && programForm.controls['finishHour'].touched}">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                  Hora de Finalización
-                </label>
-                <div class="col-xs-12 col-md-9 col-sm-9">
-                  <p-calendar formControlName="finishHour" showTime="showTime" hourFormat="12" [timeOnly]="true"></p-calendar>
-                  <control-messages [control]="programForm.controls['finishHour']"></control-messages>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="programForm.controls['frequency'].value">
-            <div class="col-xs-12">
-              <div class="well">
-                La actividad se ejecutara con una frecuencia {{programForm.controls['frequency'].value['label']}} cada
-                {{programForm.controls['periodicity'].value}}
-                {{periodicityLabel[programForm.controls['frequency'].value['slug']]}}
+          <div *ngIf="programForm.controls['frequency'].value['slug'] == 'monthly'">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!programForm.controls['dayOfMonth'].valid  && programForm.controls['dayOfMonth'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    Día del Mes
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input type="number" formControlName="dayOfMonth" class="form-control input-sm">
+                    <control-messages [control]="programForm.controls['dayOfMonth']"></control-messages>
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="row ui-fluid">
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group"
+                 [ngClass]="{'has-error':!programForm.controls['initHour'].valid  && programForm.controls['initHour'].touched}">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Hora de Inicio
+              </label>
+              <div class="col-xs-12 col-md-9 col-sm-9">
+                <p-calendar formControlName="initHour" showTime="showTime"
+                            [timeOnly]="true"></p-calendar>
+                <control-messages [control]="programForm.controls['initHour']"></control-messages>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group"
+                 [ngClass]="{'has-error':!programForm.controls['finishHour'].valid  && programForm.controls['finishHour'].touched}">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                Hora de Finalización
+              </label>
+              <div class="col-xs-12 col-md-9 col-sm-9">
+                <p-calendar formControlName="finishHour" showTime="showTime"
+                            [timeOnly]="true"></p-calendar>
+                <control-messages [control]="programForm.controls['finishHour']"></control-messages>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="programForm.controls['frequency'].value">
+          <div class="col-xs-12">
+            <div class="well">
+              {{programNaturaLanguage}}
             </div>
           </div>
         </div>

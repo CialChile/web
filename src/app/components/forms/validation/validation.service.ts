@@ -9,6 +9,8 @@ export class ValidationService {
       'invalidPassword': 'Contraseña invalida. Debe ser de por lo menos 6 caracteres y contener un numero',
       'validateEqual': 'Las contraseñas deben coincidir',
       'invalidNumber': 'Debe ser un numero',
+      'minNumberValidator': 'Debe ser un numero mayor a 1',
+      'monthDayValidator': 'EL día debe estar entre 1 y 31',
       'minlength': `Minimum length ${validatorValue.requiredLength}`
     };
 
@@ -80,10 +82,36 @@ export class ValidationService {
   static numberValidator(control) {
     // RFC 2822 compliant regex
     if (control.value) {
-      if (control.value.match(/^[0-9]*$/)) {
+      if (('' + control.value).match(/^[0-9]*$/)) {
         return null;
       } else {
         return {'invalidNumber': true};
+      }
+    }
+
+    return null;
+  }
+
+  static minNumberValidator(control) {
+    // RFC 2822 compliant regex
+    if (control.value || control.value === 0) {
+      if (control.value >= 1) {
+        return null;
+      } else {
+        return {'minNumberValidator': true};
+      }
+    }
+
+    return null;
+  }
+
+  static monthDayValidator(control) {
+    // RFC 2822 compliant regex
+    if (control.value) {
+      if (control.value >= 1 && control.value <= 31) {
+        return null;
+      } else {
+        return {'monthDayValidator': true};
       }
     }
 

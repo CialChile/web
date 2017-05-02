@@ -1,3 +1,234 @@
-<div *ngIf="visible">
-  ok
+<div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Configurar Validación</h4>
+    </div>
+  </div>
+  <form [formGroup]="validationForm" class="form-horizontal" (submit)="addValidation(validationForm,$event)">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group"
+             [ngClass]="{'has-error':!validationForm.controls['type'].valid  && validationForm.controls['type'].touched}">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            Tipo de Validación
+          </label>
+          <div class="col-xs-12 col-md-9 col-sm-9">
+            <p-dropdown [options]="validationTypes" formControlName="type" [filter]="true"
+                        (onChange)="changeValidationType($event)"
+                        placeholder="Seleccione un tipo de validación"></p-dropdown>
+            <control-messages [control]="validationForm.controls['type']"></control-messages>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="validationForm.controls['type'].value">
+      <div [ngSwitch]="validationForm.controls['type'].value['slug']">
+        <ng-container *ngSwitchCase="'programType'">
+          <div class="row" formGroupName="standard">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!validationForm.controls['standard'].controls['value'].valid  && validationForm.controls['standard'].controls['value'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Tipo de Programación
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-dropdown [options]="programTypes" formControlName="value" [filter]="true"
+                              placeholder="Seleccione un tipo de programación"></p-dropdown>
+                  <control-messages
+                    [control]="validationForm.controls['standard'].controls['value']"></control-messages>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <p-checkbox name="editable" label="¿Editable?" binary="true" formControlName="editable"></p-checkbox>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'frequency'">
+          <div class="row" formGroupName="standard">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!validationForm.controls['standard'].controls['value'].valid  && validationForm.controls['standard'].controls['value'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Frecuencia
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-dropdown [options]="frequencyTypes" formControlName="value" [filter]="true"
+                              placeholder="Seleccione una frecuencia"></p-dropdown>
+                  <control-messages
+                    [control]="validationForm.controls['standard'].controls['value']"></control-messages>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <p-checkbox name="editable" label="¿Editable?" binary="true" formControlName="editable"></p-checkbox>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'period'">
+          <div class="row" formGroupName="standard">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!validationForm.controls['standard'].controls['value'].valid  && validationForm.controls['standard'].controls['value'].touched}">
+                <label for="periodicidad" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Periodicidad
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <input type="number" class="form-control input-sm" formControlName="value" name="periodicidad"
+                         id="periodicidad">
+                  <control-messages
+                    [control]="validationForm.controls['standard'].controls['value']"></control-messages>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <p-checkbox name="editable" label="¿Editable?" binary="true" formControlName="editable"></p-checkbox>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'initHour'">
+          <div class="row ui-fluid" formGroupName="initHour">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!validationForm.controls['initHour'].controls['start'].valid  && validationForm.controls['initHour'].controls['start'].touched}">
+                <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Desde
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-calendar formControlName="start" showTime="showTime"
+                              [timeOnly]="true"></p-calendar>
+                  <control-messages
+                    [control]="validationForm.controls['initHour'].controls['start']"></control-messages>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+
+              <div class="form-group"
+                   [ngClass]="{'has-error':!validationForm.controls['initHour'].controls['end'].valid  && validationForm.controls['initHour'].controls['end'].touched}">
+                <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Hasta
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-calendar formControlName="end" showTime="showTime"
+                              [timeOnly]="true"></p-calendar>
+                  <control-messages [control]="validationForm.controls['initHour'].controls['end']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'finishHour'">
+          <div class="row ui-fluid" formGroupName="finishHour">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!validationForm.controls['finishHour'].controls['start'].valid  && validationForm.controls['finishHour'].controls['start'].touched}">
+                <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Desde
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-calendar formControlName="start" showTime="showTime"
+                              [timeOnly]="true"></p-calendar>
+                  <control-messages
+                    [control]="validationForm.controls['finishHour'].controls['start']"></control-messages>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!validationForm.controls['finishHour'].controls['end'].valid  && validationForm.controls['finishHour'].controls['end'].touched}">
+                <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Hasta
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-calendar formControlName="end" showTime="showTime"
+                              [timeOnly]="true"></p-calendar>
+                  <control-messages
+                    [control]="validationForm.controls['finishHour'].controls['end']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'dateRange'">
+          <div class="row" formGroupName="dateRange">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':(!validationForm.controls['dateRange'].controls['initMonth'].valid  && validationForm.controls['dateRange'].controls['initMonth'].touched) || !validationForm.controls['dateRange'].controls['initDay'].valid  && validationForm.controls['dateRange'].controls['initDay'].touched}">
+                <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Entre el
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                      <p-dropdown [options]="months" formControlName="initMonth" [filter]="true"
+                                  (onChange)="changeInitMonth($event)"
+                                  placeholder="Seleccione un mes"></p-dropdown>
+                      <control-messages
+                        [control]="validationForm.controls['dateRange'].controls['initMonth']"></control-messages>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                      <p-dropdown [options]="initDays" formControlName="initDay" [filter]="true"
+                                  placeholder="Seleccione un día"></p-dropdown>
+                      <control-messages
+                        [control]="validationForm.controls['dateRange'].controls['initDay']"></control-messages>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+
+              <div class="form-group"
+                   [ngClass]="{'has-error':(!validationForm.controls['dateRange'].controls['endMonth'].valid  && validationForm.controls['dateRange'].controls['endMonth'].touched) || !validationForm.controls['dateRange'].controls['endDay'].valid  && validationForm.controls['dateRange'].controls['endDay'].touched}">
+                <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Hasta
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                      <p-dropdown [options]="months" formControlName="endMonth" [filter]="true"
+                                  (onChange)="changeEndMonth($event)"
+                                  placeholder="Seleccione un mes"></p-dropdown>
+                      <control-messages
+                        [control]="validationForm.controls['dateRange'].controls['endMonth']"></control-messages>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                      <p-dropdown [options]="endDays" formControlName="endDay" [filter]="true"
+                                  placeholder="Seleccione un día"></p-dropdown>
+                      <control-messages
+                        [control]="validationForm.controls['dateRange'].controls['endDay']"></control-messages>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="toolbar text-center">
+          <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+            <i class="fa fa-save"></i>
+            Cancelar
+          </button>
+          <button class="btn btn-success btn-lg" type="submit"
+                  [disabled]="!validationForm.valid">
+            <i class="fa fa-save"></i>
+            Guardar Validación
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

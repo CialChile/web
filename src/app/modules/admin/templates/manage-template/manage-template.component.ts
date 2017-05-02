@@ -98,6 +98,11 @@ export class ManageTemplateComponent implements OnInit {
           editable: [true],
           equipmentList: this.formBuilder.array([])
         }),
+        time: this.formBuilder.group({
+          editable: [true],
+          program: this.formBuilder.array([]),
+          validations: this.formBuilder.array([])
+        }),
         procedures: this.formBuilder.group({
           procedureList: this.formBuilder.array([])
         }),
@@ -141,8 +146,8 @@ export class ManageTemplateComponent implements OnInit {
         this.templateId = params['id'];
         this.loading = true;
         this.apiService.one('admin/activities/templates', params['id'], 'programType,template').subscribe((template) => {
-          if (!template.data.is_custom && !this.clone) {
-            this.toastr.error('No puede editar una plantilla que no es personalizada')
+          if (template.data.is_custom && !this.clone) {
+            this.toastr.error('No puede editar una plantilla personalizada');
             this.router.navigate(['/admin/console/activities/templates'])
           }
           this.initForm(template.data);

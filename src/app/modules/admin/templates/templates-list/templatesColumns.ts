@@ -6,7 +6,7 @@ export const TEMPLATESCOLUMNS: DataTableColumn[] = [
     sort: true,
     filter: true
   }, <DataTableColumn>{
-    name: '¿Es Personalizada?',
+    name: 'Tipo de Pnatilla',
     data: 'is_custom',
     sort: true,
     filter: true,

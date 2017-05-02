@@ -28,11 +28,11 @@ export class PersonsSectionComponent implements OnInit {
       value: {name: 'certifications'}
     },
     {
-      label: 'Expericía',
+      label: 'Experiencia',
       value: {name: 'experience'}
     },
     {
-      label: 'cargo',
+      label: 'Cargo',
       value: {name: 'position'}
     }
   ];

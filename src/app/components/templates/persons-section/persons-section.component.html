@@ -41,7 +41,7 @@
                 <div class="ui-fluid">
                   <input formControlName="validation" class="form-control input-sm"
                          *ngIf="field.controls['type'].value == 'text'">
-                  <p-autoComplete formControlName="validation"
+                  <p-autoComplete formControlName="validation" readonly="true"
                                   [suggestions]="suggestions[field.controls['validationName'].value]"
                                   *ngIf="field.controls['type'].value == 'autocomplete'"
                                   (onDropdownClick)="search($event,field.controls['validationName'].value)"

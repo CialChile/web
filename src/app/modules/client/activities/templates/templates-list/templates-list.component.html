@@ -45,6 +45,12 @@
                 </ng-template>
               </p-column>
             </ng-container>
+            <p-column styleClass="col-button" [header]="'Activo'">
+              <ng-template let-template="rowData" pTemplate="body">
+                <p-inputSwitch onLabel="Si" offLabel="No" [(ngModel)]="template.active"
+                               (onChange)="toggleActive($event,template)" [disabled]="!template.is_custom"></p-inputSwitch>
+              </ng-template>
+            </p-column>
             <p-column styleClass="col-button" [header]="'Acciones'">
               <ng-template let-template="rowData" pTemplate="body">
                 <button type="button" pButton (click)="copy(template)" class="ui-button-info"

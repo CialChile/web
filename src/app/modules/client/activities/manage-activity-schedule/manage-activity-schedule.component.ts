@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef, Inject} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ApiService} from "../../../../services/api.service";
 import {ToastsManager} from "ng2-toastr";
@@ -7,7 +7,6 @@ import {SelectItem} from "primeng/components/common/api";
 import {TemplatesTimeHelper} from "../../../../components/templates/helpers/template-time-helper";
 import {ValidationService} from "../../../../components/forms/validation/validation.service";
 import {ScheduleNaturalLanguageBuilder} from "../../../../utilities/templates/scheduleNaturalLanguageBuilder";
-import {window} from "@angular/platform-browser/src/browser/tools/browser";
 import {WindowRefService} from "../../../../services/browser/windowRef.service";
 
 @Component({
@@ -158,6 +157,7 @@ export class ManageActivityScheduleComponent implements OnInit {
           this.template = this.activity.template.template;
           this.operatorValidations = this.template.persons.operator;
           this.timeValidations = this.template.time.validations;
+          this.applyValidationConstraintsToSchedule(this.timeValidations);
           if (!this.template.time.editable) {
             this.scheduleForm.controls['schedule'].disable();
           }
@@ -178,6 +178,7 @@ export class ManageActivityScheduleComponent implements OnInit {
           this.template = this.activity.template.template;
           this.operatorValidations = this.template.persons.operator;
           this.timeValidations = this.template.time.validations;
+          this.applyValidationConstraintsToSchedule(this.timeValidations);
           this.defaultProgram = this.template.time.program[0];
           if (this.defaultProgram) {
             this.defaultProgram.initHour = new Date(this.defaultProgram.initHour);
@@ -241,7 +242,7 @@ export class ManageActivityScheduleComponent implements OnInit {
     if (this.timeValidations.length) {
       let validationFail = false;
       this.timeValidations.forEach((valdation) => {
-        if (!TemplatesTimeHelper.validateProgram(this.scheduleForm.controls['schedule'].value, valdation)) {
+        if (!TemplatesTimeHelper.validateProgram(this.schedule.getRawValue(), valdation)) {
           validationError = true;
           validationFail = true;
         }
@@ -287,6 +288,19 @@ export class ManageActivityScheduleComponent implements OnInit {
 
   cancelConfirmation() {
     this.confirmation = false;
+  }
+
+  applyValidationConstraintsToSchedule(validations) {
+    const standardValidations = ['programType', 'frequency', 'period'];
+    validations.forEach((validation) => {
+      if (standardValidations.indexOf(validation['type']['slug']) != -1) {
+        const slug = validation['type']['slug'] == 'period' ? 'periodicity' : validation['type']['slug'];
+        this.schedule.controls[slug].setValue(validation['standard']['value']);
+        if (!validation['standard']['editable']) {
+          this.schedule.controls[slug].disable();
+        }
+      }
+    })
   }
 
   saveProgram() {

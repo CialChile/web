@@ -151,7 +151,7 @@
                                             [canBeEdited]="canEditEquipment">
 
             </app-activity-manage-equipments>
-            <div class="x_panel">
+            <div class="x_panel" *ngIf="canHaveObservations">
               <div class="x_title">
                 <h2>Observaciones
                 </h2>

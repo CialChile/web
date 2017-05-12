@@ -26,6 +26,7 @@ import {TooltipModule} from "primeng/components/tooltip/tooltip";
 import { ManageActivityScheduleComponent } from './manage-activity-schedule/manage-activity-schedule.component';
 import {CheckboxModule} from "primeng/components/checkbox/checkbox";
 import { ManageActivityAssetsComponent } from './manage-activity/manage-activity-assets/manage-activity-assets.component';
+import {InputSwitchModule} from "primeng/components/inputswitch/inputswitch";
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { ManageActivityAssetsComponent } from './manage-activity/manage-activity
     AutoCompleteModule,
     ActivitiesComponentModule,
     TooltipModule,
-    CheckboxModule
+    CheckboxModule,
+    InputSwitchModule
   ],
   declarations: [ActivitiesListComponent, ManageActivityComponent, ActivityDetailsComponent, ActivitiesIndexComponent, TemplatesListComponent, ManageTemplateComponent, ManageProceduresComponent, ManageEquipmentsComponent, ManageActivityScheduleComponent, ManageActivityAssetsComponent]
 })

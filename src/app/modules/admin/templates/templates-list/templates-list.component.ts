@@ -82,4 +82,10 @@ export class TemplatesListComponent implements OnInit {
         this.toastr.error(error);
       })
   }
+
+  toggleActive(event, template) {
+    this.apiService.update('admin/activities/templates', template.id + '/toggle-active', template).toPromise().then((response) => {
+      this.toastr.success(response.message);
+    })
+  }
 }

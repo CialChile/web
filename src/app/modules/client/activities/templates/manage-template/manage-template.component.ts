@@ -133,10 +133,7 @@ export class ManageTemplateComponent implements OnInit {
 
   ngOnInit() {
     this.apiService.all('client/activities/program-types').subscribe(programTypes => this.programTypes = programTypes.data.map((programType) => {
-      return {
-        label: programType.name,
-        value: {id: programType.id, inspection: programType.is_inspection, has_assets: programType.has_assets}
-      }
+      return {label: programType.name, value: {id: programType.id, inspection: programType.is_inspection,}}
     }))
 
     this.route.params.subscribe((params) => {
@@ -232,8 +229,7 @@ export class ManageTemplateComponent implements OnInit {
     this.templateForm.reset(template);
     this.templateForm.controls['program_type_id'].setValue({
       id: template.programType.id,
-      inspection: template.programType.is_inspection,
-      has_assets: template.programType.has_assets,
+      inspection: template.programType.is_inspection
     })
   }
 }

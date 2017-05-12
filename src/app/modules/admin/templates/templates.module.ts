@@ -15,6 +15,7 @@ import {ManageTemplateComponent} from "./manage-template/manage-template.compone
 import {DropdownModule} from "primeng/components/dropdown/dropdown";
 import {TemplatesModule as TemplateHelpersModule} from "../../../components/templates/templates.module";
 import {ButtonModule} from "primeng/components/button/button";
+import {InputSwitchModule} from "primeng/components/inputswitch/inputswitch";
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import {ButtonModule} from "primeng/components/button/button";
     FormsModule,
     DropdownModule,
     TemplateHelpersModule,
-    ButtonModule
+    ButtonModule,
+    InputSwitchModule
   ],
   declarations: [TemplatesListComponent, TemplatesIndexComponent,
     ProgramTypesListComponent, ManageProgramTypeComponent,ManageTemplateComponent]

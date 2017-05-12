@@ -69,19 +69,17 @@ export class ActivitiesListComponent implements OnInit {
 
   }
 
-  copy(activity) {
-    this.router.navigate(['/client/activities/' + activity.id, {clone: true}]);
-
-  }
-
   remove(activity) {
-    this.apiService.destroy('client/activities', activity.id).subscribe((response) => {
-        this.toastr.success('Actividad Eliminada con Éxito');
-        this.reloadTable(this.lastLoadEvent);
-      },
-      (error) => {
-        this.toastr.error(error);
-      })
+    this.toastr.warning('Falta implementar');
+    /*
+     this.apiService.destroy('client/activities', activity.id).subscribe((response) => {
+     this.toastr.success('Actividad Eliminada con Éxito');
+     this.reloadTable(this.lastLoadEvent);
+     },
+     (error) => {
+     this.toastr.error(error);
+     })
+     */
   }
 
   schedule(activity) {
@@ -94,13 +92,16 @@ export class ActivitiesListComponent implements OnInit {
   }
 
   removeSchedule(schedule) {
-    this.apiService.destroy('client/activities/' + schedule.activity_id + '/schedules', schedule.id).subscribe((response) => {
-        this.toastr.success('Programación Eliminada con Éxito');
-        this.reloadTable(this.lastLoadEvent);
-      },
-      (error) => {
-        this.toastr.error(error);
-      })
+    this.toastr.warning('Falta implementar');
+    /*
+     this.apiService.destroy('client/activities/' + schedule.activity_id + '/schedules', schedule.id).subscribe((response) => {
+     this.toastr.success('Programación Eliminada con Éxito');
+     this.reloadTable(this.lastLoadEvent);
+     },
+     (error) => {
+     this.toastr.error(error);
+     })
+     */
   }
 
 }

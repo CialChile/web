@@ -20,6 +20,7 @@ export class ManageActivityComponent implements OnInit {
   public loading: boolean = false;
   public title: string = 'Nueva Actividad';
   public initialized = false;
+  public canHaveObservations = true;
 
   breadcrumbs = [
     {
@@ -75,6 +76,8 @@ export class ManageActivityComponent implements OnInit {
           this.hasAssets = template.data.programType.has_assets;
           this.activityForm.controls['program_type_id'].setValue(template.data.program_type_id);
           let templateData = template.data.template;
+
+          this.canHaveObservations = templateData.closure.observations;
           if (templateData.equipment) {
             this.canEditEquipment = templateData.equipment.editable;
           } else {

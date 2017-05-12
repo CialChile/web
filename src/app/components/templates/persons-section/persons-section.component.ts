@@ -1,9 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {FormGroup, FormControl, Validators, FormBuilder, FormArray, AbstractControl} from "@angular/forms";
+import {FormGroup, FormBuilder, FormArray} from "@angular/forms";
 import {ApiService} from "../../../services/api.service";
-import {ValidationService} from "../../forms/validation/validation.service";
 import {ToastsManager} from "ng2-toastr";
-import {TemplatesPersonsHelper} from "../helpers/template-persons-helper";
 
 @Component({
   selector: 'templates-persons-section',
@@ -13,39 +11,29 @@ import {TemplatesPersonsHelper} from "../helpers/template-persons-helper";
 export class PersonsSectionComponent implements OnInit {
 
   @Input() section;
-  @Input() templateForm: FormGroup;
-  suggestions = {
-    'certifications': [],
-    'position': []
-  };
-  validationsTypes = [
-    {
-      label: 'Especialidad',
-      value: {name: 'specialty'}
-    },
-    {
-      label: 'Certificaciones',
-      value: {name: 'certifications'}
-    },
-    {
-      label: 'Experiencia',
-      value: {name: 'experience'}
-    },
-    {
-      label: 'Cargo',
-      value: {name: 'position'}
-    }
-  ];
+  @Input() personsFG: FormGroup;
+  @Input() isAdmin: boolean;
+  editingSupervisor: boolean;
+  addingSupervisor: boolean;
+  addingOperator: boolean;
+  editingOperator: boolean;
+  editOperatorIndex: number;
+  editSupervisorIndex: number;
 
   constructor(private formBuilder: FormBuilder, private apiService: ApiService, private toastr: ToastsManager) {
+
   }
 
   ngOnInit() {
 
   }
 
-  get persons(): FormArray {
-    return this.templateForm.get('persons') as FormArray;
+  get operator(): FormArray {
+    return this.personsFG.get('operator') as FormArray;
+  };
+
+  get supervisor(): FormArray {
+    return this.personsFG.get('supervisor') as FormArray;
   };
 
   addSection() {
@@ -54,67 +42,59 @@ export class PersonsSectionComponent implements OnInit {
 
   removeSection() {
     this.section.visible = false;
-    const personsLength = this.persons.controls.length;
-    for (let i = personsLength - 1; i >= 0; i--) {
-      this.persons.removeAt(i);
+    const operatorLength = this.operator.controls.length;
+    for (let i = operatorLength - 1; i >= 0; i--) {
+      this.operator.removeAt(i);
     }
   }
 
-  removeValidation(index) {
-    this.persons.removeAt(index);
+  editSupervisorValidation(program, index: number) {
+    this.editingSupervisor = true;
+    this.addingSupervisor = false;
+    this.editSupervisorIndex = index;
   }
 
-  addValidation() {
-    this.persons.push(TemplatesPersonsHelper.generateValidation());
-  }
-
-  changeValidationType(event, formGroup, index: number) {
-    const experience = this.persons.controls.filter((value) => {
-      return value['controls']['validationName'].value == 'experience'
-    });
-    if (experience.length && event.value.name == 'experience') {
-      formGroup.controls['value'].setValue('');
-      this.toastr.error('Ya se definio la validación de Años de experiencias');
-    } else {
-      switch (event.value.name) {
-        case 'specialty':
-          formGroup.controls['validationName'].setValue('specialty');
-          formGroup.controls['validationLabel'].setValue('Especialidad');
-          formGroup.controls['validation'].setValidators(Validators.required);
-          formGroup.controls['type'].setValue('text');
-          break;
-        case 'certifications':
-          formGroup.controls['validationLabel'].setValue('Certificaciones');
-          formGroup.controls['validationName'].setValue('certifications');
-          formGroup.controls['validation'].setValidators(Validators.required);
-          formGroup.controls['type'].setValue('autocomplete');
-          break;
-        case 'experience':
-          formGroup.controls['validationName'].setValue('experience');
-          formGroup.controls['validationLabel'].setValue('Años de Experiencia');
-          formGroup.controls['validation'].setValidators(Validators.compose([Validators.required, ValidationService.numberValidator]));
-          formGroup.controls['type'].setValue('text');
-          break;
-        case 'position':
-          formGroup.controls['validationName'].setValue('position');
-          formGroup.controls['validationLabel'].setValue('Cargo');
-          formGroup.controls['validation'].setValidators(Validators.required);
-          formGroup.controls['type'].setValue('autocomplete');
-          break;
-      }
-      this.persons.setControl(index, formGroup);
+  removeSupervisorValidation(index: number) {
+    this.supervisor.removeAt(index);
+    if (this.editSupervisorIndex == index) {
+      this.editingSupervisor = false;
+      this.addingSupervisor = false;
+      this.editOperatorIndex = null;
     }
   }
 
-  search(event, name) {
-    if (name == 'certifications') {
-      this.apiService.all('client/certifications/search?name=' + event.query + '&type=' + 0).subscribe((results) => {
-        this.suggestions.certifications = results.data;
-      })
-    } else {
-      this.apiService.all('client/workers/positions/search?name=' + event.query).subscribe((results) => {
-        this.suggestions.position = results.data;
-      })
+  editOperatorValidation(validation, index: number) {
+    this.editingOperator = true;
+    this.addingOperator = false;
+    this.editOperatorIndex = index;
+  }
+
+  removeOperatorValidation(index: number) {
+    this.operator.removeAt(index)
+    if (this.editOperatorIndex == index) {
+      this.editingOperator = false;
+      this.addingOperator = false;
+      this.editOperatorIndex = null;
     }
+  }
+
+  newOperatorValidation() {
+    this.addingOperator = true;
+    this.editingOperator = false;
+  }
+
+  newSupervisorValidation() {
+    this.addingSupervisor = true;
+    this.editingSupervisor = false;
+  }
+
+  hideSupervisorForm() {
+    this.editingSupervisor = false;
+    this.addingSupervisor = false;
+  }
+
+  hideOperatorForm() {
+    this.editingOperator = false;
+    this.addingOperator = false;
   }
 }

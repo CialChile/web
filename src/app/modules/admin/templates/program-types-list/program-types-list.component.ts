@@ -34,6 +34,15 @@ export class ProgramTypesListComponent implements OnInit {
       format: (data) => {
         return data.is_inspection ? 'Si' : 'No'
       }
+    },
+    <DataTableColumn> {
+      name: '¿Requiere Activos?',
+      data: 'has_assets',
+      sort: true,
+      filter: true,
+      format: (data) => {
+        return data.has_assets ? 'Si' : 'No'
+      }
     }, {
       name: 'Creado El',
       data: 'created_at',
@@ -50,7 +59,7 @@ export class ProgramTypesListComponent implements OnInit {
   ngOnInit() {
     this.columnOptions = [];
     for (let i = 0; i < this.programTypesColumns.length; i++) {
-      if (i < 4) {
+      if (i < 5) {
         this.columns.push(this.programTypesColumns[i]);
       }
       this.columnOptions.push({label: this.programTypesColumns[i].name, value: this.programTypesColumns[i]});
@@ -64,7 +73,7 @@ export class ProgramTypesListComponent implements OnInit {
 
   reloadTable(event: LazyLoadEvent) {
     this.lastLoadEvent = event;
-    this.datatableService.getData(event, this.columns, 'admin/activities/program-types/datatable','', this.globalSearch)
+    this.datatableService.getData(event, this.columns, 'admin/activities/program-types/datatable', '', this.globalSearch)
       .toPromise().then((response) => {
       this.programTypes = response.data;
       this.totalRecords = response.recordsFiltered;

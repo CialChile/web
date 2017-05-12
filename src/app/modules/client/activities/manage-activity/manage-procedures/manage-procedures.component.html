@@ -1,0 +1,340 @@
+<div class="x_panel">
+  <div class="x_title">
+    <h2>Procedimientos
+    </h2>
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content" [formGroup]="proceduresFG">
+    <div class="row">
+      <div class="col-xs-12">
+        <div formArrayName="procedureList">
+          <p-dataTable [value]="procedureList.controls" [responsive]="true"
+                       emptyMessage="Debe añadir un procedimiento">
+            <p-header>
+              <div class="row">
+                <div class="col-xs-12 col-md-3 text-left">
+                  <div>
+                    <button class="btn btn-success" type="button" (click)="newProcedure()">
+                      <i class="fa fa-plus"></i>
+                      Nuevo Procedimiento
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </p-header>
+            <p-column>
+              <ng-template let-procedure="rowData" pTemplate="header">
+                Tipo de Procedimiento
+              </ng-template>
+              <ng-template let-procedure="rowData" pTemplate="body">
+                {{procedure.controls['type'].value['name']}}
+              </ng-template>
+            </p-column>
+            <p-column>
+              <ng-template let-procedure="rowData" pTemplate="header">
+                Nº de Items
+              </ng-template>
+              <ng-template let-procedure="rowData" pTemplate="body">
+                <div class="text-center">
+                  {{procedure.controls['definitionList'].controls.length}}
+                </div>
+              </ng-template>
+            </p-column>
+            <p-column styleClass="col-button" [header]="'Acciones'">
+              <ng-template let-procedure="rowData" let-index="rowIndex" pTemplate="body">
+                <button type="button" (click)="editProcedure(procedure,index)" class="btn-warning btn btn-sm">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" (click)="removeProcedure(index)" class="btn-danger btn btn-sm">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </ng-template>
+            </p-column>
+          </p-dataTable>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="addingProcedure || editingProcedure">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12">
+            <h4>Configurar Procedimiento</h4>
+          </div>
+        </div>
+        <form [formGroup]="procedureForm" class="form-horizontal" (submit)="addProcedure(procedureForm,$event)">
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!procedureForm.controls['type'].valid  && procedureForm.controls['type'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                  Tipo
+                </label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-dropdown [options]="proceduresTypes" formControlName="type" [filter]="true"
+                              (onChange)="changeProcedureType($event)"
+                              placeholder="Seleccione un tipo de procedimiento"></p-dropdown>
+                  <control-messages [control]="procedureForm.controls['type']"></control-messages>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="procedureForm.controls['type'].value">
+            <div class="col-xs-12">
+              <div formArrayName="definitionList" [ngSwitch]="procedureForm.controls['type'].value['slug']">
+                <ng-container *ngSwitchCase="'step'">
+                  <p-dataTable [value]="definitionList.controls" [responsive]="true"
+                               emptyMessage="Debe añadir una definición">
+                    <p-header>
+                      <div class="row">
+                        <div class="col-xs-12 col-md-3 text-left">
+                          <div>
+                            <button class="btn btn-success" type="button" (click)="addStep()">
+                              <i class="fa fa-plus"></i>
+                              Nuevo Paso
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </p-header>
+                    <p-column styleClass="col-button">
+                      <ng-template pTemplate="header">
+                        Nº Paso
+                      </ng-template>
+                      <ng-template let-index="rowIndex" pTemplate="body">
+                        {{index+1}}
+                      </ng-template>
+                    </p-column>
+                    <p-column>
+                      <ng-template pTemplate="header">
+                        Descripción
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index">
+                          <div class="form-group"
+                               [ngClass]="{'has-error':!step.controls['value'].valid  && step.controls['value'].touched}">
+                           <textarea formControlName="value" class="form-control input-sm" name="step" id="step"
+                                     rows="3"></textarea>
+                            <control-messages [control]="step.controls['value']"></control-messages>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column styleClass="col-button" [header]="'Acciones'">
+                      <ng-template let-procedure="rowData" let-index="rowIndex" pTemplate="body">
+                        <button class="btn btn-danger btn-sm" (click)="removeDefinitionItem(index)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </ng-template>
+                    </p-column>
+                  </p-dataTable>
+                </ng-container>
+                <ng-container *ngSwitchCase="'checklist'">
+                  <p-dataTable [value]="definitionList.controls" [responsive]="true"
+                               emptyMessage="Debe añadir un item al checklist">
+                    <p-header>
+                      <div class="row">
+                        <div class="col-xs-12 col-md-3 text-left">
+                          <div>
+                            <button class="btn btn-success" type="button" (click)="addStep()">
+                              <i class="fa fa-plus"></i>
+                              Nuevo Item del Checklist
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </p-header>
+                    <p-column>
+                      <ng-template pTemplate="header">
+                        Item
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index">
+                          <div class="form-group"
+                               [ngClass]="{'has-error':!step.controls['value'].valid  && step.controls['value'].touched}">
+                           <textarea formControlName="value" class="form-control input-sm" name="checklist"
+                                     id="checklist"
+                                     rows="3"></textarea>
+                            <control-messages [control]="step.controls['value']"></control-messages>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column styleClass="col-button" [header]="'Acciones'">
+                      <ng-template let-procedure="rowData" let-index="rowIndex" pTemplate="body">
+                        <button class="btn btn-danger btn-sm" (click)="removeDefinitionItem(index)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </ng-template>
+                    </p-column>
+                  </p-dataTable>
+                </ng-container>
+                <ng-container *ngSwitchCase="'variables'">
+                  <p-dataTable [value]="definitionList.controls" [responsive]="true"
+                               emptyMessage="Debe añadir una variable">
+                    <p-header>
+                      <div class="row">
+                        <div class="col-xs-12 col-md-3 text-left">
+                          <div>
+                            <button class="btn btn-success" type="button" (click)="addVariable()">
+                              <i class="fa fa-plus"></i>
+                              Nueva Variable
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </p-header>
+                    <p-column>
+                      <ng-template pTemplate="header">
+                        Nombre de la variable
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index">
+                          <div class="form-group"
+                               [ngClass]="{'has-error':!step.controls['variableName'].valid  && step.controls['variableName'].touched}">
+                            <input formControlName="variableName" class="form-control input-sm" type="text"
+                                   name="variableName" id="variableName">
+                            <control-messages [control]="step.controls['variableName']"></control-messages>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column>
+                      <ng-template pTemplate="header">
+                        Inicio del rango
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index">
+                          <div class="form-group"
+                               [ngClass]="{'has-error':!step.controls['from'].valid  && step.controls['from'].touched}">
+                            <input formControlName="from" class="form-control input-sm" type="text" name="from"
+                                   id="from">
+                            <control-messages [control]="step.controls['from']"></control-messages>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column>
+                      <ng-template pTemplate="header">
+                        Fin del rango
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index">
+                          <div class="form-group"
+                               [ngClass]="{'has-error':!step.controls['to'].valid  && step.controls['to'].touched}">
+                            <input formControlName="to" class="form-control input-sm" type="text" name="to" id="to">
+                            <control-messages [control]="step.controls['to']"></control-messages>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column>
+                      <ng-template pTemplate="header">
+                        ¿Requerida?
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index" class="text-center">
+                          <label>
+                            <input formControlName="required" type="checkbox" name="required" id="required">
+                          </label>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column styleClass="col-button" [header]="'Acciones'">
+                      <ng-template let-procedure="rowData" let-index="rowIndex" pTemplate="body">
+                        <button class="btn btn-danger btn-sm" (click)="removeDefinitionItem(index)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </ng-template>
+                    </p-column>
+                  </p-dataTable>
+                </ng-container>
+                <ng-container *ngSwitchCase="'data'">
+                  <p-dataTable [value]="definitionList.controls" [responsive]="true"
+                               emptyMessage="Debe añadir un dato">
+                    <p-header>
+                      <div class="row">
+                        <div class="col-xs-12 col-md-3 text-left">
+                          <div>
+                            <button class="btn btn-success" type="button" (click)="addData()">
+                              <i class="fa fa-plus"></i>
+                              Nuevo Dato
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </p-header>
+                    <p-column>
+                      <ng-template pTemplate="header">
+                        Nombre del dato
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index">
+                          <div class="form-group"
+                               [ngClass]="{'has-error':!step.controls['dataName'].valid  && step.controls['dataName'].touched}">
+                            <input formControlName="dataName" class="form-control input-sm" type="text"
+                                   name="dataName" id="dataName">
+                            <control-messages [control]="step.controls['dataName']"></control-messages>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column [style]="{'overflow':'visible'}">
+                      <ng-template pTemplate="header">
+                        Tipo de dato
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index">
+                          <div class="form-group"
+                               [ngClass]="{'has-error':!step.controls['dataType'].valid  && step.controls['dataType'].touched}">
+                            <p-dropdown [options]="dataTypes" formControlName="dataType" [filter]="true"
+                                        [autoWidth]="false" [style]="{'width':'100%'}"
+                                        placeholder="Seleccione un tipo de dato"></p-dropdown>
+                            <control-messages [control]="step.controls['dataType']"></control-messages>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column>
+                      <ng-template pTemplate="header">
+                        ¿Requerida?
+                      </ng-template>
+                      <ng-template let-step="rowData" let-index="rowIndex" pTemplate="body">
+                        <div [formGroupName]="index" class="text-center">
+                          <label for="">
+                            <input formControlName="required" type="checkbox" name="datarequired" id="datarequired">
+                          </label>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column styleClass="col-button" [header]="'Acciones'">
+                      <ng-template let-procedure="rowData" let-index="rowIndex" pTemplate="body">
+                        <button class="btn btn-danger btn-sm" type="button" (click)="removeDefinitionItem(index)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </ng-template>
+                    </p-column>
+                  </p-dataTable>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="toolbar text-center">
+                <button class="btn btn-danger btn-lg" type="button" (click)="cancelAddProcedure()">
+                  <i class="fa fa-save"></i>
+                  Cancelar
+                </button>
+                <button class="btn btn-success btn-lg" type="submit"
+                        [disabled]="!procedureForm.valid || !procedureForm.controls['definitionList'].length">
+                  <i class="fa fa-save"></i>
+                  Guardar Procedimiento
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,8 @@ import {authHttpServiceFactory} from './auth.service.factory'
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrDefaultOptions} from "./components/toastr/toastr-default-options";
 import {ActivitiesModule} from "./modules/client/activities/activities.module";
+import {PersonsValidationConstraintListComponent} from './components/activities/persons-validation-constraint-list/persons-validation-constraint-list.component';
+import {WindowRefService} from "./services/browser/windowRef.service";
 
 @NgModule({
   declarations: [
@@ -32,14 +34,13 @@ import {ActivitiesModule} from "./modules/client/activities/activities.module";
     ClientModule,
     ToastModule.forRoot(),
     ReactiveFormsModule,
-    BrowserAnimationsModule,
-    ActivitiesModule
+    BrowserAnimationsModule
   ],
   providers: [{provide: ToastOptions, useClass: ToastrDefaultOptions}, {
     provide: AuthHttp,
     useFactory: authHttpServiceFactory,
     deps: [Http, RequestOptions]
-  }, ToastsManager, ApiService, ToastrService, DatatableService],
+  }, ToastsManager, ApiService, ToastrService, DatatableService, WindowRefService],
   bootstrap: [AppComponent]
 })
 

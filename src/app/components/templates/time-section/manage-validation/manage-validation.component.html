@@ -109,7 +109,6 @@
               </div>
             </div>
             <div class="col-xs-12 col-md-6">
-
               <div class="form-group"
                    [ngClass]="{'has-error':!validationForm.controls['initHour'].controls['end'].valid  && validationForm.controls['initHour'].controls['end'].touched}">
                 <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -124,33 +123,29 @@
             </div>
           </div>
         </ng-container>
-        <ng-container *ngSwitchCase="'finishHour'">
-          <div class="row ui-fluid" formGroupName="finishHour">
+        <ng-container *ngSwitchCase="'estimatedTime'">
+          <div class="row ui-fluid" formGroupName="estimatedTime">
             <div class="col-xs-12 col-md-6">
               <div class="form-group"
-                   [ngClass]="{'has-error':!validationForm.controls['finishHour'].controls['start'].valid  && validationForm.controls['finishHour'].controls['start'].touched}">
+                   [ngClass]="{'has-error':(!validationForm.controls['estimatedTime'].controls['time'].valid  && validationForm.controls['estimatedTime'].controls['time'].touched) || (!validationForm.controls['estimatedTime'].controls['unit'].valid  && validationForm.controls['estimatedTime'].controls['unit'].touched )}">
                 <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
-                  Desde
+                  Duración Estimada
                 </label>
                 <div class="col-xs-12 col-md-9 col-sm-9">
-                  <p-calendar formControlName="start" showTime="showTime"
-                              [timeOnly]="true"></p-calendar>
-                  <control-messages
-                    [control]="validationForm.controls['finishHour'].controls['start']"></control-messages>
-                </div>
-              </div>
-            </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="form-group"
-                   [ngClass]="{'has-error':!validationForm.controls['finishHour'].controls['end'].valid  && validationForm.controls['finishHour'].controls['end'].touched}">
-                <label for="initHour" class="control-label col-md-3 col-sm-3 col-xs-12">
-                  Hasta
-                </label>
-                <div class="col-xs-12 col-md-9 col-sm-9">
-                  <p-calendar formControlName="end" showTime="showTime"
-                              [timeOnly]="true"></p-calendar>
-                  <control-messages
-                    [control]="validationForm.controls['finishHour'].controls['end']"></control-messages>
+                  <div class="row">
+                    <div class="col-xs-6 col-md-6 col-sm-6">
+                      <input id="estimatedTime" type="number" formControlName="time"
+                             class="form-control input-sm">
+                      <control-messages
+                        [control]="validationForm.controls['estimatedTime'].controls['time']"></control-messages>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-sm-6">
+                      <p-dropdown [options]="estimatedTimeUnits" formControlName="unit" [filter]="true"
+                                  placeholder="Seleccione una unidad de medida"></p-dropdown>
+                      <control-messages
+                        [control]="validationForm.controls['estimatedTime'].controls['unit']"></control-messages>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

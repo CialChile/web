@@ -39,12 +39,30 @@ export class ManageValidationComponent implements OnInit, OnChanges {
       label: 'Hora de Inicio'
     },
     {
-      value: {slug: 'finishHour', name: 'Hora de Finalización'},
-      label: 'Hora de Finalización'
+      value: {slug: 'estimatedTime', name: 'Duración Estimada de Ejecución'},
+      label: 'Duración Estimada de Ejecución'
     },
     {
       value: {slug: 'dateRange', name: 'Fecha de Programación'},
       label: 'Fecha de Programación'
+    }
+  ];
+  estimatedTimeUnits: SelectItem[] = [
+    {
+      value: {slug: '0', name: 'Horas'},
+      label: 'Horas'
+    },
+    {
+      value: {slug: '1', name: 'Dias'},
+      label: 'Dias'
+    },
+    {
+      value: {slug: '2', name: 'Semanas'},
+      label: 'Semanas'
+    },
+    {
+      value: {slug: '3', name: 'Meses'},
+      label: 'Meses'
     }
   ];
   programTypes: SelectItem[] = [
@@ -146,10 +164,6 @@ export class ManageValidationComponent implements OnInit, OnChanges {
 
   private loadForm(index: number) {
     let values = this.validationFormArray.at(index).value;
-    if (values.type.slug == 'finishHour') {
-      values.finishHour.start = moment(values.finishHour.start).toDate();
-      values.finishHour.end = moment(values.finishHour.end).toDate();
-    }
     if (values.type.slug == 'initHour') {
       values.initHour.start = moment(values.initHour.start).toDate();
       values.initHour.end = moment(values.initHour.end).toDate();
@@ -190,8 +204,8 @@ export class ManageValidationComponent implements OnInit, OnChanges {
     this.validationForm.controls['standard'].get('value').setValidators([]);
     this.validationForm.controls['initHour'].get('start').setValidators([]);
     this.validationForm.controls['initHour'].get('end').setValidators([]);
-    this.validationForm.controls['finishHour'].get('start').setValidators([]);
-    this.validationForm.controls['finishHour'].get('end').setValidators([]);
+    this.validationForm.controls['estimatedTime'].get('time').setValidators([]);
+    this.validationForm.controls['estimatedTime'].get('unit').setValidators([]);
     this.validationForm.controls['dateRange'].get('initDay').setValidators([]);
     this.validationForm.controls['dateRange'].get('initMonth').setValidators([]);
     this.validationForm.controls['dateRange'].get('endDay').setValidators([]);
@@ -210,10 +224,10 @@ export class ManageValidationComponent implements OnInit, OnChanges {
       this.validationForm.controls['initHour'].get('start').setValidators(Validators.compose([Validators.required]));
       this.validationForm.controls['initHour'].get('end').setValidators(Validators.compose([Validators.required]));
       this.validationForm.reset(newValues)
-    } else if (event.value.slug == 'finishHour') {
-      const newValues = {type: event.value, finishHour: formValues.finishHour}
-      this.validationForm.controls['finishHour'].get('start').setValidators(Validators.compose([Validators.required]));
-      this.validationForm.controls['finishHour'].get('end').setValidators(Validators.compose([Validators.required]));
+    } else if (event.value.slug == 'estimatedTime') {
+      const newValues = {type: event.value, estimatedTime: formValues.estimatedTime}
+      this.validationForm.controls['estimatedTime'].get('time').setValidators(Validators.compose([Validators.required]));
+      this.validationForm.controls['estimatedTime'].get('unit').setValidators(Validators.compose([Validators.required]));
       this.validationForm.reset(newValues)
     } else if (event.value.slug == 'dateRange') {
       const newValues = {type: event.value, dateRange: formValues.dateRange}

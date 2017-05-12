@@ -9,7 +9,7 @@ function isJsObject(o: any) {
 export function objectToParams(object): string {
   return Object.keys(object).map((key) => isJsObject(object[key]) ?
     subObjectToParams(encodeURIComponent(key), object[key]) :
-    `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`
+    `${encodeURIComponent(key)}=${object[key]}`
   ).join('&');
 }
 
@@ -21,6 +21,6 @@ export function objectToParams(object): string {
 function subObjectToParams(key, object): string {
   return Object.keys(object).map((childKey) => isJsObject(object[childKey]) ?
     subObjectToParams(`${key}[${encodeURIComponent(childKey)}]`, object[childKey]) :
-    `${key}[${encodeURIComponent(childKey)}]=${encodeURIComponent(object[childKey])}`
+    `${key}[${encodeURIComponent(childKey)}]=${object[childKey]}`
   ).join('&');
 }

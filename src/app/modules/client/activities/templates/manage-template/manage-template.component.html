@@ -56,7 +56,8 @@
       </div>
       <templates-general-section [section]="sections[0]" [templateForm]="templateForm.controls['template']">
       </templates-general-section>
-      <templates-persons-section [section]="sections[1]" [templateForm]="templateForm.controls['template']">
+      <templates-persons-section [section]="sections[1]"
+                                 [personsFG]="templateForm.controls['template'].controls['persons']" [isAdmin]="false">
       </templates-persons-section>
       <templates-equipment-section [section]="sections[2]"
                                    [equipmentFG]="templateForm.controls['template'].controls['equipment']">

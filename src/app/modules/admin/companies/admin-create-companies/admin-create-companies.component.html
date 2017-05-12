@@ -277,7 +277,16 @@
               </div>
             </div>
             <div class="col-xs-12 col-md-6">
-
+              <div class="form-group"
+                   [ngClass]="{'has-error':!companyForm.controls['responsible'].controls['specialty'].valid  && companyForm.controls['responsible'].controls['position'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad</label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <input formControlName="specialty" class="form-control" placeholder="Especialidad"
+                         id="specialty"/>
+                  <control-messages
+                    [control]="companyForm.controls['responsible'].controls['specialty']"></control-messages>
+                </div>
+              </div>
             </div>
           </div>
         </div>

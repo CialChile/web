@@ -1,7 +1,6 @@
 import {FormControl, Validators, FormGroup} from "@angular/forms";
 import {isObject} from "rxjs/util/isObject";
 import * as moment from 'moment';
-import {isDate} from "rxjs/util/isDate";
 
 export class TemplatesTimeHelper {
   public static generateProgram(): FormGroup {
@@ -21,7 +20,8 @@ export class TemplatesTimeHelper {
       days: days,
       dayOfMonth: new FormControl(''),
       initHour: new FormControl('', Validators.required),
-      finishHour: new FormControl('', Validators.required)
+      estimatedTime: new FormControl('', Validators.required),
+      estimatedTimeUnit: new FormControl('', Validators.required)
     };
     return new FormGroup(config);
   }
@@ -37,9 +37,9 @@ export class TemplatesTimeHelper {
         start: new FormControl(''),
         end: new FormControl(''),
       }),
-      finishHour: new FormGroup({
-        start: new FormControl(''),
-        end: new FormControl(''),
+      estimatedTime: new FormGroup({
+        time: new FormControl(''),
+        unit: new FormControl(''),
       }),
       dateRange: new FormGroup({
         initDay: new FormControl(''),
@@ -52,21 +52,18 @@ export class TemplatesTimeHelper {
   }
 
   public static validateProgram(program, validation) {
-    const capitalize = ([first, ...rest]) => {
-      console.log(first, rest)
-      return first.toUpperCase() + rest;
-    };
+    if (validation.type['slug'] != 'dateRange') {
+      const capitalize = ([first, ...rest]) => {
+        return first.toUpperCase() + rest;
+      };
 
-    return TemplatesTimeHelper['validate' + capitalize(validation.type['slug'])](program, validation)
+      return TemplatesTimeHelper['validate' + capitalize(validation.type['slug'])](program, validation)
+    }
+    return true;
   }
 
   private static validateInitHour(program, validation) {
     return TemplatesTimeHelper.validateTime(validation.initHour.start, validation.initHour.end, program.initHour);
-  }
-
-  private static validateFinishHour(program, validation) {
-
-    return TemplatesTimeHelper.validateTime(validation.finishHour.start, validation.finishHour.end, program.finishHour);
   }
 
   private static validateProgramType(program, validation) {
@@ -79,6 +76,10 @@ export class TemplatesTimeHelper {
 
   private static validatePeriod(program, validation) {
     return TemplatesTimeHelper.validateStandard(program.periodicity, validation);
+  }
+
+  private static validateEstimatedTime(program, validation) {
+    return program.estimatedTime == validation.estimatedTime.time && program.estimatedTimeUnit['slug'] == validation.estimatedTime.unit['slug'];
   }
 
   private static validateStandard(programValue, validation) {
@@ -99,5 +100,4 @@ export class TemplatesTimeHelper {
 
     return programTime.isBetween(startTime, endTime);
   }
-
 }

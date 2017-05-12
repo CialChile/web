@@ -67,7 +67,8 @@ export class AdminEditCompaniesComponent implements OnInit {
         last_name: ['', [Validators.required]],
         email: ['', Validators.compose([Validators.required, ValidationService.emailValidator])],
         rut_passport: ['', [Validators.required]],
-        position: ['', [Validators.required]]
+        position: ['', [Validators.required]],
+        specialty: ['', [Validators.required]]
       })
     });
     this.companyForm.controls['country'].valueChanges.subscribe((value) => {

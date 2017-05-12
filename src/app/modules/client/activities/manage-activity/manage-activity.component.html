@@ -1,3 +1,205 @@
-<p>
-  manage-activity works!
-</p>
+<app-page-title back="/client/activities" [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+
+<form role="form" class="form-horizontal form-label-left form-assets" [formGroup]="activityForm"
+      (submit)="onSubmit(activityForm,$event)">
+
+  <ng-template #loadingIndicator>
+    <div class="text-center">
+      <img width="70px" src="assets/img/gears2.svg" alt="">
+      <h4>Cargando Actividad...</h4>
+    </div>
+  </ng-template>
+
+  <ng-template #loadingTemplateIndicator>
+    <div class="text-center">
+      <img width="70px" src="assets/img/gears2.svg" alt="">
+      <h4>Cargando Plantilla...</h4>
+    </div>
+  </ng-template>
+
+  <div *ngIf="!loading; else loadingIndicator">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Plantilla de la actividad
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!activityForm.controls['template_id'].valid  && activityForm.controls['template_id'].touched}">
+                  <label for="template_id" class="control-label col-xs-12 col-md-3">
+                    Plantilla
+                  </label>
+                  <div class="col-xs-12 col-md-9">
+                    <p-dropdown [options]="templates" formControlName="template_id" [filter]="true"
+                                placeholder="Seleccione una Plantilla"></p-dropdown>
+                    <control-messages [control]="activityForm.controls['template_id']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!loadingTemplate; else loadingTemplateIndicator">
+          <div *ngIf="activityForm.controls['template_id'].value">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Información General
+                </h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group"
+                         [ngClass]="{'has-error':!activityForm.controls['name'].valid  && activityForm.controls['name'].touched}">
+                      <label for="name" class="control-label col-xs-12 col-md-3">
+                        Nombre
+                      </label>
+                      <div class="col-xs-12 col-md-9">
+                        <input type="text" id="name" class="form-control" formControlName="name">
+                        <control-messages [control]="activityForm.controls['name']"></control-messages>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group"
+                         [ngClass]="{'has-error':!activityForm.controls['program_type_id'].valid  && activityForm.controls['program_type_id'].touched}">
+                      <label for="program_type_id" class="control-label col-xs-12 col-md-3 multiline">
+                        Tipo de Programa
+                      </label>
+                      <div class="col-xs-12 col-md-9">
+                        <p-dropdown [options]="programTypes" formControlName="program_type_id" [filter]="true"
+                                    placeholder="Seleccione un tipo de programa"></p-dropdown>
+
+                        <control-messages [control]="activityForm.controls['program_type_id']"></control-messages>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group"
+                         [ngClass]="{'has-error':!activityForm.controls['description'].valid  && activityForm.controls['description'].touched}">
+                      <label for="description" class="control-label col-xs-12 col-md-3">
+                        Descripción
+                      </label>
+                      <div class="col-xs-12 col-md-9">
+                        <textarea id="description" class="form-control" formControlName="description"></textarea>
+                        <control-messages [control]="activityForm.controls['description']"></control-messages>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="x_panel" *ngIf="hasSupervisor">
+              <div class="x_title">
+                <h2>Supervisor
+                </h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <div class="row ui-fluid">
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group"
+                         [ngClass]="{'has-error':!activityForm.controls['supervisor'].valid  && activityForm.controls['supervisor'].touched}">
+                      <label for="supervisor" class="control-label col-xs-12 col-md-3">
+                        Supervisor
+                      </label>
+                      <div class="col-xs-12 col-md-9">
+                        <p-autoComplete formControlName="supervisor"
+                                        placeholder="Buscar por Nombre..."
+                                        [suggestions]="supervisors"
+                                        (onDropdownClick)="searchSupervisor($event)"
+                                        [dropdown]="true" field="full_name"
+                                        (completeMethod)="searchSupervisor($event)">
+                          <ng-template let-item pTemplate="item">
+                            <h4 class="media-heading">{{item.full_name}}</h4>
+                          </ng-template>
+                        </p-autoComplete>
+                        <control-messages [control]="activityForm.controls['supervisor']"></control-messages>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <app-persons-validation-constraint-list [validations]="supervisorValidations">
+
+                    </app-persons-validation-constraint-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="x_panel" *ngIf="hasAssets">
+              <div class="x_title">
+                <h2>Activos
+                </h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <app-manage-activity-assets [activity]="activity"></app-manage-activity-assets>
+              </div>
+            </div>
+            <app-activity-manage-procedures [proceduresFG]="activityForm.controls['procedures']">
+
+            </app-activity-manage-procedures>
+            <app-activity-manage-equipments [equipmentFG]="activityForm.controls['equipment']"
+                                            [canBeEdited]="canEditEquipment">
+
+            </app-activity-manage-equipments>
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Observaciones
+                </h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <div formArrayName="observations">
+                  <div class="row" *ngFor="let observation of observations.controls; let i=index" [formGroupName]="i">
+                    <div class="col-xs-12 col-md-10">
+                      <div class="form-group"
+                           [ngClass]="{'has-error':!observation.controls['observation'].valid  && observation.controls['observation'].touched}">
+                        <textarea class="form-control" formControlName="observation"></textarea>
+                        <control-messages [control]="observation.controls['observation']"></control-messages>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-md-2 text-center">
+                      <button type="button" class="btn btn-danger" (click)="removeObservation(i)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 text-right">
+                      <button type="button" class="btn btn-success" (click)="createObservation()">Añadir Observación
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="toolbar text-center">
+                  <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+                    <i class="fa fa-trash"></i>
+                    Cancelar
+                  </button>
+                  <button class="btn btn-success btn-lg" type="submit" [disabled]="!activityForm.valid || saving">
+                    <i class="fa fa-save"></i>
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

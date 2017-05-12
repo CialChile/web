@@ -61,7 +61,7 @@ export class DatatableService {
     }
   }
 
-  getData(event, columns: DataTableColumn[], url: string, include?: string, search?: string) {
+  getData(event, columns: DataTableColumn[], url: string, include?: string, search?: string, urlParams?: string) {
     let order;
     let columnFilter;
     if (event.sortField) {
@@ -95,6 +95,9 @@ export class DatatableService {
     }));
 
     url = include ? url + '?include=' + include : url;
+    if (urlParams) {
+      url = include ? url + '&' + urlParams : url + '?' + urlParams;
+    }
     return this.apiService.all(url, null, {search: input});
   }
 

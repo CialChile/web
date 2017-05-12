@@ -8,73 +8,129 @@
     </a>
     <div class="clearfix"></div>
   </div>
-  <div class="x_content" [formGroup]="templateForm">
-    <div [formArrayName]="section.name">
-      <div *ngFor="let field of persons.controls; let i=index" [formGroupName]="i">
-        <div class="row">
-          <div class="col-xs-12">
-            <h5>Validación Nº {{i+1}}</h5>
+  <div class="x_content" [formGroup]="personsFG">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <div class="checkbox">
+            <label class="control-label">
+              <input type="checkbox" formControlName="hasSupervisor"> ¿La actividad tiene un supervisor?
+            </label>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-12 col-md-5">
-            <div class="form-group"
-                 [ngClass]="{'has-error':!field.controls['value'].valid  && field.controls['value'].touched}">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                {{field.controls['label'].value}}
-              </label>
-              <div class="col-xs-12 col-md-9 col-sm-9">
-                <p-dropdown [options]="validationsTypes" formControlName="value" [filter]="true"
-                            (onChange)="changeValidationType($event,field,i)"
-                            placeholder="Seleccione un tipo de validación"></p-dropdown>
-                <control-messages [control]="field.controls['value']"></control-messages>
+      </div>
+    </div>
+    <div formArrayName="supervisor" *ngIf="personsFG.controls['hasSupervisor'].value">
+      <h3>Validaciones de Supervisor</h3>
+      <p-dataTable [value]="supervisor.controls" [responsive]="true"
+                   emptyMessage="Debe añadir una validación si es necesario">
+        <p-header>
+          <div class="row">
+            <div class="col-xs-12 col-md-3 text-left">
+              <div>
+                <button class="btn btn-success" type="button" (click)="newSupervisorValidation()">
+                  <i class="fa fa-plus"></i>
+                  Nueva Validación
+                </button>
               </div>
             </div>
           </div>
-          <div class="col-xs-12 col-md-6">
-            <div class="form-group clearfix"
-                 [ngClass]="{'has-error':!field.controls['validation'].valid  && field.controls['validation'].touched}">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                {{field.controls['validationLabel'].value}}
-              </label>
-              <div class="col-xs-12 col-md-9 col-sm-9">
-                <div class="ui-fluid">
-                  <input formControlName="validation" class="form-control input-sm"
-                         *ngIf="field.controls['type'].value == 'text'">
-                  <p-autoComplete formControlName="validation" readonly="true"
-                                  [suggestions]="suggestions[field.controls['validationName'].value]"
-                                  *ngIf="field.controls['type'].value == 'autocomplete'"
-                                  (onDropdownClick)="search($event,field.controls['validationName'].value)"
-                                  [dropdown]="true" field="name"
-                                  (completeMethod)="search($event,field.controls['validationName'].value)">
-                    <ng-template let-item pTemplate="item">
-                      <h4 class="media-heading">{{item.name}}</h4>
-                    </ng-template>
-                  </p-autoComplete>
+        </p-header>
+        <p-column>
+          <ng-template pTemplate="header">
+            Tipo de Validación
+          </ng-template>
+          <ng-template let-supervisor="rowData" pTemplate="body">
+            {{supervisor.controls['value'].value['label']}}
+          </ng-template>
+        </p-column>
+        <p-column>
+          <ng-template pTemplate="header">
+            Validación
+          </ng-template>
+          <ng-template let-supervisor="rowData" pTemplate="body">
+            <div class="text-center">
+              {{supervisor.controls['validation'].value.hasOwnProperty('name')?supervisor.controls['validation'].value['name']:supervisor.controls['validation'].value}}
+            </div>
+          </ng-template>
+        </p-column>
+        <p-column styleClass="col-button" [header]="'Acciones'">
+          <ng-template let-supervisor="rowData" let-index="rowIndex" pTemplate="body">
+            <button type="button" (click)="editSupervisorValidation(supervisor,index)" class="btn-warning btn btn-sm">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button type="button" (click)="removeSupervisorValidation(index)" class="btn-danger btn btn-sm">
+              <i class="fa fa-trash"></i>
+            </button>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
 
-                  <control-messages [control]="field.controls['validation']"></control-messages>
-                </div>
+      <templates-person-manage-supervisor (supervisorAdded)="hideSupervisorForm()"
+                                          (supervisorCanceled)="hideSupervisorForm()"
+                                          *ngIf="addingSupervisor || editingSupervisor"
+                                          [add]="addingSupervisor"
+                                          [edit]="editingSupervisor"
+                                          [supervisor]="supervisor"
+                                          [supervisorFormArrayIndex]="editSupervisorIndex"
+                                          [isAdmin]="isAdmin">
+      </templates-person-manage-supervisor>
+    </div>
+    <div formArrayName="operator">
+      <h3>Validaciones de Operador</h3>
+      <p-dataTable [value]="operator.controls" [responsive]="true"
+                   emptyMessage="Debe añadir una validación si es necesario">
+        <p-header>
+          <div class="row">
+            <div class="col-xs-12 col-md-3 text-left">
+              <div>
+                <button class="btn btn-success" type="button" (click)="newOperatorValidation()">
+                  <i class="fa fa-plus"></i>
+                  Nueva Validación
+                </button>
               </div>
             </div>
           </div>
-          <div class="col-xs-12 col-md-1">
-            <div class="form-group">
-              <button class="btn btn-danger btn-block" type="button" (click)="removeValidation(i)">
-                <i class="fa fa-trash"></i>
-              </button>
+        </p-header>
+        <p-column>
+          <ng-template pTemplate="header">
+            Tipo de Validación
+          </ng-template>
+          <ng-template let-operator="rowData" pTemplate="body">
+            {{operator.controls['value'].value['label']}}
+          </ng-template>
+        </p-column>
+        <p-column>
+          <ng-template pTemplate="header">
+            Validación
+          </ng-template>
+          <ng-template let-operator="rowData" pTemplate="body">
+            <div class="text-center">
+              {{operator.controls['validation'].value.hasOwnProperty('name')?operator.controls['validation'].value['name']:operator.controls['validation'].value}}
             </div>
-          </div>
-        </div>
-        <hr>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-md-4 col-md-offset-8 text-right">
-          <button class="btn btn-success" type="button" (click)="addValidation($event)">
-            <i class="fa fa-add"></i>
-            Añadir Validación
-          </button>
-        </div>
-      </div>
+          </ng-template>
+        </p-column>
+        <p-column styleClass="col-button" [header]="'Acciones'">
+          <ng-template let-operator="rowData" let-index="rowIndex" pTemplate="body">
+            <button type="button" (click)="editOperatorValidation(operator,index)" class="btn-warning btn btn-sm">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button type="button" (click)="removeOperatorValidation(index)" class="btn-danger btn btn-sm">
+              <i class="fa fa-trash"></i>
+            </button>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+
+      <templates-person-manage-operator (operatorAdded)="hideOperatorForm()"
+                                        (operatorCanceled)="hideOperatorForm()"
+                                        *ngIf="addingOperator || editingOperator"
+                                        [add]="addingOperator"
+                                        [edit]="editingOperator"
+                                        [operator]="operator"
+                                        [operatorFormArrayIndex]="editOperatorIndex"
+                                        [isAdmin]="isAdmin">
+      </templates-person-manage-operator>
     </div>
   </div>
 </div>

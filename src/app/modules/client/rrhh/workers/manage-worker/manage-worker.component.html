@@ -69,6 +69,15 @@
                   </div>
                 </div>
                 <div class="form-group"
+                     [ngClass]="{'has-error':!workerForm.controls['specialty'].valid  && workerForm.controls['specialty'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad</label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <input formControlName="specialty" class="form-control" placeholder="Especialidad"
+                           id="specialty"/>
+                    <control-messages [control]="workerForm.controls['specialty']"></control-messages>
+                  </div>
+                </div>
+                <div class="form-group"
                      [ngClass]="{'has-error':!workerForm.controls['email'].valid  && workerForm.controls['email'].touched}">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">Correo Electrónico</label>
                   <div class="col-xs-12 col-md-9 col-sm-9">

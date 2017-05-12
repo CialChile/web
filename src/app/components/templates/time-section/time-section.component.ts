@@ -24,9 +24,9 @@ export class TimeSectionComponent implements OnInit {
 
   ngOnInit() {
     this.timeFG.controls['editable'].valueChanges.subscribe((value) => {
-      if (!value) {
-        const validationsLength = this.validations.controls.length;
-        for (let i = validationsLength - 1; i >= 0; i--) {
+      if (value === false) {
+        const validationLength = this.validations.controls.length;
+        for (let i = validationLength - 1; i >= 0; i--) {
           this.validations.removeAt(i);
         }
       }
@@ -47,7 +47,8 @@ export class TimeSectionComponent implements OnInit {
   }
 
   removeProgram(index: number) {
-    this.program.removeAt(index)
+    this.program.removeAt(index);
+    this.hideProgramForm();
   }
 
   editValidation(validation, index: number) {
@@ -58,6 +59,10 @@ export class TimeSectionComponent implements OnInit {
 
   removeValidation(index: number) {
     this.validations.removeAt(index)
+    if (this.editValidationIndex == index) {
+      this.hideValidationForm();
+      this.editValidationIndex = null;
+    }
   }
 
   newProgram() {

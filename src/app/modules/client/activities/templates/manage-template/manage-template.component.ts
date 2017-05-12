@@ -94,7 +94,11 @@ export class ManageTemplateComponent implements OnInit {
       description: [''],
       template: this.formBuilder.group({
         general: this.formBuilder.array([]),
-        persons: this.formBuilder.array([]),
+        persons: this.formBuilder.group({
+          hasSupervisor: [true],
+          supervisor: this.formBuilder.array([]),
+          operator: this.formBuilder.array([])
+        }),
         equipment: this.formBuilder.group({
           editable: [true],
           equipmentList: this.formBuilder.array([])
@@ -129,7 +133,10 @@ export class ManageTemplateComponent implements OnInit {
 
   ngOnInit() {
     this.apiService.all('client/activities/program-types').subscribe(programTypes => this.programTypes = programTypes.data.map((programType) => {
-      return {label: programType.name, value: {id: programType.id, inspection: programType.is_inspection}}
+      return {
+        label: programType.name,
+        value: {id: programType.id, inspection: programType.is_inspection, has_assets: programType.has_assets}
+      }
     }))
 
     this.route.params.subscribe((params) => {
@@ -167,40 +174,47 @@ export class ManageTemplateComponent implements OnInit {
 
   saveTemplate(event, form) {
     event.preventDefault();
+    let validationError = false;
     let data = this.templateForm.getRawValue();
-    if (!this.sections[1].visible) {
-      delete data.template.persons
+    if (!data.template.time.editable && !data.template.time.program.length) {
+      this.toastr.error('Si la programación no puede ser editada en la actividad, entonces debes definir la que sera usada');
+      validationError = true;
     }
-    if (!this.sections[2].visible) {
-      delete data.template.equipment
-    } else if (!data.template.equipment.editable && !data.template.equipment.equipmentList.length) {
-      delete data.template.equipment
-    }
-    if (!this.sections[4].visible) {
-      delete data.template.procedures
-    } else if (!data.template.procedures.procedureList.length) {
-      delete data.template.procedures
-    }
-    if (!this.sections[5].visible) {
-      delete data.template.documents
-    } else if (!data.template.documents.documentList.length) {
-      delete data.template.documents
-    }
-    if (this.templateId && !this.clone) {
-      this.apiService.update('client/activities/templates', this.templateId, data).subscribe((response) => {
-        this.toastr.success('Plantilla Actualizada con Éxito');
-        this.router.navigate(['/client/activities/templates'])
+    if (!validationError) {
+      if (!this.sections[1].visible) {
+        delete data.template.persons
+      }
+      if (!this.sections[2].visible) {
+        delete data.template.equipment
+      } else if (!data.template.equipment.editable && !data.template.equipment.equipmentList.length) {
+        delete data.template.equipment
+      }
+      if (!this.sections[4].visible) {
+        delete data.template.procedures
+      } else if (!data.template.procedures.procedureList.length) {
+        delete data.template.procedures
+      }
+      if (!this.sections[5].visible) {
+        delete data.template.documents
+      } else if (!data.template.documents.documentList.length) {
+        delete data.template.documents
+      }
+      if (this.templateId && !this.clone) {
+        this.apiService.update('client/activities/templates', this.templateId, data).subscribe((response) => {
+          this.toastr.success('Plantilla Actualizada con Éxito');
+          this.router.navigate(['/client/activities/templates'])
 
-      }, (error) => {
-        this.toastr.error(error);
-      })
-    } else {
-      this.apiService.create('client/activities/templates', data).subscribe((response) => {
-        this.toastr.success('Plantilla Guardada con Éxito');
-        this.router.navigate(['/client/activities/templates'])
-      }, (error) => {
-        this.toastr.error(error);
-      })
+        }, (error) => {
+          this.toastr.error(error);
+        })
+      } else {
+        this.apiService.create('client/activities/templates', data).subscribe((response) => {
+          this.toastr.success('Plantilla Guardada con Éxito');
+          this.router.navigate(['/client/activities/templates'])
+        }, (error) => {
+          this.toastr.error(error);
+        })
+      }
     }
   }
 
@@ -218,7 +232,8 @@ export class ManageTemplateComponent implements OnInit {
     this.templateForm.reset(template);
     this.templateForm.controls['program_type_id'].setValue({
       id: template.programType.id,
-      inspection: template.programType.is_inspection
+      inspection: template.programType.is_inspection,
+      has_assets: template.programType.has_assets,
     })
   }
 }

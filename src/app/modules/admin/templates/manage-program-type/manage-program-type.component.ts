@@ -43,6 +43,7 @@ export class ManageProgramTypeComponent implements OnInit {
     this.programTypeForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       is_inspection: [true],
+      has_assets: [true],
     });
   }
 
@@ -86,7 +87,7 @@ export class ManageProgramTypeComponent implements OnInit {
     } else {
       this.apiService.create('admin/activities/program-types', data).subscribe((response) => {
           this.saving = false;
-          this.toastr.success('Tipo de Programa actualizado con éxito');
+          this.toastr.success('Tipo de Programa creado con éxito');
           this.router.navigate(['/admin/console/activities/program-types'])
         },
         (error) => {

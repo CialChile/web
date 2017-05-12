@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import {ValidationService} from "../../../forms/validation/validation.service";
 import {TemplatesTimeHelper} from "../../helpers/template-time-helper";
 import {ToastsManager} from "ng2-toastr";
+import {SelectItem} from "primeng/components/common/api";
 
 @Component({
   selector: 'templates-time-manage-program',
@@ -19,6 +20,24 @@ export class ManageProgramComponent implements OnInit {
   @Output() programAdded = new EventEmitter();
 
   programForm: FormGroup;
+  estimatedTimeUnits: SelectItem[] = [
+    {
+      value: {slug: '0', name: 'Horas'},
+      label: 'Horas'
+    },
+    {
+      value: {slug: '1', name: 'Dias'},
+      label: 'Dias'
+    },
+    {
+      value: {slug: '2', name: 'Semanas'},
+      label: 'Semanas'
+    },
+    {
+      value: {slug: '3', name: 'Meses'},
+      label: 'Meses'
+    }
+  ];
   days: any = {
     lunes: 'Lunes',
     martes: 'Martes',
@@ -28,7 +47,7 @@ export class ManageProgramComponent implements OnInit {
     sabado: 'Sabado',
     domingo: 'Domingo',
   };
-  programTypes: any[] = [
+  programTypes: SelectItem[] = [
     {
       value: {slug: 'periodical', name: 'Periódica'},
       label: 'Periódica'
@@ -38,7 +57,7 @@ export class ManageProgramComponent implements OnInit {
       label: 'Solo una vez'
     }
   ];
-  frequencyTypes: any[] = [
+  frequencyTypes: SelectItem[] = [
     {
       value: {slug: 'daily', label: 'Diaria'},
       label: 'Diaria'
@@ -70,12 +89,12 @@ export class ManageProgramComponent implements OnInit {
     if (this.edit) {
       let values = this.programFormArray.at(0).value;
       values.initHour = moment(values.initHour).toDate();
-      values.finishHour = moment(values.finishHour).toDate();
       this.programForm.reset(values)
     }
     this.programForm.valueChanges.subscribe(() => {
       let constraint: string = '';
       let timeConstraint: string = '';
+      let durationConstraint: string = '';
       if (this.programForm.controls['frequency'].value['slug'] == 'weekly') {
         const days = this.programForm.controls['days'].value;
         Object.keys(days).forEach((key) => {
@@ -88,14 +107,19 @@ export class ManageProgramComponent implements OnInit {
         constraint = ' los dias ' + this.programForm.controls['dayOfMonth'].value
       }
 
-      if (this.programForm.controls['initHour'].value && this.programForm.controls['finishHour'].value) {
-        timeConstraint = ` entre las
-        ${moment(this.programForm.controls['initHour'].value).format('hh:mm A')} y las ${moment(this.programForm.controls['finishHour'].value).format('hh:mm A')}`
+      if (this.programForm.controls['initHour'].value) {
+        timeConstraint = ` iniciando a las
+        ${moment(this.programForm.controls['initHour'].value).format('hh:mm A')} `
+      }
+
+      if (this.programForm.controls['initHour'].value) {
+        durationConstraint = ` con una duración estimada de 
+        ${this.programForm.controls['estimatedTime'].value} ${this.programForm.controls['estimatedTimeUnit'].value.name}`
       }
 
 
       this.programNaturaLanguage = `La actividad se ejecutara con una frecuencia 
-${this.programForm.controls['frequency'].value['label']} ${constraint} ${timeConstraint}
+${this.programForm.controls['frequency'].value['label']} ${constraint} ${timeConstraint} ${durationConstraint}
 cada ${this.programForm.controls['periodicity'].value} 
 ${this.periodicityLabel[this.programForm.controls['frequency'].value['slug']]}`
 
@@ -109,6 +133,19 @@ ${this.periodicityLabel[this.programForm.controls['frequency'].value['slug']]}`
   addProgram(programForm, event) {
     event.preventDefault();
     let isValid = true;
+    let daysSelected = true;
+    if (this.programForm.controls['frequency'].value['slug'] == 'weekly') {
+      daysSelected = false;
+      const days = this.programForm.controls['days'].value;
+      Object.keys(days).forEach((key) => {
+        if (days[key]) {
+          daysSelected = true;
+        }
+      });
+      if (!daysSelected) {
+        this.toastr.error('Debe especificar que dias de la semana se debe ejecutar la actividad')
+      }
+    }
     let failedValidations = [];
     this.validations.controls.forEach((validation) => {
       if (!TemplatesTimeHelper.validateProgram(this.programForm.value, validation.value)) {
@@ -117,7 +154,7 @@ ${this.periodicityLabel[this.programForm.controls['frequency'].value['slug']]}`
       }
     });
 
-    if (isValid) {
+    if (isValid && daysSelected) {
       this.programAdded.emit();
       let programFormCopy = TemplatesTimeHelper.generateProgram();
       programFormCopy.reset(this.programForm.value);
@@ -126,7 +163,9 @@ ${this.periodicityLabel[this.programForm.controls['frequency'].value['slug']]}`
       }
       this.programFormArray.push(programFormCopy);
     } else {
-      this.toastr.error('Esta programación no cumple con las siguientes validaciones: ' + failedValidations.join(', '));
+      if (failedValidations.length) {
+        this.toastr.error('Esta programación no cumple con las siguientes validaciones: ' + failedValidations.join(', '));
+      }
     }
   }
 

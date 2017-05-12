@@ -1,0 +1,7 @@
+<h5>El usuario debe cumplir con los siguientes criterios:</h5>
+<ul *ngFor="let constraint of constraints">
+  <li>{{constraint}}</li>
+</ul>
+<ul *ngIf="!constraints.length">
+  <li>No se definió ningún criterio de validación</li>
+</ul>

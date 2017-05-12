@@ -74,11 +74,12 @@
             </p-column>
             <p-column>
               <ng-template pTemplate="header">
-                Hora de Finalización
+                Tiempo estimado de Ejecución
               </ng-template>
               <ng-template let-program="rowData" pTemplate="body">
                 <div class="text-center">
-                  {{parseTime(program.controls['finishHour'].value)}}
+                  {{program.controls['estimatedTime'].value}} {{program.controls['estimatedTimeUnit'].value['name']}}
+
                 </div>
               </ng-template>
             </p-column>

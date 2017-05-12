@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Configurar Validación de Supervisor</h4>
+      </div>
+    </div>
+    <form [formGroup]="supervisorForm" class="form-horizontal" (submit)="addValidation(supervisorForm,$event)">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group"
+               [ngClass]="{'has-error':!supervisorForm.controls['value'].valid  && supervisorForm.controls['value'].touched}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">
+              Tipo de Validación
+            </label>
+            <div class="col-xs-12 col-md-9 col-sm-9">
+              <p-dropdown [options]="validationsTypes" formControlName="value" [filter]="true"
+                          (onChange)="changeSupervisorValidationType($event,supervisorForm)"
+                          placeholder="Seleccione un tipo de validación"></p-dropdown>
+              <control-messages [control]="supervisorForm.controls['value']"></control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group clearfix"
+               [ngClass]="{'has-error':!supervisorForm.controls['validation'].valid  && supervisorForm.controls['validation'].touched}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+              {{supervisorForm.controls['validationLabel'].value}}
+            </label>
+            <div class="col-xs-12 col-md-9 col-sm-9">
+              <div class="ui-fluid">
+                <input formControlName="validation" class="form-control input-sm"
+                       *ngIf="supervisorForm.controls['type'].value == 'text'">
+                <p-autoComplete formControlName="validation"
+                                placeholder="Buscar por nombre..."
+                                [suggestions]="suggestions[supervisorForm.controls['validationName'].value]"
+                                *ngIf="supervisorForm.controls['type'].value == 'autocomplete'"
+                                (onDropdownClick)="search($event,supervisorForm.controls['validationName'].value)"
+                                [dropdown]="true" field="name"
+                                (completeMethod)="search($event,supervisorForm.controls['validationName'].value)">
+                  <ng-template let-item pTemplate="item">
+                    <h4 class="media-heading">{{item.name}}</h4>
+                  </ng-template>
+                </p-autoComplete>
+
+                <control-messages [control]="supervisorForm.controls['validation']"></control-messages>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="toolbar text-center">
+            <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+              <i class="fa fa-save"></i>
+              Cancelar
+            </button>
+            <button class="btn btn-success btn-lg" type="submit"
+                    [disabled]="!supervisorForm.valid">
+              <i class="fa fa-save"></i>
+              Guardar Validación
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

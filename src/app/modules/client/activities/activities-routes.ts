@@ -9,6 +9,7 @@ import {ManageActivityComponent} from "./manage-activity/manage-activity.compone
 import {ActivityDetailsComponent} from "./activity-details/activity-details.component";
 import {TemplatesListComponent} from "./templates/templates-list/templates-list.component";
 import {ManageTemplateComponent} from "./templates/manage-template/manage-template.component";
+import {ManageActivityScheduleComponent} from "./manage-activity-schedule/manage-activity-schedule.component";
 export const routes: Routes = [
   {
     path: 'client',
@@ -51,6 +52,22 @@ export const routes: Routes = [
             data: {
               redirectTo: 'client/dashboard',
               permission: 'client-activities-activities.update'
+            }
+          },
+          {
+            path: ':id/schedules/create',
+            component: ManageActivityScheduleComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-activities-schedules.store'
+            }
+          },
+          {
+            path: ':id/schedules/:scheduleId',
+            component: ManageActivityScheduleComponent,
+            data: {
+              redirectTo: 'client/dashboard',
+              permission: 'client-activities-schedules.update'
             }
           },
           {

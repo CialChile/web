@@ -58,6 +58,7 @@ export class ManageWorkerComponent implements OnInit {
       last_name: ['', [Validators.required]],
       email: ['', [Validators.compose([Validators.required, ValidationService.emailValidator])]],
       position: ['', [Validators.required]],
+      specialty: ['', [Validators.required]],
       rut_passport: ['', [Validators.required]],
       birthday: ['', [Validators.required]],
       telephone: [''],
@@ -87,7 +88,7 @@ export class ManageWorkerComponent implements OnInit {
         this.breadcrumbs[this.breadcrumbs.length - 1].link = '/client/rrhh/workers/' + params['id'];
         this.workerId = params['id'];
         this.loading = true;
-        this.apiService.one('client/workers', params['id'],'certifications').subscribe((worker) => {
+        this.apiService.one('client/workers', params['id'], 'certifications').subscribe((worker) => {
           this.initForm(worker.data);
           this.loading = false;
           this.certifications = worker.data.certifications;

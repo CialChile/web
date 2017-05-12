@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Configurar Validación de Operario</h4>
+      </div>
+    </div>
+    <form [formGroup]="operatorForm" class="form-horizontal" (submit)="addValidation(operatorForm,$event)">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group"
+               [ngClass]="{'has-error':!operatorForm.controls['value'].valid  && operatorForm.controls['value'].touched}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">
+              Tipo de Validación
+            </label>
+            <div class="col-xs-12 col-md-9 col-sm-9">
+              <p-dropdown [options]="validationsTypes" formControlName="value" [filter]="true"
+                          (onChange)="changeOperatorValidationType($event,operatorForm)"
+                          placeholder="Seleccione un tipo de validación"></p-dropdown>
+              <control-messages [control]="operatorForm.controls['value']"></control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group clearfix"
+               [ngClass]="{'has-error':!operatorForm.controls['validation'].valid  && operatorForm.controls['validation'].touched}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+              {{operatorForm.controls['validationLabel'].value}}
+            </label>
+            <div class="col-xs-12 col-md-9 col-sm-9">
+              <div class="ui-fluid">
+                <input formControlName="validation" class="form-control input-sm"
+                       *ngIf="operatorForm.controls['type'].value == 'text'">
+                <p-autoComplete formControlName="validation"
+                                placeholder="Buscar por nombre..."
+                                [suggestions]="suggestions[operatorForm.controls['validationName'].value]"
+                                *ngIf="operatorForm.controls['type'].value == 'autocomplete'"
+                                (onDropdownClick)="search($event,operatorForm.controls['validationName'].value)"
+                                [dropdown]="true" field="name"
+                                (completeMethod)="search($event,operatorForm.controls['validationName'].value)">
+                  <ng-template let-item pTemplate="item">
+                    <h4 class="media-heading">{{item.name}}</h4>
+                  </ng-template>
+                </p-autoComplete>
+
+                <control-messages [control]="operatorForm.controls['validation']"></control-messages>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="toolbar text-center">
+            <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+              <i class="fa fa-save"></i>
+              Cancelar
+            </button>
+            <button class="btn btn-success btn-lg" type="submit"
+                    [disabled]="!operatorForm.valid">
+              <i class="fa fa-save"></i>
+              Guardar Validación
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

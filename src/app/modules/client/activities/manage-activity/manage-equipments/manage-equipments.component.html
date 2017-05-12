@@ -1,0 +1,55 @@
+<div class="x_panel">
+  <div class="x_title">
+    <h2>Equipos y Materiales
+    </h2>
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content" [formGroup]="equipmentFG">
+    <div formArrayName="equipmentList">
+      <p-dataTable [value]="equipmentList.controls" [responsive]="true"
+                   emptyMessage="Debe añadir una o mas equipos o materiales">
+        <p-header>
+          <div class="row">
+            <div class="col-xs-12 col-md-3 text-left">
+              <div>
+                <button class="btn btn-success" type="button" (click)="addEquipment()" [disabled]="!canBeEdited" >
+                  <i class="fa fa-plus"></i>
+                  Nuevo Equipo o Material
+                </button>
+              </div>
+            </div>
+          </div>
+        </p-header>
+        <p-column styleClass="col-button">
+          <ng-template pTemplate="header">
+            Nº
+          </ng-template>
+          <ng-template let-index="rowIndex" pTemplate="body">
+            {{index+1}}
+          </ng-template>
+        </p-column>
+        <p-column>
+          <ng-template pTemplate="header">
+            Nombre
+          </ng-template>
+          <ng-template let-equipment="rowData" let-index="rowIndex" pTemplate="body">
+            <div [formGroupName]="index">
+              <div class="form-group"
+                   [ngClass]="{'has-error':!equipment.controls['name'].valid  && equipment.controls['name'].touched}">
+                <input formControlName="name" class="form-control input-sm" name="name" id="name"/>
+                <control-messages [control]="equipment.controls['name']"></control-messages>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+        <p-column styleClass="col-button" [header]="'Acciones'">
+          <ng-template let-procedure="rowData" let-index="rowIndex" pTemplate="body">
+            <button class="btn btn-danger btn-sm" (click)="removeEquipment(index)" [disabled]="!canBeEdited" >
+              <i class="fa fa-trash"></i>
+            </button>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</div>

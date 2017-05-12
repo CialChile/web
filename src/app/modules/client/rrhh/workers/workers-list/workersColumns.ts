@@ -22,6 +22,11 @@ export const WORKERSCOLUMNS: DataTableColumn[] = [
     sort: true,
     filter: true
   }, {
+    name: 'Especialidad',
+    data: 'specialty',
+    sort: true,
+    filter: true
+  }, {
     name: 'Fecha de Nacimiento',
     data: 'birthday',
     sort: true,

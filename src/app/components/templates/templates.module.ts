@@ -17,6 +17,8 @@ import { ManageProgramComponent } from './time-section/manage-program/manage-pro
 import { ManageValidationComponent } from './time-section/manage-validation/manage-validation.component';
 import {CheckboxModule} from "primeng/components/checkbox/checkbox";
 import {CalendarModule} from "primeng/components/calendar/calendar";
+import { ManageSupervisorComponent } from './persons-section/manage-supervisor/manage-supervisor.component';
+import { ManageOperatorComponent } from './persons-section/manage-operator/manage-operator.component';
 
 @NgModule({
   imports: [
@@ -35,7 +37,9 @@ import {CalendarModule} from "primeng/components/calendar/calendar";
     ProceduresSectionComponent, DocumentsSectionComponent, ClosureSectionComponent,
     TimeSectionComponent,
     ManageProgramComponent,
-    ManageValidationComponent],
+    ManageValidationComponent,
+    ManageSupervisorComponent,
+    ManageOperatorComponent],
   exports: [GeneralSectionComponent, PersonsSectionComponent, EquipmentSectionComponent,
     ProceduresSectionComponent, DocumentsSectionComponent, ClosureSectionComponent,
     TimeSectionComponent]

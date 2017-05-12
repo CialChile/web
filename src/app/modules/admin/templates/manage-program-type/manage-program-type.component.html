@@ -1,4 +1,5 @@
-<app-page-title back="/admin/console/activities/program-types" [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+<app-page-title back="/admin/console/activities/program-types" [title]="title"
+                [breadcrumbs]="breadcrumbs"></app-page-title>
 
 <form role="form" class="form-horizontal form-label-left form-assets" [formGroup]="programTypeForm"
       (submit)="onSubmit(programTypeForm,$event)">
@@ -34,10 +35,14 @@
               </div>
               <div class="col-xs-12 col-md-6">
                 <div class="form-group">
-                    <label for="" class="control-label">
-                      <input formControlName="is_inspection" type="checkbox" id="is_inspection"/> ¿Es Inspección o
-                      Mantenimiento?
-                    </label>
+                  <label for="" class="control-label">
+                    <input formControlName="is_inspection" type="checkbox" id="is_inspection"/> ¿Es Inspección o
+                    Mantenimiento?
+                  </label>
+                  <br>
+                  <label for="" class="control-label">
+                    <input formControlName="has_assets" type="checkbox" id="has_assets"/> ¿Requiere Activos?
+                  </label>
                 </div>
               </div>
             </div>

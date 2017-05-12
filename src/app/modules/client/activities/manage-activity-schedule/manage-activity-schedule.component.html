@@ -1,0 +1,368 @@
+<app-page-title back="/client/activities" [title]="title" [breadcrumbs]="breadcrumbs"></app-page-title>
+<ng-template #loadingIndicator>
+  <div class="text-center">
+    <img width="70px" src="assets/img/gears2.svg" alt="">
+    <h4>Cargando Programación...</h4>
+  </div>
+</ng-template>
+
+<div *ngIf="!loading; else loadingIndicator">
+  <div class="row" *ngIf="!confirmation">
+    <div class="col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Información de la Actividad
+          </h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <label for="activity_name" class="control-label col-xs-12 col-md-3">
+                  Nombre
+                </label>
+                <div class="col-xs-12 col-md-9">
+                  <input id="activity_name" type="text" class="form-control" [(ngModel)]="activity.name" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <label for="program_type" class="control-label col-xs-12 col-md-3">
+                  Tipo de Programa
+                </label>
+                <div class="col-xs-12 col-md-9">
+                  <input id="program_type" type="text" class="form-control" [(ngModel)]="activity.programType.name"
+                         disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <label for="activity_description" class="control-label col-xs-12 col-md-3">
+                  Descripción
+                </label>
+                <div class="col-xs-12 col-md-9">
+                  <textarea id="activity_description" class="form-control" [(ngModel)]="activity.description"
+                            disabled></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="form-horizontal" [formGroup]="scheduleForm"
+            (submit)="onSubmit(scheduleForm,$event)">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Información del Operador
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row ui-fluid">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!scheduleForm.controls['operator'].valid  && scheduleForm.controls['operator'].touched}">
+                  <label for="supervisor" class="control-label col-xs-12 col-md-3">
+                    Operador
+                  </label>
+                  <div class="col-xs-12 col-md-9">
+                    <p-autoComplete formControlName="operator"
+                                    placeholder="Buscar por Nombre..."
+                                    [suggestions]="operators"
+                                    (onDropdownClick)="searchOperator($event)"
+                                    [dropdown]="true" field="full_name"
+                                    (completeMethod)="searchOperator($event)">
+                      <ng-template let-item pTemplate="item">
+                        <h4 class="media-heading">{{item.full_name}}</h4>
+                      </ng-template>
+                    </p-autoComplete>
+                    <control-messages [control]="scheduleForm.controls['operator']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <app-persons-validation-constraint-list [validations]="operatorValidations">
+
+                </app-persons-validation-constraint-list>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="x_panel" *ngIf="hasAssets && !scheduleId">
+          <div class="x_title">
+            <h2>Activos a programar
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <app-manage-activity-assets [activity]="scheduleData" [assetSearchUrl]="assetSearchUrl">
+
+            </app-manage-activity-assets>
+          </div>
+        </div>
+        <div class="x_panel" *ngIf="hasAssets && scheduleId">
+          <div class="x_title">
+            <h2>Activo
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content ui-fluid">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!scheduleForm.controls['asset'].valid  && scheduleForm.controls['asset'].touched}">
+                  <label for="supervisor" class="control-label col-xs-12 col-md-3">
+                    Activo
+                  </label>
+                  <div class="col-xs-12 col-md-9">
+                    <p-autoComplete formControlName="asset"
+                                    placeholder="Buscar por Nombre..."
+                                    [suggestions]="assets"
+                                    (onDropdownClick)="searchAsset($event)"
+                                    [dropdown]="true" field="name"
+                                    (completeMethod)="searchAsset($event)">
+                      <ng-template let-item pTemplate="item">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                      </ng-template>
+                    </p-autoComplete>
+                    <control-messages [control]="scheduleForm.controls['asset']"></control-messages>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Configurar Programación
+            </h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content" [formGroup]="schedule">
+            <div class="row">
+              <div class="col-xs-12 well">
+                <app-time-validation-constraint-list
+                  [validations]="timeValidations"></app-time-validation-constraint-list>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!schedule.controls['programType'].valid  && schedule.controls['programType'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">
+                    Tipo de Programación
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-dropdown [options]="programTypes" formControlName="programType" [filter]="true"
+                                (onChange)="changeProgramType($event)"
+                                placeholder="Seleccione un tipo de programación"></p-dropdown>
+                    <control-messages [control]="schedule.controls['programType']"></control-messages>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="schedule.controls['programType'].value['slug'] == 'periodical'">
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group"
+                       [ngClass]="{'has-error':!schedule.controls['frequency'].valid  && schedule.controls['frequency'].touched}">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                      Frecuencia
+                    </label>
+                    <div class="col-xs-12 col-md-9 col-sm-9">
+                      <p-dropdown [options]="frequencyTypes" formControlName="frequency" [filter]="true"
+                                  (onChange)="changeFrequencyType($event)"
+                                  placeholder="Seleccione una frecuencia"></p-dropdown>
+                      <control-messages [control]="schedule.controls['frequency']"></control-messages>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group"
+                       [ngClass]="{'has-error':!schedule.controls['periodicity'].valid  && schedule.controls['periodicity'].touched}">
+                    <label for="periodicity" class="control-label col-md-3 col-sm-3 col-xs-12">
+                      Periodicidad
+                    </label>
+                    <div class="col-xs-12 col-md-9 col-sm-9">
+                      <input id="periodicity" type="number" formControlName="periodicity" class="form-control input-sm">
+                      <control-messages [control]="schedule.controls['periodicity']"></control-messages>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="schedule.controls['frequency'].value['slug'] == 'weekly'" formGroupName="days">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h4>Seleccione los dias de la semana en los que se pretende ejecutar la actividad</h4>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-3">
+                        <p-checkbox name="lunes" binary="true" label="Lunes" formControlName="lunes"></p-checkbox>
+
+                      </div>
+                      <div class="col-xs-12 col-md-3">
+                        <p-checkbox name="martes" binary="true" label="Martes" formControlName="martes"></p-checkbox>
+
+                      </div>
+                      <div class="col-xs-12 col-md-3">
+                        <p-checkbox name="miercoles" binary="true" label="Miércoles"
+                                    formControlName="miercoles"></p-checkbox>
+
+                      </div>
+                      <div class="col-xs-12 col-md-3">
+                        <p-checkbox name="daysgroup" binary="true" label="Jueves" formControlName="jueves"></p-checkbox>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-3">
+                        <p-checkbox name="daysgroup" binary="true" label="Viernes"
+                                    formControlName="viernes"></p-checkbox>
+
+                      </div>
+                      <div class="col-xs-12 col-md-3">
+                        <p-checkbox name="daysgroup" binary="true" label="Sabado" formControlName="sabado"></p-checkbox>
+
+                      </div>
+                      <div class="col-xs-12 col-md-3">
+                        <p-checkbox name="daysgroup" binary="true" label="Domingo"
+                                    formControlName="domingo"></p-checkbox>
+                      </div>
+                      <div class="col-xs-12 col-md-3">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="schedule.controls['frequency'].value['slug'] == 'monthly'">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group"
+                         [ngClass]="{'has-error':!schedule.controls['dayOfMonth'].valid  && schedule.controls['dayOfMonth'].touched}">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        Día del Mes
+                      </label>
+                      <div class="col-xs-12 col-md-9 col-sm-9">
+                        <input type="number" formControlName="dayOfMonth" class="form-control input-sm">
+                        <control-messages [control]="schedule.controls['dayOfMonth']"></control-messages>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row ui-fluid">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':!schedule.controls['initHour'].valid  && schedule.controls['initHour'].touched}">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    Hora de Inicio
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <p-calendar formControlName="initHour" showTime="showTime"
+                                [timeOnly]="true"></p-calendar>
+                    <control-messages [control]="schedule.controls['initHour']"></control-messages>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group"
+                     [ngClass]="{'has-error':(!schedule.controls['estimatedTime'].valid  && schedule.controls['estimatedTime'].touched)||(!schedule.controls['estimatedTimeUnit'].valid  && schedule.controls['estimatedTimeUnit'].touched)}">
+                  <label for="estimatedTime" class="control-label col-md-3 col-sm-3 col-xs-12 multiline">
+                    Duración estimada
+                  </label>
+                  <div class="col-xs-12 col-md-9 col-sm-9">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-6 col-sm-6">
+                        <input id="estimatedTime" type="number" formControlName="estimatedTime"
+                               class="form-control input-sm">
+                        <control-messages [control]="schedule.controls['estimatedTime']"></control-messages>
+
+                      </div>
+                      <div class="col-xs-6 col-md-6 col-sm-6">
+                        <p-dropdown [options]="estimatedTimeUnits" formControlName="estimatedTimeUnit" [filter]="true"
+                                    placeholder="Seleccione una unidad de medida"></p-dropdown>
+                        <control-messages [control]="schedule.controls['estimatedTimeUnit']"></control-messages>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="schedule.controls['frequency'].value">
+              <div class="col-xs-12">
+                <div class="well">
+                  {{programNaturaLanguage}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="toolbar text-center">
+              <button class="btn btn-danger btn-lg" type="button" (click)="cancel()">
+                <i class="fa fa-save"></i>
+                Cancelar
+              </button>
+              <button class="btn btn-success btn-lg" type="submit"
+                      [disabled]="!scheduleForm.valid">
+                <i class="fa fa-save"></i>
+                Guardar Programación
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row" *ngIf="confirmation">
+    <div class="col-xs-12">
+      <div class="x_panel" #confirmationView>
+        <div class="x_title">
+          <h2>Confirmar
+          </h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="row">
+            <div class="col-xs-12">
+              <h5 *ngIf="scheduleData.assets.length == 1">Se crearan <b>1</b>
+                programación para el activo:
+              </h5>
+              <h5 *ngIf="scheduleData.assets.length > 1">Se crearan <b>{{scheduleData.assets.length}}</b>
+                programaciones, una por cada activo de la siguiente lista:
+              </h5>
+              <div class="well"><b>{{assetsStringList}}</b></div>
+              <h5>Con la siguiente configuración de tiempo:</h5>
+              <div class="well"><b>{{programNaturaLanguage}}</b></div>
+              <h4>¿Esta seguro que desea continuar?</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="toolbar text-center">
+                <button class="btn btn-danger btn-lg" type="button" (click)="cancelConfirmation()">
+                  <i class="fa fa-close"></i>
+                  No
+                </button>
+                <button class="btn btn-success btn-lg" type="button"
+                        [disabled]="!scheduleForm.valid" (click)="saveProgram()">
+                  <i class="fa fa-save"></i>
+                  Si
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

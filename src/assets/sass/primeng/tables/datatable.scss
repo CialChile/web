@@ -11,6 +11,10 @@
   }
 }
 
+table thead tr th span.ui-column-title {
+  display: inline !important;
+}
+
 @media (max-width: 35em) {
   .ui-datatable-reflow .ui-datatable-data.ui-widget-content {
     border: 1px solid #c7c7c7 !important;

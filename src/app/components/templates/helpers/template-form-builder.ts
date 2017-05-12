@@ -11,8 +11,12 @@ export class TemplateFormBuilder {
   generate() {
 
     if (this.formValues.persons) {
-      this.formValues.persons.forEach((personFormValue) => {
-        this.persons.push(TemplatesPersonsHelper.generateValidation(personFormValue.value, personFormValue.validationName, personFormValue.validationLabel, personFormValue.validation, personFormValue.type))
+      this.persons.controls['hasSupervisor'].setValue(this.formValues.persons.hasSupervisor);
+      this.formValues.persons.supervisor.forEach((supervisorFormValue) => {
+        this.supervisor.push(TemplatesPersonsHelper.generateValidation(supervisorFormValue.value, supervisorFormValue.validationName, supervisorFormValue.validationLabel, supervisorFormValue.validation, supervisorFormValue.type))
+      });
+      this.formValues.persons.operator.forEach((operatorFormValue) => {
+        this.operator.push(TemplatesPersonsHelper.generateValidation(operatorFormValue.value, operatorFormValue.validationName, operatorFormValue.validationLabel, operatorFormValue.validation, operatorFormValue.type))
       });
     }
     if (this.formValues.equipment) {
@@ -75,8 +79,16 @@ export class TemplateFormBuilder {
     return this.form;
   }
 
-  get persons(): FormArray {
-    return this.form.controls['template'].get('persons') as FormArray;
+  get persons(): FormGroup {
+    return this.form.controls['template'].get('persons') as FormGroup;
+  };
+
+  get supervisor(): FormArray {
+    return this.persons.get('supervisor') as FormArray;
+  };
+
+  get operator(): FormArray {
+    return this.persons.get('operator') as FormArray;
   };
 
   get equipmentList(): FormArray {

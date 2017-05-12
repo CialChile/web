@@ -12,7 +12,7 @@
             <div class="form-group"
                  [ngClass]="{'has-error':!programForm.controls['programType'].valid  && programForm.controls['programType'].touched}">
               <label class="control-label col-md-3 col-sm-3 col-xs-12 multiline">
-                Tipo de Proramación
+                Tipo de Programación
               </label>
               <div class="col-xs-12 col-md-9 col-sm-9">
                 <p-dropdown [options]="programTypes" formControlName="programType" [filter]="true"
@@ -127,14 +127,24 @@
           </div>
           <div class="col-xs-12 col-md-6">
             <div class="form-group"
-                 [ngClass]="{'has-error':!programForm.controls['finishHour'].valid  && programForm.controls['finishHour'].touched}">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                Hora de Finalización
+                 [ngClass]="{'has-error':(!programForm.controls['estimatedTime'].valid  && programForm.controls['estimatedTime'].touched)||(!programForm.controls['estimatedTimeUnit'].valid  && programForm.controls['estimatedTimeUnit'].touched)}">
+              <label for="estimatedTime" class="control-label col-md-3 col-sm-3 col-xs-12 multiline">
+                Duración estimada
               </label>
               <div class="col-xs-12 col-md-9 col-sm-9">
-                <p-calendar formControlName="finishHour" showTime="showTime"
-                            [timeOnly]="true"></p-calendar>
-                <control-messages [control]="programForm.controls['finishHour']"></control-messages>
+                <div class="row">
+                  <div class="col-xs-6 col-md-6 col-sm-6">
+                    <input id="estimatedTime" type="number" formControlName="estimatedTime"
+                           class="form-control input-sm">
+                    <control-messages [control]="programForm.controls['estimatedTime']"></control-messages>
+
+                  </div>
+                  <div class="col-xs-6 col-md-6 col-sm-6">
+                    <p-dropdown [options]="estimatedTimeUnits" formControlName="estimatedTimeUnit" [filter]="true"
+                                placeholder="Seleccione una unidad de medida"></p-dropdown>
+                    <control-messages [control]="programForm.controls['estimatedTimeUnit']"></control-messages>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,0 +1,52 @@
+.user_data {
+  .user_data-item {
+    display: flex;
+    font-size: 14px;
+    margin-bottom: 6px;
+    .user_data-item-icon {
+      min-width: 40px;
+      align-items: center;
+      font-size: 28px;
+    }
+    .user_data-item-data {
+      align-items: center;
+
+    }
+  }
+}
+
+.avatar-view {
+  max-width: 200px;
+}
+
+.tile-stats h3 {
+  font-size: 16px !important;
+  margin-top: 5px !important;
+}
+
+.tile-stats:hover, .tile-stats {
+  &.red {
+    .icon i, h3 {
+      color: #d81e00 !important;
+    }
+  }
+
+  &.green {
+    .icon i, h3 {
+      color: #5cb85c !important;
+    }
+  }
+
+  &.blue {
+    .icon i, h3 {
+      color: darken(#428bca, 6.5%) !important;
+    }
+  }
+
+  &.yellow {
+    .icon i, h3,.count {
+      color: #f0ad4e !important;
+    }
+  }
+
+}

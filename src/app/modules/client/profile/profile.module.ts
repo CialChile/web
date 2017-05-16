@@ -11,6 +11,12 @@ import {ChangePasswordComponent} from "./change-password/change-password.compone
 import {MyProfileComponent} from "./my-profile/my-profile.component";
 import {FormDirectivesModule} from "../../../directives/forms/form-directives.module";
 import {ProfileRoutingModule} from "./profile-routing.module";
+import {DropdownModule} from "primeng/components/dropdown/dropdown";
+import {MyNotificationsComponent} from './my-notifications/my-notifications.component';
+import {ScheduleModule} from "primeng/components/schedule/schedule";
+import {MyScheduleComponent} from './my-schedule/my-schedule.component';
+import { MyActivitiesComponent } from './my-activities/my-activities.component';
+import {DataTableModule} from "primeng/components/datatable/datatable";
 
 @NgModule({
   imports: [
@@ -24,9 +30,12 @@ import {ProfileRoutingModule} from "./profile-routing.module";
     MultiSelectModule,
     FileUploadModule,
     FormDirectivesModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
+    DropdownModule,
+    ScheduleModule,
+    DataTableModule
   ],
-  declarations: [MyProfileComponent, ChangePasswordComponent]
+  declarations: [MyProfileComponent, ChangePasswordComponent, MyNotificationsComponent, MyScheduleComponent, MyActivitiesComponent]
 })
 export class ProfileModule {
 }

@@ -3,8 +3,15 @@ export const CLIENTSIDEBARMENUITEMS: Menu[] = [
   {
     dropdown: false,
     link: '/client/dashboard',
-    name: 'Dashboard',
+    name: 'Mi Dashboard',
     icon: 'fa-home',
+    permission: ''
+  },
+  {
+    dropdown: false,
+    link: '/client/global-dashboard',
+    name: 'Dashboard General',
+    icon: 'fa-dashboard',
     permission: ''
   },
   {

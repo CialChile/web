@@ -1,0 +1,40 @@
+.msg_list {
+  li {
+    &:hover {
+      cursor: pointer;
+      &.unread, &.unread a {
+        background: darken(#f7f7f7, 5%) !important;
+      }
+
+      &.read, &.read a {
+        background: darken(#fff, 5%) !important;
+      }
+    }
+
+    &.unread, &.unread a {
+      background: #f7f7f7;
+    }
+    &.read, &.read a {
+      background: #fff;
+    }
+  }
+}
+
+.notifications_list {
+  li a {
+    width: 100%;
+    color: #5A738E !important;
+  }
+
+  li a .image img {
+    max-width: 53px;
+  }
+
+  li a .time {
+    right: 45px !important;
+  }
+
+  ul li {
+    width: 100% !important;
+  }
+}

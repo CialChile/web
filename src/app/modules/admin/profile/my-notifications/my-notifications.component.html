@@ -1,0 +1,58 @@
+<app-page-title [title]="'Mis Notificaciones'" [breadcrumbs]="breadcrumbs"></app-page-title>
+<ng-template #loadingIndicator>
+  <div class="text-center">
+    <img width="70px" src="assets/img/gears2.svg" alt="">
+    <h4>Cargando Notificaciones...</h4>
+  </div>
+</ng-template>
+
+<div *ngIf="!loading; else loadingIndicator">
+  <div class="x_panel">
+    <div class="x_title">
+      <h2>Mis Notificaciones
+      </h2>
+      <ul class="nav navbar-right panel_toolbox">
+        <li>
+          <a class="collapse-link" (click)="markAllAsRead()">
+            <i class="fa fa-check"></i>
+            Marcar todas como leídas
+          </a>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+      <ul class="list-unstyled msg_list notifications_list" role="menu"
+          aria-labelledby="notificaciones">
+        <ng-container *ngIf="notifications.length">
+          <li *ngFor="let notification of notifications"
+              [ngClass]="{read:notification.read,'unread':!notification.read}">
+            <a>
+              <span class="image">
+                <img [src]="notification.created_by_img" alt="">
+              </span>
+              <span>
+                <span>{{notification.created_by}}</span>
+                <span class="time">{{notification.time}}</span>
+              </span>
+              <span class="message">
+                {{notification.body.body}}
+              </span>
+            </a>
+          </li>
+        </ng-container>
+        <li *ngIf="!notifications.length">
+          <span>
+            <h4>No hay notificaciones</h4>
+          </span>
+        </li>
+        <li>
+          <button (click)="loadNotifications()" class="btn btn-block btn-danger" [disabled]="!hasMorePages">
+            <i class="fa fa-refresh"></i>
+            <strong>Cargar Más</strong>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

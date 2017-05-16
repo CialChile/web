@@ -5,6 +5,7 @@ import {ApiService} from "../../../../services/api.service";
 import {ValidationService} from "../../../../components/forms/validation/validation.service";
 import {UserService} from "../../../auth/services/user.service";
 import {objectToFormData} from "../../../../utilities/form/objectToFormData";
+import {SelectItem} from "primeng/components/common/api";
 
 @Component({
   selector: 'client-profile',
@@ -16,6 +17,7 @@ export class MyProfileComponent implements OnInit {
   public loading: boolean;
   public user: any;
   public saving: boolean;
+  public timezones: SelectItem[];
   public image: any = {
     objectURL: '',
     notDefault: false,
@@ -39,11 +41,17 @@ export class MyProfileComponent implements OnInit {
     this.profileForm = this.formBuilder.group({
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
+      timezone: ['', [Validators.required]],
       email: [{value: '', disabled: true}, Validators.compose([Validators.required, ValidationService.emailValidator])],
     });
   }
 
   ngOnInit() {
+    this.apiService.all('timezones').subscribe((data) => {
+      this.timezones = Object.keys(data).map((key) => {
+        return {label: key, value: data[key]}
+      })
+    });
     this.userService.getUser().subscribe(
       (user) => {
         this.loading = false;

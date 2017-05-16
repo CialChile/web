@@ -155,7 +155,10 @@ export class ManageActivityScheduleComponent implements OnInit {
             this.scheduleForm.controls['asset'].setValidators(Validators.required);
           }
           this.template = this.activity.template.template;
-          this.operatorValidations = this.template.persons.operator;
+          this.operatorValidations = [];
+          if (this.template.persons) {
+            this.operatorValidations = this.template.persons.operator;
+          }
           this.timeValidations = this.template.time.validations;
           this.applyValidationConstraintsToSchedule(this.timeValidations);
           if (!this.template.time.editable) {
@@ -176,7 +179,10 @@ export class ManageActivityScheduleComponent implements OnInit {
           this.activity = activity.data;
           this.hasAssets = this.activity.programType.has_assets;
           this.template = this.activity.template.template;
-          this.operatorValidations = this.template.persons.operator;
+          this.operatorValidations = [];
+          if (this.template.persons) {
+            this.operatorValidations = this.template.persons.operator;
+          }
           this.timeValidations = this.template.time.validations;
           this.applyValidationConstraintsToSchedule(this.timeValidations);
           this.defaultProgram = this.template.time.program[0];

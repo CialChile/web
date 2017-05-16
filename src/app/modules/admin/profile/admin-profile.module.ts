@@ -11,6 +11,7 @@ import {EqualValidator} from "../../../directives/forms/equal-validator.directiv
 import {AdminProfileComponent} from "./my-profile/admin-profile.component";
 import {AdminChangePasswordComponent} from "./change-password/admin-change-password.component";
 import {FormDirectivesModule} from "../../../directives/forms/form-directives.module";
+import {MyNotificationsComponent} from "./my-notifications/my-notifications.component";
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import {FormDirectivesModule} from "../../../directives/forms/form-directives.mo
     FileUploadModule,
     FormDirectivesModule
   ],
-  declarations: [AdminProfileComponent, AdminChangePasswordComponent]
+  declarations: [AdminProfileComponent, AdminChangePasswordComponent, MyNotificationsComponent]
 })
 export class AdminProfileModule {
 }

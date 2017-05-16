@@ -85,7 +85,9 @@
                     </ng-container>
                     <p-column styleClass="col-button" [header]="'Acciones'">
                       <ng-template let-schedule="rowData" pTemplate="body">
-                        <button type="button" pButton (click)="editSchedule(schedule)" class="ui-button-warning"
+                        <button type="button" pButton (click)="history(schedule)" class="ui-button-info"
+                                icon="fa-history" pTooltip="Historial de Ejecución" tooltipPosition="top"></button>
+                       <button type="button" pButton (click)="editSchedule(schedule)" class="ui-button-warning"
                                 icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></button>
                         <button type="button" pButton (click)="removeSchedule(schedule)" class="ui-button-danger"
                                 icon="fa-trash" pTooltip="Eliminar" tooltipPosition="top"></button>

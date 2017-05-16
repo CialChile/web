@@ -43,6 +43,16 @@
                     [control]="profileForm.controls['email']"></control-messages>
                 </div>
               </div>
+              <div class="form-group"
+                   [ngClass]="{'has-error':!profileForm.controls['timezone'].valid  && profileForm.controls['timezone'].touched}">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Timezone</label>
+                <div class="col-xs-12 col-md-9 col-sm-9">
+                  <p-dropdown [options]="timezones" formControlName="timezone" [filter]="true"
+                              placeholder="Seleccione un TimeZone"></p-dropdown>
+                  <control-messages
+                    [control]="profileForm.controls['timezone']"></control-messages>
+                </div>
+              </div>
             </div>
             <div class="col-xs-12 col-md-2 col-md-offset-1">
               <etrack-image-upload [file]="image"

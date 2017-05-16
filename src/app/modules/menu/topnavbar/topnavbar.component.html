@@ -27,30 +27,38 @@
         </li>
 
         <li role="presentation" dropdown>
-          <a href id="notificaciones" dropdownToggle (click)="false">
+          <a href id="notificaciones" dropdownToggle (click)="reloadNotifications()">
             <i class="fa fa-envelope-o"></i>
-            <span class="badge bg-green">1</span>
+            <span class="badge bg-green">{{unreadCount}}</span>
           </a>
           <ul *dropdownMenu class="dropdown-menu list-unstyled msg_list" role="menu"
               aria-labelledby="notificaciones">
-            <li>
-              <a>
-                <span class="image">
-                  <img src="assets/img/missing.png" alt="">
-                </span>
-                <span>
-                  <span>Pedro Gorrin</span>
-                  <span class="time">hace 3 mins</span>
-                </span>
-                <span class="message">
-                  Agrego una nueva empresa
-                </span>
-              </a>
+            <ng-container *ngIf="notifications.length">
+              <li *ngFor="let notification of notifications"
+                  [ngClass]="{read:notification.read,'unread':!notification.read}">
+                <a>
+                  <span class="image">
+                    <img [src]="notification.created_by_img" alt="">
+                  </span>
+                  <span>
+                    <span>{{notification.created_by}}</span>
+                    <span class="time">{{notification.time}}</span>
+                  </span>
+                  <span class="message">
+                    {{notification.body.body}}
+                  </span>
+                </a>
+              </li>
+            </ng-container>
+            <li *ngIf="!notifications.length">
+              <span>
+                <h4>No hay notificaciones</h4>
+              </span>
             </li>
             <li>
               <div class="text-center">
-                <a>
-                  <strong>Ver Todas las Alertas</strong>
+                <a [routerLink]="notificationUrl">
+                  <strong>Ver Todas</strong>
                   <i class="fa fa-angle-right"></i>
                 </a>
               </div>

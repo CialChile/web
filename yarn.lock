@@ -76,6 +76,10 @@
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.2.1.tgz#ad7996a865b7b11fc315363827f2414a48c6589c"
 
+"@angular/common@2.4.10":
+  version "2.4.10"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.10.tgz#a3a682d2228fa30ec23dd0eb57c8e887fba26997"
+
 "@angular/compiler-cli@^4.0.0":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-4.0.1.tgz#90c60d491c12e1da901a0aeb3990470aa96e9bfa"
@@ -100,6 +104,10 @@
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.2.1.tgz#86fdc34a370a4fcfe84ed9de4b3c43548612919c"
 
+"@angular/core@2.4.10":
+  version "2.4.10"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.10.tgz#0b8320a65065965d998645b1f5cd3cf769b441ea"
+
 "@angular/forms@^4.0.0":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-4.0.1.tgz#b9ebdbbb8ace0f9a3bf9e53c299eafdfab1d5041"
@@ -107,6 +115,10 @@
 "@angular/forms@2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.2.1.tgz#0e7154acc5127c583b4b52c59eac45d672c29da4"
+
+"@angular/forms@2.4.10":
+  version "2.4.10"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.4.10.tgz#062133aaade1f3b3c962f1593208c541b622fd06"
 
 "@angular/http@^4.0.0":
   version "4.0.1"
@@ -151,6 +163,20 @@
     magic-string "^0.19.0"
     source-map "^0.5.6"
 
+"@types/fullcalendar":
+  version "2.7.42"
+  resolved "https://registry.yarnpkg.com/@types/fullcalendar/-/fullcalendar-2.7.42.tgz#52a13e9fdb32909d60c5ef77c1c6bb5b89e30b06"
+  dependencies:
+    "@types/jquery" "*"
+    moment ">=2.14.0"
+
+"@types/fullcalendar@2.7.38":
+  version "2.7.38"
+  resolved "https://registry.yarnpkg.com/@types/fullcalendar/-/fullcalendar-2.7.38.tgz#dd08c35b090cf787214658bd2a453ac9c191d896"
+  dependencies:
+    "@types/jquery" "*"
+    moment ">=2.14.0"
+
 "@types/google-maps@^3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@types/google-maps/-/google-maps-3.2.0.tgz#804a3ae9ac9265b4e0d1508b5b9b894867974f82"
@@ -165,13 +191,27 @@
   version "2.5.38"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.38.tgz#a4379124c4921d4e21de54ec74669c9e9b356717"
 
-"@types/jquery@^2.0.40":
+"@types/jquery@*":
+  version "2.0.44"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-2.0.44.tgz#34e9c5cac21c896b7fbb8319f587c4a6112e8bfc"
+
+"@types/jquery@^2.0.40", "@types/jquery@2.0.41":
   version "2.0.41"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-2.0.41.tgz#b87ba051011f99edbe586d8f97282e7786e01a6d"
+
+"@types/moment@2.13.0":
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/@types/moment/-/moment-2.13.0.tgz#604ebd189bc3bc34a1548689404e61a2a4aac896"
+  dependencies:
+    moment "*"
 
 "@types/node@^6.0.46", "@types/node@~6.0.60":
   version "6.0.68"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.68.tgz#0c43b6b8b9445feb86a0fbd3457e3f4bc591e66d"
+
+"@types/node@7.0.8":
+  version "7.0.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.8.tgz#25e4dd804b630c916ae671233e6d71f6ce18124a"
 
 "@types/q@^0.0.32":
   version "0.0.32"
@@ -247,6 +287,19 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+angular2-fullcalendar:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/angular2-fullcalendar/-/angular2-fullcalendar-1.0.19.tgz#8e725bd7c0a781d06d41730f78f39f6cd78c59af"
+  dependencies:
+    "@angular/common" "2.4.10"
+    "@angular/core" "2.4.10"
+    "@angular/forms" "2.4.10"
+    "@types/fullcalendar" "2.7.38"
+    "@types/jquery" "2.0.41"
+    "@types/moment" "2.13.0"
+    "@types/node" "7.0.8"
+    fullcalendar "3.2.0"
 
 angular2-jwt@^0.1.28:
   version "0.1.28"
@@ -808,6 +861,26 @@ chalk@^1.0.0, chalk@^1.1.0, chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
+chart.js:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.5.0.tgz#fe6e751a893769f56e72bee5ad91207e1c592957"
+  dependencies:
+    chartjs-color "^2.0.0"
+    moment "^2.10.6"
+
+chartjs-color-string@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/chartjs-color-string/-/chartjs-color-string-0.4.0.tgz#57748d4530ae28d8db0a5492182ba06dfdf2f468"
+  dependencies:
+    color-name "^1.0.0"
+
+chartjs-color@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/chartjs-color/-/chartjs-color-2.1.0.tgz#9c39ac830ccd98996ae80c9f11086ff12c98a756"
+  dependencies:
+    chartjs-color-string "^0.4.0"
+    color-convert "^0.5.3"
+
 chokidar@^1.4.1, chokidar@^1.4.3, chokidar@^1.6.0:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.6.1.tgz#2f4447ab5e96e50fb3d789fd90d4c72e0e4c70c2"
@@ -899,6 +972,10 @@ codelyzer@~2.0.0:
     semver-dsl "^1.0.1"
     source-map "^0.5.6"
     sprintf-js "^1.0.3"
+
+color-convert@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-0.5.3.tgz#bdb6c69ce660fadffe0b0007cc447e1b9f7282bd"
 
 color-convert@^1.3.0:
   version "1.9.0"
@@ -1878,6 +1955,20 @@ fstream@^1.0.0, fstream@^1.0.10, fstream@^1.0.2:
     mkdirp ">=0.5 0"
     rimraf "2"
 
+fullcalendar:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/fullcalendar/-/fullcalendar-3.4.0.tgz#34dabff2abe5e85f70025c789a5b9dc3ea4c4762"
+  dependencies:
+    jquery "2 - 3"
+    moment "^2.9.0"
+
+fullcalendar@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/fullcalendar/-/fullcalendar-3.2.0.tgz#0718964c5edacc45e7204ad797a56bcab535068b"
+  dependencies:
+    jquery "2 - 3"
+    moment "^2.9.0"
+
 function-bind@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
@@ -2602,6 +2693,10 @@ jquery@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
+"jquery@2 - 3":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
+
 js-base64@^2.1.5, js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
@@ -3050,7 +3145,7 @@ mkdirp@^0.5.0, mkdirp@^0.5.1, "mkdirp@>=0.5 0", mkdirp@~0.5.0, mkdirp@~0.5.1, mk
   dependencies:
     minimist "0.0.8"
 
-moment, moment@2.18.1:
+moment, moment@*, moment@^2.10.6, moment@^2.9.0, moment@>=2.14.0, moment@2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 

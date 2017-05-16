@@ -11,5 +11,17 @@ export const CLIENTTOPBARMENUITEMS: any[] = [
     link: '/client/my-profile/change-password',
     name: 'Cambiar Contraseña',
     icon: 'fa-lock'
-  }
+  },
+  {
+    dropdown: false,
+    link: '/client/my-activities',
+    name: 'Mis Actividades',
+    icon: 'fa-calendar'
+  },
+  {
+    dropdown: false,
+    link: '/client/my-schedule',
+    name: 'Mi Calendario',
+    icon: 'fa-calendar'
+  },
 ];

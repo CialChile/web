@@ -18,8 +18,8 @@ var DashboardComponent = (function () {
 DashboardComponent = __decorate([
     core_1.Component({
         selector: 'app-dashboard',
-        templateUrl: './dashboard.component.html',
-        styleUrls: ['./dashboard.component.scss']
+        templateUrl: 'dashboard.component.html',
+        styleUrls: ['dashboard.component.scss']
     })
 ], DashboardComponent);
 exports.DashboardComponent = DashboardComponent;

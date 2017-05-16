@@ -15,6 +15,7 @@ import {AdminUsersListComponent} from "./security/users/users-list/admin-users-l
 import {AdminManageUserComponent} from "./security/users/manage-user/admin-manage-user.component";
 import {AdminRolesListComponent} from "./security/roles/roles-list/admin-roles-list.component";
 import {AdminManageRoleComponent} from "./security/roles/manage-role/admin-manage-role.component";
+import {MyNotificationsComponent} from "./profile/my-notifications/my-notifications.component";
 
 export const routes: Routes = [
   {
@@ -34,6 +35,10 @@ export const routes: Routes = [
       {
         path: 'my-profile/change-password',
         component: AdminChangePasswordComponent
+      },
+      {
+        path: 'my-notifications',
+        component: MyNotificationsComponent
       },
       {
         path: 'companies',

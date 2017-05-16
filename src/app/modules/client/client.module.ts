@@ -1,11 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DashboardComponent} from './dashboard/dashboard.component';
 import {ClientRoutingModule} from "./client-routing.module";
 import {MenuModule} from "../menu/menu.module";
 import {UserCanModule} from "../../directives/user-can/user-can.module";
 import {IndexComponent} from './index/index.component';
-import {LayoutsModule} from "../../components/layouts/layouts.module";
 import {RrhhModule} from "./rrhh/rrhh.module";
 import {ProfileModule} from "./profile/profile.module";
 import {SecurityModule} from "./security/security.module";
@@ -13,6 +11,7 @@ import {AssetsModule} from "./assets/assets.module";
 import {ConfigurationModule} from "./configuration/configuration.module";
 import {CertificationsModule} from "./certifications/certifications.module";
 import {ActivitiesModule} from "./activities/activities.module";
+import {DashboardModule} from "./dashboard/dashboard.module";
 
 @NgModule({
   imports: [
@@ -24,12 +23,12 @@ import {ActivitiesModule} from "./activities/activities.module";
     ProfileModule,
     SecurityModule,
     AssetsModule,
-    LayoutsModule,
+    DashboardModule,
     ConfigurationModule,
     CertificationsModule,
     ActivitiesModule
   ],
-  declarations: [DashboardComponent, IndexComponent],
+  declarations: [IndexComponent],
 })
 export class ClientModule {
 }

@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
-var dashboard_component_1 = require("./dashboard/dashboard.component");
+var dashboard_component_1 = require("./dashboard/global-dashboard/dashboard.component.ts");
 var client_routing_module_1 = require("./client-routing.module");
 var menu_module_1 = require("../menu/menu.module");
 var user_can_module_1 = require("../../directives/user-can/user-can.module");

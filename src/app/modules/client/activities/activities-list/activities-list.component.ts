@@ -91,6 +91,10 @@ export class ActivitiesListComponent implements OnInit {
     this.router.navigate(['/client/activities/' + schedule.activity_id + '/schedules/' + schedule.id]);
   }
 
+  history(schedule) {
+
+  }
+
   removeSchedule(schedule) {
     this.toastr.warning('Falta implementar');
     /*

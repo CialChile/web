@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var auth_guard_service_1 = require("../auth/guards/auth-guard.service");
 var index_component_1 = require("./index/index.component");
 var client_guard_1 = require("../auth/guards/client.guard");
-var dashboard_component_1 = require("./dashboard/dashboard.component");
+var dashboard_component_1 = require("./dashboard/global-dashboard/dashboard.component.ts");
 exports.routes = [
     {
         path: 'client',

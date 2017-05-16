@@ -10,6 +10,7 @@ import {TopbarDropdownItemComponent} from "./topnavbar/topbar-dropdown-item/topb
 import {UserCanModule} from "../../directives/user-can/user-can.module";
 import {EventsService} from "../../services/events/events.service";
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {NotificationsService} from "../../services/notifications/notifications.service";
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
   ],
   declarations: [SidebarComponent, TopNavBarComponent, FooterComponent,
     SidebarDropdownComponent, SidebarItemComponent, TopbarDropdownItemComponent],
-  providers: [EventsService],
+  providers: [EventsService, NotificationsService],
   exports: [SidebarComponent, TopNavBarComponent, FooterComponent]
 })
 export class MenuModule {

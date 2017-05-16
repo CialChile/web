@@ -19,7 +19,6 @@ export class UserService {
 
   constructor(private authHttp: AuthHttp) {
     this.userSubject = new ReplaySubject(1);
-
   }
 
 

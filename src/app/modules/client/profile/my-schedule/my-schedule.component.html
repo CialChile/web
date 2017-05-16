@@ -1,0 +1,13 @@
+<app-page-title [title]="'Mi Calendario'" [breadcrumbs]="breadcrumbs"></app-page-title>
+
+<div class="x_panel">
+  <div class="x_title">
+    <h2>Mi Calendario
+    </h2>
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content">
+    <p-schedule [events]="events" [header]="headerConfig" (onViewRender)="loadEvents($event)" locale="es"></p-schedule>
+
+  </div>
+</div>

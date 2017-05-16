@@ -56,7 +56,7 @@ export class ScheduleNaturalLanguageBuilder {
         ${moment(initHour).format('hh:mm A')} `
     }
 
-    if (estimatedTime) {
+    if (estimatedTime && estimatedTimeUnit) {
       durationConstraint = ` con una duración estimada de 
         ${estimatedTime} ${estimatedTimeUnit.hasOwnProperty('name') ? estimatedTimeUnit.name : estimatedTimeUnit}`
     }
